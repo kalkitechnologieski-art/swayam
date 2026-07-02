@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.01) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.01) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.2); border-radius: 10px; }
+
+    /* ============================================================
+       SIDEBAR
+       ============================================================ */
+    .sidebar {
+      width: 260px;
+      background: rgba(255, 255, 255, 0.01);
+      border-right: 1px solid rgba(255, 255, 255, 0.02);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
+    .sidebar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+      margin-bottom: 30px;
+      padding: 0 8px;
+    }
+    .sidebar .logo i { color: #b8860b; }
+    .sidebar .logo span { font-weight: 300; opacity: 0.3; }
+
+    .sidebar .nav-section { margin-bottom: 8px; }
+    .sidebar .nav-section .label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.06);
+      padding: 8px 12px 4px;
+    }
+    .sidebar .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+    }
+    .sidebar .nav-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .sidebar .nav-item.active {
+      background: rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+    }
+    .sidebar .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      height: 60%;
+      width: 3px;
+      background: #b8860b;
+      border-radius: 0 4px 4px 0;
+    }
+    .sidebar .nav-item .icon { width: 20px; text-align: center; font-size: 1rem; }
+    .sidebar .nav-item .badge {
+      margin-left: auto;
+      padding: 0 8px;
+      border-radius: 20px;
+      background: rgba(184, 134, 11, 0.08);
+      color: #b8860b;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+    .sidebar .nav-item .badge.success { background: rgba(34, 197, 94, 0.08); color: #22c55e; }
+
+    .sidebar .user-section {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .sidebar .user-section .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+    }
+    .sidebar .user-section .user-info .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .sidebar .user-section .user-info .name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #f0ece6;
+    }
+    .sidebar .user-section .user-info .email {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ============================================================
+       MAIN CONTENT
+       ============================================================ */
+    .main-content {
+      flex: 1;
+      padding: 24px 32px 32px;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    /* ----- Top Bar ----- */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topbar .greeting h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .topbar .greeting p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .topbar .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .topbar .actions .btn-new {
+      padding: 10px 24px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .topbar .actions .btn-new:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25);
+    }
+    .topbar .actions .btn-search {
+      padding: 10px 14px;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .topbar .actions .btn-search:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+
+    /* ----- Stats Grid ----- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px 22px;
+      transition: 0.3s;
+    }
+    .stat-card:hover {
+      border-color: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.01);
+    }
+    .stat-card .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f0ece6;
+      margin: 4px 0 2px;
+    }
+    .stat-card .change {
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .stat-card .change.up { color: #22c55e; }
+    .stat-card .change.down { color: #ef4444; }
+    .stat-card .change.neutral { color: rgba(255, 255, 255, 0.15); }
+
+    /* ----- Sites Grid ----- */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 24px 0 16px;
+    }
+    .section-header h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .section-header a {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .section-header a:hover { color: #b8860b; }
+
+    .sites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .site-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+    }
+    .site-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(184, 134, 11, 0.08);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+    .site-card .thumbnail {
+      height: 140px;
+      background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.02);
+      position: relative;
+    }
+    .site-card .thumbnail .status-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .site-card .thumbnail .status-badge.live { background: rgba(34, 197, 94, 0.08); color: #22c55e; }
+    .site-card .thumbnail .status-badge.draft { background: rgba(251, 191, 36, 0.08); color: #fbbf24; }
+    .site-card .thumbnail .status-badge.archived { background: rgba(239, 68, 68, 0.08); color: #ef4444; }
+    .site-card .thumbnail .status-badge.building { background: rgba(96, 165, 250, 0.08); color: #60a5fa; animation: pulseBadge 1.5s ease-in-out infinite; }
+    @keyframes pulseBadge { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+    .site-card .info {
+      padding: 16px 18px 18px;
+    }
+    .site-card .info .name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f0ece6;
+      margin-bottom: 2px;
+    }
+    .site-card .info .url {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .site-card .info .url a {
+      color: #b8860b;
+      text-decoration: none;
+    }
+    .site-card .info .url a:hover { text-decoration: underline; }
+    .site-card .info .meta {
+      display: flex;
+      gap: 16px;
+      margin: 10px 0 12px;
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .site-card .info .meta span { display: flex; align-items: center; gap: 4px; }
+    .site-card .info .actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .site-card .info .actions button {
+      padding: 4px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.65rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .site-card .info .actions button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .site-card .info .actions button.primary {
+      background: rgba(184, 134, 11, 0.04);
+      border-color: rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+    }
+    .site-card .info .actions button.primary:hover {
+      background: rgba(184, 134, 11, 0.08);
+    }
+
+    /* ----- Activity Feed ----- */
+    .activity-feed {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-top: 24px;
+    }
+    .activity-feed .feed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .activity-feed .feed-header h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .activity-feed .feed-header a {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .activity-feed .feed-header a:hover { color: #b8860b; }
+
+    .feed-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+    }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-item .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+    .feed-item .content {
+      flex: 1;
+    }
+    .feed-item .content .text {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .feed-item .content .text strong { color: #f0ece6; font-weight: 500; }
+    .feed-item .content .time {
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.06);
+    }
+    .feed-item .content .text .highlight { color: #b8860b; }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+    .toast.warning { border-color: rgba(251,191,36,0.2); }
+    .toast.warning i { color: #fbbf24; }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 992px) {
+      .sidebar { width: 80px; padding: 16px 8px; }
+      .sidebar .logo { font-size: 1.2rem; justify-content: center; }
+      .sidebar .logo span { display: none; }
+      .sidebar .nav-item { padding: 10px 12px; justify-content: center; }
+      .sidebar .nav-item .label-text { display: none; }
+      .sidebar .nav-item .badge { display: none; }
+      .sidebar .user-section .user-info .name,
+      .sidebar .user-section .user-info .email { display: none; }
+      .sidebar .nav-section .label { display: none; }
+      .main-content { padding: 16px; }
+    }
+    @media (max-width: 768px) {
+      body { overflow: auto; flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 26, 0.92);
+        backdrop-filter: blur(12px);
+        gap: 4px;
+      }
+      .sidebar .logo { margin-bottom: 0; font-size: 1.1rem; }
+      .sidebar .logo span { display: inline; }
+      .sidebar .nav-section { display: flex; gap: 4px; margin-bottom: 0; }
+      .sidebar .nav-section .label { display: none; }
+      .sidebar .nav-item { padding: 6px 10px; font-size: 0.7rem; }
+      .sidebar .nav-item .label-text { display: inline; }
+      .sidebar .nav-item .badge { display: inline; }
+      .sidebar .user-section { display: none; }
+      .main-content { height: auto; padding: 16px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .sites-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .topbar .greeting h1 { font-size: 1.2rem; }
+      .topbar .actions .btn-new { padding: 8px 16px; font-size: 0.75rem; }
+      .stat-card .value { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       TOAST
+       ============================================================ -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- ============================================================
+       SIDEBAR
+       ============================================================ -->
+  <nav class="sidebar" id="sidebar">
+    <a href="../index.html" class="logo">
+      <i class="fas fa-om"></i>
+      Swayam<span>AI</span>
+    </a>
+
+    <div class="nav-section">
+      <div class="label">Main</div>
+      <a href="index.html" class="nav-item active">
+        <span class="icon"><i class="fas fa-th-large"></i></span>
+        <span class="label-text">Dashboard</span>
+      </a>
+      <a href="sites.html" class="nav-item">
+        <span class="icon"><i class="fas fa-globe"></i></span>
+        <span class="label-text">Sites</span>
+        <span class="badge success">3</span>
+      </a>
+      <a href="analytics.html" class="nav-item">
+        <span class="icon"><i class="fas fa-chart-line"></i></span>
+        <span class="label-text">Analytics</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="label">Management</div>
+      <a href="../builder/step-1.html" class="nav-item">
+        <span class="icon"><i class="fas fa-plus-circle"></i></span>
+        <span class="label-text">New Website</span>
+      </a>
+      <a href="domain.html" class="nav-item">
+        <span class="icon"><i class="fas fa-globe-asia"></i></span>
+        <span class="label-text">Domains</span>
+        <span class="badge">1</span>
+      </a>
+      <a href="billing.html" class="nav-item">
+        <span class="icon"><i class="fas fa-credit-card"></i></span>
+        <span class="label-text">Billing</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="label">Support</div>
+      <a href="support.html" class="nav-item">
+        <span class="icon"><i class="fas fa-headset"></i></span>
+        <span class="label-text">Support</span>
+      </a>
+      <a href="../pages/about.html" class="nav-item">
+        <span class="icon"><i class="fas fa-info-circle"></i></span>
+        <span class="label-text">About</span>
+      </a>
+    </div>
+
+    <div class="user-section">
+      <div class="user-info">
+        <div class="avatar">AK</div>
+        <div>
+          <div class="name">Arjun Kumar</div>
+          <div class="email">arjun@example.com</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="greeting">
+        <h1>Welcome back, Arjun 👋</h1>
+        <p>Here's what's happening with your websites today.</p>
+      </div>
+      <div class="actions">
+        <button class="btn-search" id="searchBtn" aria-label="Search">
+          <i class="fas fa-search"></i>
+        </button>
+        <button class="btn-new" id="newSiteBtn">
+          <i class="fas fa-plus"></i> New Site
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="label">Total Sites</div>
+        <div class="value" id="totalSites">0</div>
+        <div class="change neutral">+0 this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total Visits</div>
+        <div class="value" id="totalVisits">0</div>
+        <div class="change up"><i class="fas fa-arrow-up"></i> +12.5%</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">SEO Score</div>
+        <div class="value" id="seoScore">0</div>
+        <div class="change up"><i class="fas fa-arrow-up"></i> +4.2%</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Domains</div>
+        <div class="value" id="domainCount">0</div>
+        <div class="change neutral">0 pending</div>
+      </div>
+    </div>
+
+    <!-- Sites -->
+    <div class="section-header">
+      <h2><i class="fas fa-globe" style="color:#b8860b; margin-right:6px;"></i> Your Sites</h2>
+      <a href="sites.html">View all →</a>
+    </div>
+    <div class="sites-grid" id="sitesGrid">
+      <!-- Sites injected by JS -->
+    </div>
+
+    <!-- Activity Feed -->
+    <div class="activity-feed">
+      <div class="feed-header">
+        <h3><i class="fas fa-clock" style="color:#b8860b; margin-right:6px;"></i> Recent Activity</h3>
+        <a href="#">View all</a>
+      </div>
+      <div id="activityFeed">
+        <!-- Activity items injected by JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- DATA -----
+      const sitesData = [
+        {
+          id: 1,
+          name: 'Veda Wellness',
+          url: 'veda-wellness.vercel.app',
+          status: 'live',
+          visits: 1247,
+          theme: 'veda',
+          createdAt: '2026-07-01',
+          lastDeployed: '2026-07-02'
+        },
+        {
+          id: 2,
+          name: 'Karma Agency',
+          url: 'karma-agency.vercel.app',
+          status: 'draft',
+          visits: 0,
+          theme: 'karma',
+          createdAt: '2026-06-28',
+          lastDeployed: null
+        },
+        {
+          id: 3,
+          name: 'Sattva Store',
+          url: 'sattva-store.vercel.app',
+          status: 'live',
+          visits: 893,
+          theme: 'sattva',
+          createdAt: '2026-06-15',
+          lastDeployed: '2026-06-28'
+        },
+        {
+          id: 4,
+          name: 'Dharma Consulting',
+          url: 'dharma-consulting.vercel.app',
+          status: 'building',
+          visits: 0,
+          theme: 'dharma',
+          createdAt: '2026-07-02',
+          lastDeployed: null
+        }
+      ];
+
+      const activityData = [
+        { text: '<strong>Veda Wellness</strong> received <span class="highlight">247</span> new visitors', time: '2 hours ago', icon: '📈' },
+        { text: '<strong>Karma Agency</strong> was updated to <span class="highlight">draft</span> status', time: '4 hours ago', icon: '✏️' },
+        { text: 'New site <strong>Dharma Consulting</strong> is being built', time: '6 hours ago', icon: '🚀' },
+        { text: '<strong>Sattva Store</strong> made <span class="highlight">3</span> new sales', time: '1 day ago', icon: '🛍️' },
+        { text: 'Domain <strong>veda-wellness.com</strong> was purchased', time: '2 days ago', icon: '🌐' },
+      ];
+
+      // ----- DOM REFS -----
+      const sitesGrid = document.getElementById('sitesGrid');
+      const activityFeed = document.getElementById('activityFeed');
+      const totalSites = document.getElementById('totalSites');
+      const totalVisits = document.getElementById('totalVisits');
+      const seoScore = document.getElementById('seoScore');
+      const domainCount = document.getElementById('domainCount');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const newSiteBtn = document.getElementById('newSiteBtn');
+      const searchBtn = document.getElementById('searchBtn');
+
+      // ----- TOAST -----
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        try {
+          toastMessage.textContent = typeof message === 'string' ? message : String(message);
+          toast.className = 'toast';
+          if (type === 'error') toast.classList.add('error');
+          if (type === 'success') toast.classList.add('success');
+          if (type === 'warning') toast.classList.add('warning');
+          toast.classList.add('show');
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(function() {
+            toast.classList.remove('show');
+          }, 3500);
+        } catch (err) {
+          console.warn('Toast error:', err);
+        }
+      }
+
+      // ----- RENDER SITES -----
+      function renderSites() {
+        if (!sitesGrid) return;
+
+        // Update stats
+        const liveSites = sitesData.filter(function(s) { return s.status === 'live'; });
+        const totalVisitsSum = sitesData.reduce(function(sum, s) { return sum + (s.visits || 0); }, 0);
+        const domainsOwned = 1; // Simulated
+
+        totalSites.textContent = sitesData.length;
+        totalVisits.textContent = totalVisitsSum.toLocaleString();
+        seoScore.textContent = Math.floor(75 + Math.random() * 15);
+        domainCount.textContent = domainsOwned;
+
+        let html = '';
+        sitesData.forEach(function(site) {
+          const statusMap = {
+            live: { label: 'Live', class: 'live' },
+            draft: { label: 'Draft', class: 'draft' },
+            archived: { label: 'Archived', class: 'archived' },
+            building: { label: 'Building...', class: 'building' }
+          };
+          const status = statusMap[site.status] || statusMap.draft;
+          const visits = site.visits || 0;
+          const themeIcons = { veda: '🕉', karma: '🚀', sattva: '🛍️', dharma: '📊' };
+          const icon = themeIcons[site.theme] || '🌐';
+
+          html += `
+            <div class="site-card" data-id="${site.id}">
+              <div class="thumbnail">
+                <span>${icon}</span>
+                <span class="status-badge ${status.class}">${status.label}</span>
+              </div>
+              <div class="info">
+                <div class="name">${site.name}</div>
+                <div class="url">
+                  <i class="fas fa-link" style="opacity:0.3;"></i>
+                  <a href="https://${site.url}" target="_blank">${site.url}</a>
+                </div>
+                <div class="meta">
+                  <span><i class="fas fa-eye"></i> ${visits.toLocaleString()} visits</span>
+                  <span><i class="fas fa-calendar"></i> ${site.createdAt}</span>
+                </div>
+                <div class="actions">
+                  <button class="primary" onclick="handleEditSite(${site.id})"><i class="fas fa-edit"></i> Edit</button>
+                  <button onclick="handlePreviewSite('${site.url}')"><i class="fas fa-eye"></i> Preview</button>
+                  ${site.status === 'live' ? `<button onclick="handleDeploySite(${site.id})"><i class="fas fa-sync"></i> Redeploy</button>` : `<button class="primary" onclick="handleDeploySite(${site.id})"><i class="fas fa-cloud-upload-alt"></i> Deploy</button>`}
+                  <button onclick="handleDeleteSite(${site.id})" style="color:rgba(239,68,68,0.2);"><i class="fas fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        sitesGrid.innerHTML = html;
+
+        // Save to state
+        localStorage.setItem('swayam_dashboard_sites', JSON.stringify(sitesData));
+      }
+
+      // ----- RENDER ACTIVITY -----
+      function renderActivity() {
+        if (!activityFeed) return;
+        let html = '';
+        activityData.forEach(function(item) {
+          html += `
+            <div class="feed-item">
+              <div class="icon">${item.icon}</div>
+              <div class="content">
+                <div class="text">${item.text}</div>
+                <div class="time">${item.time}</div>
+              </div>
+            </div>
+          `;
+        });
+        activityFeed.innerHTML = html;
+      }
+
+      // ----- ACTIONS -----
+      window.handleEditSite = function(id) {
+        const site = sitesData.find(function(s) { return s.id === id; });
+        if (site) {
+          showToast('Opening editor for: ' + site.name, 'success');
+          // In production, redirect to builder/step-3.html with site ID
+        }
+      };
+
+      window.handlePreviewSite = function(url) {
+        if (url) {
+          window.open('https://' + url, '_blank');
+        } else {
+          showToast('No URL available for preview.', 'warning');
+        }
+      };
+
+      window.handleDeploySite = function(id) {
+        const site = sitesData.find(function(s) { return s.id === id; });
+        if (site) {
+          if (site.status === 'live') {
+            showToast('Redeploying ' + site.name + '...', 'success');
+          } else {
+            showToast('Deploying ' + site.name + ' to Vercel...', 'success');
+          }
+          // Simulate deployment
+          site.status = 'building';
+          renderSites();
+          setTimeout(function() {
+            site.status = 'live';
+            site.visits = (site.visits || 0) + Math.floor(Math.random() * 50);
+            renderSites();
+            showToast('✅ ' + site.name + ' is now live!', 'success');
+          }, 3000);
+        }
+      };
+
+      window.handleDeleteSite = function(id) {
+        const site = sitesData.find(function(s) { return s.id === id; });
+        if (site && confirm('Delete "' + site.name + '" permanently?')) {
+          const index = sitesData.indexOf(site);
+          if (index > -1) {
+            sitesData.splice(index, 1);
+            renderSites();
+            showToast('🗑️ ' + site.name + ' deleted.', 'warning');
+          }
+        }
+      };
+
+      // ----- NEW SITE -----
+      newSiteBtn.addEventListener('click', function() {
+        window.location.href = '../builder/step-1.html';
+      });
+
+      // ----- SEARCH -----
+      searchBtn.addEventListener('click', function() {
+        const query = prompt('Search for a site or domain:');
+        if (query && query.trim()) {
+          const found = sitesData.filter(function(s) {
+            return s.name.toLowerCase().includes(query.toLowerCase()) ||
+                   s.url.toLowerCase().includes(query.toLowerCase());
+          });
+          if (found.length > 0) {
+            showToast('Found ' + found.length + ' site(s) matching "' + query + '"', 'success');
+          } else {
+            showToast('No sites found matching "' + query + '"', 'warning');
+          }
+        }
+      });
+
+      // ----- KEYBOARD SHORTCUTS -----
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+          e.preventDefault();
+          window.location.href = '../builder/step-1.html';
+        }
+        if (e.key === 'Escape') {
+          toast.classList.remove('show');
+        }
+        if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          renderSites();
+          showToast('Dashboard refreshed.', 'success');
+        }
+      });
+
+      // ----- STATE PERSISTENCE -----
+      function loadState() {
+        try {
+          const raw = localStorage.getItem('swayam_dashboard_sites');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              // Merge with default data
+              parsed.forEach(function(p, i) {
+                if (i < sitesData.length) {
+                  sitesData[i] = { ...sitesData[i], ...p };
+                }
+              });
+            }
+          }
+          const activityRaw = localStorage.getItem('swayam_dashboard_activity');
+          if (activityRaw) {
+            const parsed = JSON.parse(activityRaw);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              activityData.length = 0;
+              parsed.forEach(function(item) { activityData.push(item); });
+            }
+          }
+        } catch (err) {
+          console.warn('Could not load state:', err);
+        }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem('swayam_dashboard_sites', JSON.stringify(sitesData));
+          localStorage.setItem('swayam_dashboard_activity', JSON.stringify(activityData));
+        } catch (err) {
+          console.warn('Could not save state:', err);
+        }
+      }
+
+      // ----- WELCOME TOAST -----
+      function showWelcome() {
+        const hour = new Date().getHours();
+        let greeting = 'Good morning';
+        if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
+        else if (hour >= 17 && hour < 21) greeting = 'Good evening';
+        else if (hour >= 21) greeting = 'Good night';
+        showToast(greeting + ', Arjun. Welcome to Swayam Dashboard!', 'success');
+      }
+
+      // ----- INIT -----
+      function init() {
+        try {
+          loadState();
+          renderSites();
+          renderActivity();
+          saveState();
+
+          // Show welcome after a moment
+          setTimeout(showWelcome, 400);
+
+          console.log('Dashboard initialized successfully.');
+        } catch (err) {
+          console.error('Fatal init error:', err);
+          showToast('Failed to initialize dashboard. Please refresh.', 'error');
+        }
+      }
+
+      // ----- ERROR BOUNDARY -----
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled rejection:', e.reason);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
+      });
+
+      // ----- START -----
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
