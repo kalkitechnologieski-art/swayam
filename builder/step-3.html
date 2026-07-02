@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 3: Preview & Edit — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.02) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .header {
+      padding: 14px 0 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i { color: #b8860b; }
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .step-indicator .current { color: #b8860b; font-weight: 600; }
+    .step-indicator .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      transition: 0.3s;
+    }
+    .step-indicator .dot.active { background: #b8860b; box-shadow: 0 0 12px rgba(184, 134, 11, 0.3); }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-back {
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-back:hover { background: rgba(255, 255, 255, 0.04); color: #fff; }
+    .btn-next {
+      padding: 6px 20px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 12px rgba(184, 134, 11, 0.15);
+    }
+    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(184, 134, 11, 0.2); }
+
+    /* ============================================================
+       MAIN LAYOUT
+       ============================================================ */
+    .builder-main {
+      flex: 1;
+      padding: 20px 0 30px;
+      animation: fadeUp 0.5s ease both;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .builder-header {
+      margin-bottom: 20px;
+    }
+    .builder-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 2px;
+    }
+    .builder-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .builder-sub {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 2px;
+    }
+
+    /* ============================================================
+       TWO-COLUMN LAYOUT
+       ============================================================ */
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ============================================================
+       LEFT: LIVE PREVIEW
+       ============================================================ */
+    .preview-container {
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      overflow: hidden;
+      position: relative;
+      min-height: 500px;
+    }
+    .preview-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .preview-toolbar .left {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .preview-toolbar .device-btns button {
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.65rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .preview-toolbar .device-btns button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .preview-toolbar .device-btns button.active {
+      background: rgba(184, 134, 11, 0.06);
+      border-color: #b8860b;
+      color: #b8860b;
+    }
+    .preview-toolbar .status {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .preview-toolbar .status .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    .preview-frame {
+      padding: 20px;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      overflow: auto;
+      min-height: 400px;
+      background: #f8f6f2;
+      color: #1a1a2e;
+    }
+    .preview-frame.dark {
+      background: #0a0a12;
+      color: #e8e8f0;
+    }
+    .preview-frame .mock-site {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    .preview-frame .mock-site .mock-hero {
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, rgba(184,134,11,0.08), rgba(184,134,11,0.02));
+      border: 1px solid rgba(184,134,11,0.04);
+    }
+    .preview-frame .mock-site .mock-hero h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: inherit;
+    }
+    .preview-frame .mock-site .mock-hero p {
+      color: rgba(26,26,46,0.5);
+      font-size: 0.9rem;
+    }
+    .preview-frame.dark .mock-site .mock-hero p {
+      color: rgba(255,255,255,0.4);
+    }
+    .preview-frame .mock-site .mock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .preview-frame .mock-site .mock-card {
+      background: rgba(255,255,255,0.6);
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+    .preview-frame.dark .mock-site .mock-card {
+      background: rgba(255,255,255,0.02);
+      border-color: rgba(255,255,255,0.02);
+    }
+    .preview-frame .mock-site .mock-card .icon {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+    .preview-frame .mock-site .mock-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: inherit;
+    }
+    .preview-frame .mock-site .mock-card p {
+      font-size: 0.7rem;
+      color: rgba(26,26,46,0.4);
+    }
+    .preview-frame.dark .mock-site .mock-card p {
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Inline editing */
+    .editable {
+      cursor: text;
+      position: relative;
+      transition: 0.2s;
+      padding: 2px 4px;
+      border-radius: 4px;
+      outline: none;
+      min-width: 20px;
+      display: inline-block;
+    }
+    .editable:hover {
+      background: rgba(184, 134, 11, 0.04);
+      box-shadow: 0 0 0 1px rgba(184, 134, 11, 0.08);
+    }
+    .editable:focus {
+      background: rgba(184, 134, 11, 0.06);
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.12);
+    }
+    .editable .edit-hint {
+      position: absolute;
+      top: -18px;
+      right: 0;
+      font-size: 0.5rem;
+      color: rgba(184, 134, 11, 0.3);
+      opacity: 0;
+      transition: 0.3s;
+      pointer-events: none;
+    }
+    .editable:hover .edit-hint { opacity: 1; }
+
+    /* ============================================================
+       RIGHT: EDITOR SIDEBAR
+       ============================================================ */
+    .editor-sidebar {
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      position: sticky;
+      top: 90px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+    .editor-sidebar::-webkit-scrollbar { width: 3px; }
+    .editor-sidebar::-webkit-scrollbar-track { background: transparent; }
+    .editor-sidebar::-webkit-scrollbar-thumb { background: rgba(184,134,11,0.2); border-radius: 10px; }
+
+    .editor-sidebar h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .editor-sidebar .sub {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.15);
+      margin-bottom: 16px;
+    }
+    .editor-group {
+      margin-bottom: 16px;
+    }
+    .editor-group label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.25);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+    .editor-group input,
+    .editor-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .editor-group input:focus,
+    .editor-group textarea:focus {
+      border-color: #b8860b;
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.06);
+    }
+    .editor-group textarea {
+      height: 60px;
+      resize: vertical;
+    }
+    .editor-group .char-counter {
+      text-align: right;
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.1);
+      margin-top: 2px;
+    }
+
+    .editor-divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      margin: 12px 0;
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .editor-actions button {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .editor-actions button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .editor-actions button.primary {
+      background: rgba(184, 134, 11, 0.06);
+      border-color: #b8860b;
+      color: #b8860b;
+    }
+    .editor-actions button.primary:hover {
+      background: rgba(184, 134, 11, 0.1);
+    }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transition: 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      text-align: center;
+      padding: 12px 0;
+      color: rgba(255, 255, 255, 0.02);
+      font-size: 0.6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.01);
+      margin-top: auto;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 992px) {
+      .builder-grid {
+        grid-template-columns: 1fr;
+      }
+      .editor-sidebar {
+        position: relative;
+        top: 0;
+        max-height: none;
+      }
+    }
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+      }
+      .step-indicator { justify-content: center; }
+      .nav-actions { justify-content: center; }
+      .builder-title { font-size: 1.4rem; }
+      .preview-frame .mock-site .mock-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .preview-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+      }
+      .preview-toolbar .left { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .preview-frame .mock-site .mock-grid {
+        grid-template-columns: 1fr;
+      }
+      .preview-frame .mock-site .mock-hero h2 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       TOAST
+       ============================================================ -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="container header">
+    <a href="../index.html" class="logo">
+      <i class="fas fa-om"></i> Swayam<span style="font-weight:300; opacity:0.3;">AI</span>
+    </a>
+    <div class="step-indicator">
+      <span style="opacity:0.3;">1</span>
+      <span style="opacity:0.3;">2</span>
+      <span class="current">3</span>
+      <span style="opacity:0.3;">/ 4</span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot active"></span>
+      <span class="dot"></span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-back" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
+      <button class="btn-next" id="nextBtn">Deploy <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main class="container builder-main">
+
+    <div class="builder-header">
+      <div class="builder-label">Step 3</div>
+      <h1 class="builder-title">Preview & Edit Your Website</h1>
+      <p class="builder-sub">Click any text to edit it instantly. Changes appear live on the right.</p>
+    </div>
+
+    <div class="builder-grid">
+
+      <!-- ==========================================================
+           LEFT: LIVE PREVIEW
+           ========================================================== -->
+      <div class="preview-container">
+        <div class="preview-toolbar">
+          <div class="left">
+            <div class="device-btns">
+              <button class="active" data-device="desktop"><i class="fas fa-desktop"></i></button>
+              <button data-device="tablet"><i class="fas fa-tablet-alt"></i></button>
+              <button data-device="mobile"><i class="fas fa-mobile-alt"></i></button>
+            </div>
+            <button id="themeToggleBtn" style="padding:4px 12px; border-radius:20px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2); font-size:0.65rem; cursor:pointer; font-family:inherit;">🌙 Dark</button>
+          </div>
+          <div class="status">
+            <span class="dot"></span>
+            <span id="previewStatus">Live • Auto-save</span>
+          </div>
+        </div>
+        <div class="preview-frame" id="previewFrame">
+          <div class="mock-site" id="mockSite">
+            <div class="mock-hero">
+              <h2><span class="editable" contenteditable="false" data-field="siteTitle">Your Brand Name</span></h2>
+              <p><span class="editable" contenteditable="false" data-field="siteTagline">A beautiful website for your business</span></p>
+            </div>
+            <div class="mock-grid" id="mockGrid">
+              <div class="mock-card">
+                <div class="icon">🚀</div>
+                <h4><span class="editable" contenteditable="false" data-field="service1">Service One</span></h4>
+                <p><span class="editable" contenteditable="false" data-field="service1Desc">Short description</span></p>
+              </div>
+              <div class="mock-card">
+                <div class="icon">💡</div>
+                <h4><span class="editable" contenteditable="false" data-field="service2">Service Two</span></h4>
+                <p><span class="editable" contenteditable="false" data-field="service2Desc">Short description</span></p>
+              </div>
+              <div class="mock-card">
+                <div class="icon">📈</div>
+                <h4><span class="editable" contenteditable="false" data-field="service3">Service Three</span></h4>
+                <p><span class="editable" contenteditable="false" data-field="service3Desc">Short description</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================================
+           RIGHT: EDITOR SIDEBAR
+           ========================================================== -->
+      <div class="editor-sidebar" id="editorSidebar">
+        <h3><i class="fas fa-edit" style="color:#b8860b; margin-right:6px;"></i> Editor</h3>
+        <p class="sub">Edit content directly or use the fields below.</p>
+
+        <div class="editor-group">
+          <label>Site Title</label>
+          <input type="text" id="editSiteTitle" value="Your Brand Name" maxlength="60" />
+          <div class="char-counter" id="titleCounter">0/60</div>
+        </div>
+
+        <div class="editor-group">
+          <label>Tagline</label>
+          <input type="text" id="editTagline" value="A beautiful website for your business" maxlength="80" />
+          <div class="char-counter" id="taglineCounter">0/80</div>
+        </div>
+
+        <hr class="editor-divider" />
+
+        <div class="editor-group">
+          <label>Service 1</label>
+          <input type="text" id="editService1" value="Service One" maxlength="40" />
+          <input type="text" id="editService1Desc" value="Short description" placeholder="Description" style="margin-top:4px;" maxlength="60" />
+        </div>
+
+        <div class="editor-group">
+          <label>Service 2</label>
+          <input type="text" id="editService2" value="Service Two" maxlength="40" />
+          <input type="text" id="editService2Desc" value="Short description" placeholder="Description" style="margin-top:4px;" maxlength="60" />
+        </div>
+
+        <div class="editor-group">
+          <label>Service 3</label>
+          <input type="text" id="editService3" value="Service Three" maxlength="40" />
+          <input type="text" id="editService3Desc" value="Short description" placeholder="Description" style="margin-top:4px;" maxlength="60" />
+        </div>
+
+        <hr class="editor-divider" />
+
+        <div class="editor-actions">
+          <button id="resetBtn" class=""><i class="fas fa-undo"></i> Reset</button>
+          <button id="saveBtn" class="primary"><i class="fas fa-save"></i> Save Changes</button>
+        </div>
+        <div style="margin-top:8px; font-size:0.6rem; color:rgba(255,255,255,0.06); text-align:center;">
+          Changes auto-save every 5 seconds
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer container">
+    <p>Built with ॐ • <a href="#">Swayam</a> — Free AI Website Builder</p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- STATE -----
+      const state = {
+        siteTitle: 'Your Brand Name',
+        tagline: 'A beautiful website for your business',
+        service1: 'Service One',
+        service1Desc: 'Short description',
+        service2: 'Service Two',
+        service2Desc: 'Short description',
+        service3: 'Service Three',
+        service3Desc: 'Short description',
+        darkMode: false,
+        device: 'desktop',
+        autoSaveTimer: null,
+        initialized: false
+      };
+
+      // ----- DOM REFS -----
+      const previewFrame = document.getElementById('previewFrame');
+      const mockSite = document.getElementById('mockSite');
+      const editSiteTitle = document.getElementById('editSiteTitle');
+      const editTagline = document.getElementById('editTagline');
+      const editService1 = document.getElementById('editService1');
+      const editService1Desc = document.getElementById('editService1Desc');
+      const editService2 = document.getElementById('editService2');
+      const editService2Desc = document.getElementById('editService2Desc');
+      const editService3 = document.getElementById('editService3');
+      const editService3Desc = document.getElementById('editService3Desc');
+      const titleCounter = document.getElementById('titleCounter');
+      const taglineCounter = document.getElementById('taglineCounter');
+      const backBtn = document.getElementById('backBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const deviceBtns = document.querySelectorAll('.device-btns button');
+      const resetBtn = document.getElementById('resetBtn');
+      const saveBtn = document.getElementById('saveBtn');
+      const previewStatus = document.getElementById('previewStatus');
+
+      // ----- TOAST -----
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        try {
+          toastMessage.textContent = typeof message === 'string' ? message : String(message);
+          toast.className = 'toast';
+          if (type === 'error') toast.classList.add('error');
+          if (type === 'success') toast.classList.add('success');
+          toast.classList.add('show');
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(function() {
+            toast.classList.remove('show');
+          }, 3200);
+        } catch (err) {
+          console.warn('Toast error:', err);
+        }
+      }
+
+      // ----- UPDATE PREVIEW -----
+      function updatePreview() {
+        try {
+          // Update all editable fields
+          const editableMap = {
+            'siteTitle': state.siteTitle,
+            'siteTagline': state.tagline,
+            'service1': state.service1,
+            'service1Desc': state.service1Desc,
+            'service2': state.service2,
+            'service2Desc': state.service2Desc,
+            'service3': state.service3,
+            'service3Desc': state.service3Desc
+          };
+
+          document.querySelectorAll('.editable[data-field]').forEach(function(el) {
+            const field = el.dataset.field;
+            if (field && editableMap.hasOwnProperty(field)) {
+              el.textContent = editableMap[field] || '';
+            }
+          });
+
+          // Sync input fields
+          editSiteTitle.value = state.siteTitle;
+          editTagline.value = state.tagline;
+          editService1.value = state.service1;
+          editService1Desc.value = state.service1Desc;
+          editService2.value = state.service2;
+          editService2Desc.value = state.service2Desc;
+          editService3.value = state.service3;
+          editService3Desc.value = state.service3Desc;
+
+          // Update char counters
+          titleCounter.textContent = state.siteTitle.length + '/60';
+          taglineCounter.textContent = state.tagline.length + '/80';
+
+          // Dark mode
+          previewFrame.classList.toggle('dark', state.darkMode);
+          themeToggleBtn.textContent = state.darkMode ? '☀️ Light' : '🌙 Dark';
+
+          // Device simulation
+          const frame = previewFrame;
+          if (state.device === 'mobile') {
+            frame.style.maxWidth = '360px';
+            frame.style.margin = '0 auto';
+            frame.style.padding = '16px';
+          } else if (state.device === 'tablet') {
+            frame.style.maxWidth = '768px';
+            frame.style.margin = '0 auto';
+            frame.style.padding = '18px';
+          } else {
+            frame.style.maxWidth = '100%';
+            frame.style.margin = '0';
+            frame.style.padding = '20px';
+          }
+
+          // Update status
+          previewStatus.textContent = 'Live • Auto-save';
+
+          // Save to localStorage
+          saveState();
+
+        } catch (err) {
+          console.error('Preview update error:', err);
+          showToast('Error updating preview: ' + err.message, 'error');
+        }
+      }
+
+      // ----- STATE PERSISTENCE -----
+      function saveState() {
+        try {
+          const data = {
+            ...state,
+            timestamp: Date.now()
+          };
+          localStorage.setItem('swayam_step3_state', JSON.stringify(data));
+        } catch (err) {
+          console.warn('Could not save state:', err);
+        }
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem('swayam_step3_state');
+          if (!raw) return false;
+          const data = JSON.parse(raw);
+          // Validate required fields
+          const required = ['siteTitle', 'tagline', 'service1', 'service1Desc', 'service2', 'service2Desc', 'service3', 'service3Desc'];
+          const valid = required.every(function(key) { return data.hasOwnProperty(key); });
+          if (!valid) {
+            console.warn('Invalid state data, ignoring.');
+            return false;
+          }
+          // Copy over
+          Object.keys(data).forEach(function(key) {
+            if (state.hasOwnProperty(key)) {
+              state[key] = data[key];
+            }
+          });
+          return true;
+        } catch (err) {
+          console.warn('Could not load state:', err);
+          return false;
+        }
+      }
+
+      // ----- AUTO-SAVE -----
+      function startAutoSave() {
+        if (state.autoSaveTimer) clearInterval(state.autoSaveTimer);
+        state.autoSaveTimer = setInterval(function() {
+          // Sync state from inputs
+          syncStateFromInputs();
+          // Update preview
+          updatePreview();
+          // Show subtle indicator
+          previewStatus.textContent = 'Auto-saved ✓';
+          setTimeout(function() {
+            previewStatus.textContent = 'Live • Auto-save';
+          }, 800);
+        }, 5000);
+      }
+
+      // ----- SYNC STATE FROM INPUTS -----
+      function syncStateFromInputs() {
+        try {
+          state.siteTitle = editSiteTitle.value.trim() || 'Your Brand Name';
+          state.tagline = editTagline.value.trim() || 'A beautiful website for your business';
+          state.service1 = editService1.value.trim() || 'Service One';
+          state.service1Desc = editService1Desc.value.trim() || 'Short description';
+          state.service2 = editService2.value.trim() || 'Service Two';
+          state.service2Desc = editService2Desc.value.trim() || 'Short description';
+          state.service3 = editService3.value.trim() || 'Service Three';
+          state.service3Desc = editService3Desc.value.trim() || 'Short description';
+        } catch (err) {
+          console.warn('Sync error:', err);
+        }
+      }
+
+      // ----- INLINE EDITING (contenteditable) -----
+      function setupInlineEditing() {
+        document.querySelectorAll('.editable').forEach(function(el) {
+          // Add edit hint
+          const hint = document.createElement('span');
+          hint.className = 'edit-hint';
+          hint.textContent = '✎ edit';
+          el.appendChild(hint);
+
+          el.addEventListener('click', function() {
+            if (this.contentEditable === 'false') {
+              this.contentEditable = 'true';
+              this.focus();
+              // Select all text
+              const range = document.createRange();
+              range.selectNodeContents(this);
+              const sel = window.getSelection();
+              sel.removeAllRanges();
+              sel.addRange(range);
+            }
+          });
+
+          el.addEventListener('blur', function() {
+            this.contentEditable = 'false';
+            const field = this.dataset.field;
+            const newVal = this.textContent.trim();
+            if (field && state.hasOwnProperty(field)) {
+              state[field] = newVal || state[field];
+              // Update corresponding input field
+              const inputMap = {
+                'siteTitle': editSiteTitle,
+                'siteTagline': editTagline,
+                'service1': editService1,
+                'service1Desc': editService1Desc,
+                'service2': editService2,
+                'service2Desc': editService2Desc,
+                'service3': editService3,
+                'service3Desc': editService3Desc
+              };
+              if (inputMap[field]) {
+                inputMap[field].value = state[field];
+              }
+              updatePreview();
+              showToast('Updated: ' + field, 'success');
+            }
+          });
+
+          el.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+              this.blur();
+            }
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              this.blur();
+            }
+          });
+        });
+      }
+
+      // ----- EVENT BINDING FOR INPUTS -----
+      function bindInputs() {
+        const inputs = [
+          { el: editSiteTitle, field: 'siteTitle' },
+          { el: editTagline, field: 'tagline' },
+          { el: editService1, field: 'service1' },
+          { el: editService1Desc, field: 'service1Desc' },
+          { el: editService2, field: 'service2' },
+          { el: editService2Desc, field: 'service2Desc' },
+          { el: editService3, field: 'service3' },
+          { el: editService3Desc, field: 'service3Desc' }
+        ];
+
+        inputs.forEach(function(item) {
+          if (!item.el) return;
+          item.el.addEventListener('input', function() {
+            const val = this.value.trim();
+            state[item.field] = val || state[item.field];
+            // Update char counters for title/tagline
+            if (item.field === 'siteTitle') {
+              titleCounter.textContent = val.length + '/60';
+            } else if (item.field === 'tagline') {
+              taglineCounter.textContent = val.length + '/80';
+            }
+            // Update preview live
+            updatePreview();
+          });
+          // Max length enforcement
+          item.el.addEventListener('keydown', function(e) {
+            const max = this.maxLength;
+            if (max && this.value.length >= max && e.key !== 'Backspace' && e.key !== 'Delete' && !e.ctrlKey && !e.metaKey) {
+              e.preventDefault();
+              showToast('Character limit reached (' + max + ')', 'error');
+            }
+          });
+        });
+      }
+
+      // ----- DARK MODE TOGGLE -----
+      themeToggleBtn.addEventListener('click', function() {
+        state.darkMode = !state.darkMode;
+        updatePreview();
+        saveState();
+        showToast(state.darkMode ? 'Dark mode enabled' : 'Light mode enabled', 'success');
+      });
+
+      // ----- DEVICE TOGGLE -----
+      deviceBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          deviceBtns.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          state.device = this.dataset.device;
+          updatePreview();
+          showToast('Device: ' + state.device, 'success');
+        });
+      });
+
+      // ----- RESET -----
+      resetBtn.addEventListener('click', function() {
+        if (confirm('Reset all content to default values?')) {
+          state.siteTitle = 'Your Brand Name';
+          state.tagline = 'A beautiful website for your business';
+          state.service1 = 'Service One';
+          state.service1Desc = 'Short description';
+          state.service2 = 'Service Two';
+          state.service2Desc = 'Short description';
+          state.service3 = 'Service Three';
+          state.service3Desc = 'Short description';
+          updatePreview();
+          showToast('Content reset to defaults', 'success');
+        }
+      });
+
+      // ----- SAVE (manual) -----
+      saveBtn.addEventListener('click', function() {
+        syncStateFromInputs();
+        updatePreview();
+        saveState();
+        showToast('Changes saved successfully!', 'success');
+      });
+
+      // ----- NAVIGATION -----
+      backBtn.addEventListener('click', function() {
+        try {
+          saveState();
+          window.location.href = 'step-2.html';
+        } catch (err) {
+          showToast('Error navigating back: ' + err.message, 'error');
+        }
+      });
+
+      nextBtn.addEventListener('click', function() {
+        try {
+          syncStateFromInputs();
+          updatePreview();
+          saveState();
+          // In production, go to step-4.html
+          showToast('🎉 Your website is ready for deployment!', 'success');
+          setTimeout(function() {
+            alert('Step 4: Deployment would load here.\n\nSite: ' + state.siteTitle +
+              '\nTagline: ' + state.tagline +
+              '\nServices: ' + state.service1 + ', ' + state.service2 + ', ' + state.service3);
+          }, 600);
+        } catch (err) {
+          showToast('Error proceeding: ' + err.message, 'error');
+        }
+      });
+
+      // ----- KEYBOARD SHORTCUTS -----
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          e.preventDefault();
+          syncStateFromInputs();
+          updatePreview();
+          saveState();
+          showToast('Saved (Ctrl+S)', 'success');
+        }
+        if (e.key === 'Escape') {
+          toast.classList.remove('show');
+        }
+      });
+
+      // ----- BEFOREUNLOAD -----
+      window.addEventListener('beforeunload', function() {
+        syncStateFromInputs();
+        saveState();
+      });
+
+      // ----- VISIBILITY CHANGE -----
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          syncStateFromInputs();
+          saveState();
+        }
+      });
+
+      // ----- INIT -----
+      function init() {
+        try {
+          // Load state
+          const loaded = loadState();
+          if (!loaded) {
+            // Set default state
+            state.siteTitle = 'Your Brand Name';
+            state.tagline = 'A beautiful website for your business';
+            state.service1 = 'Service One';
+            state.service1Desc = 'Short description';
+            state.service2 = 'Service Two';
+            state.service2Desc = 'Short description';
+            state.service3 = 'Service Three';
+            state.service3Desc = 'Short description';
+          }
+
+          // Setup inline editing
+          setupInlineEditing();
+
+          // Bind inputs
+          bindInputs();
+
+          // Update preview
+          updatePreview();
+
+          // Start auto-save
+          startAutoSave();
+
+          state.initialized = true;
+          console.log('Step 3 initialized successfully.');
+
+          // Show welcome toast
+          setTimeout(function() {
+            showToast('✏️ Click any text to edit it directly!', 'success');
+          }, 600);
+
+        } catch (err) {
+          console.error('Fatal init error:', err);
+          showToast('Failed to initialize. Please refresh.', 'error');
+        }
+      }
+
+      // ----- ERROR BOUNDARY -----
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please try again.', 'error');
+        return true;
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled rejection:', e.reason);
+        showToast('An unexpected error occurred. Please try again.', 'error');
+        return true;
+      });
+
+      // Start
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
