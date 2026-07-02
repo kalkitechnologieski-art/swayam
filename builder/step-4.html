@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 4: Deploy — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.02) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .header {
+      padding: 14px 0 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i { color: #b8860b; }
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .step-indicator .current { color: #b8860b; font-weight: 600; }
+    .step-indicator .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      transition: 0.3s;
+    }
+    .step-indicator .dot.active { background: #b8860b; box-shadow: 0 0 12px rgba(184, 134, 11, 0.3); }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-back {
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-back:hover { background: rgba(255, 255, 255, 0.04); color: #fff; }
+
+    /* ============================================================
+       MAIN
+       ============================================================ */
+    .builder-main {
+      flex: 1;
+      padding: 30px 0 40px;
+      animation: fadeUp 0.5s ease both;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .builder-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .builder-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .builder-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .builder-sub {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       DEPLOYMENT CARD
+       ============================================================ */
+    .deploy-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 24px;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .deploy-card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 26px;
+      background: conic-gradient(from 0deg, transparent, rgba(184, 134, 11, 0.05), transparent 60%);
+      opacity: 0;
+      transition: 0.6s;
+      pointer-events: none;
+      z-index: -1;
+      animation: spinGlow 6s linear infinite;
+    }
+    .deploy-card.deploying::before { opacity: 1; }
+    @keyframes spinGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .deploy-card .status-icon {
+      font-size: 4rem;
+      text-align: center;
+      margin-bottom: 12px;
+      transition: 0.5s;
+    }
+    .deploy-card .status-icon .spinner {
+      display: inline-block;
+      animation: spin 1.2s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    .deploy-card .status-title {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .deploy-card .status-sub {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .deploy-card .progress-container {
+      max-width: 400px;
+      margin: 0 auto 20px;
+    }
+    .deploy-card .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .deploy-card .progress-bar .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #b8860b, #d4a017);
+      border-radius: 10px;
+      transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 0 20px rgba(184, 134, 11, 0.2);
+    }
+    .deploy-card .progress-text {
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.2);
+      margin-top: 6px;
+    }
+
+    /* ============================================================
+       LOGS
+       ============================================================ */
+    .log-container {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      padding: 12px 16px;
+      max-height: 120px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.15);
+      margin-top: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .log-container::-webkit-scrollbar { width: 3px; }
+    .log-container::-webkit-scrollbar-track { background: transparent; }
+    .log-container::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.2); border-radius: 10px; }
+    .log-container .log-entry {
+      padding: 2px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+    .log-container .log-entry:last-child { border-bottom: none; opacity: 1; }
+    .log-container .log-entry .time {
+      color: rgba(255, 255, 255, 0.08);
+      margin-right: 8px;
+    }
+    .log-container .log-entry .success { color: #22c55e; }
+    .log-container .log-entry .error { color: #ef4444; }
+    .log-container .log-entry .info { color: #60a5fa; }
+    .log-container .log-entry .warn { color: #f59e0b; }
+
+    /* ============================================================
+       DOMAIN SECTION
+       ============================================================ */
+    .domain-section {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .domain-section h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .domain-section .sub {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.15);
+      margin-bottom: 16px;
+    }
+    .domain-search {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .domain-search input {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: 0.3s;
+      min-width: 180px;
+    }
+    .domain-search input:focus {
+      border-color: #b8860b;
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.06);
+    }
+    .domain-search .domain-btn {
+      padding: 10px 24px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .domain-search .domain-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.2);
+    }
+    .domain-search .domain-btn:disabled {
+      opacity: 0.3;
+      pointer-events: none;
+      transform: none;
+    }
+
+    .domain-results {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .domain-result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      transition: 0.3s;
+    }
+    .domain-result-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .domain-result-item .name {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .domain-result-item .price {
+      font-weight: 600;
+      color: #b8860b;
+      font-size: 0.9rem;
+    }
+    .domain-result-item .buy-btn {
+      padding: 4px 16px;
+      border-radius: 20px;
+      background: rgba(184, 134, 11, 0.06);
+      border: 1px solid rgba(184, 134, 11, 0.1);
+      color: #b8860b;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .domain-result-item .buy-btn:hover {
+      background: #b8860b;
+      color: #fff;
+    }
+    .domain-result-item .buy-btn.purchased {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: #fff;
+    }
+
+    .domain-info {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(184, 134, 11, 0.02);
+      border: 1px solid rgba(184, 134, 11, 0.04);
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .domain-info strong {
+      color: #b8860b;
+    }
+
+    /* ============================================================
+       ACTIONS
+       ============================================================ */
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .action-btn {
+      padding: 12px 32px;
+      border-radius: 60px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .action-btn.primary {
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .action-btn.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(184, 134, 11, 0.25);
+    }
+    .action-btn.success {
+      background: #22c55e;
+      border: none;
+      color: #fff;
+    }
+    .action-btn.success:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(34, 197, 94, 0.25);
+    }
+    .action-btn:disabled {
+      opacity: 0.3;
+      pointer-events: none;
+      transform: none !important;
+    }
+
+    /* ============================================================
+       CELEBRATION / CONFETTI
+       ============================================================ */
+    .celebration {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: -20px;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg) scale(0.2); opacity: 0; }
+    }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transition: 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      text-align: center;
+      padding: 12px 0;
+      color: rgba(255, 255, 255, 0.02);
+      font-size: 0.6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.01);
+      margin-top: auto;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+      }
+      .step-indicator { justify-content: center; }
+      .nav-actions { justify-content: center; }
+      .builder-title { font-size: 1.6rem; }
+      .deploy-card { padding: 24px 16px; }
+      .domain-search { flex-direction: column; }
+      .domain-search input { width: 100%; }
+      .action-buttons { flex-direction: column; align-items: center; }
+      .action-btn { width: 100%; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .deploy-card .status-icon { font-size: 3rem; }
+      .deploy-card .status-title { font-size: 1.2rem; }
+      .domain-result-item { flex-wrap: wrap; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       TOAST
+       ============================================================ -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- ============================================================
+       CELEBRATION CONTAINER
+       ============================================================ -->
+  <div class="celebration" id="celebrationContainer"></div>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="container header">
+    <a href="../index.html" class="logo">
+      <i class="fas fa-om"></i> Swayam<span style="font-weight:300; opacity:0.3;">AI</span>
+    </a>
+    <div class="step-indicator">
+      <span style="opacity:0.3;">1</span>
+      <span style="opacity:0.3;">2</span>
+      <span style="opacity:0.3;">3</span>
+      <span class="current">4</span>
+      <span style="opacity:0.3;">/ 4</span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot active"></span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-back" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main class="container builder-main">
+
+    <div class="builder-header">
+      <div class="builder-label">Step 4 — Final</div>
+      <h1 class="builder-title">Deploy & Launch Your Website</h1>
+      <p class="builder-sub">Your website is ready. Deploy to Vercel, get your free subdomain, and go live.</p>
+    </div>
+
+    <!-- ==========================================================
+         DEPLOYMENT CARD
+         ========================================================== -->
+    <div class="deploy-card" id="deployCard">
+      <div class="status-icon" id="statusIcon">
+        <i class="fas fa-rocket"></i>
+      </div>
+      <div class="status-title" id="statusTitle">Ready to Deploy</div>
+      <div class="status-sub" id="statusSub">Click the deploy button below to launch your site.</div>
+
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="fill" id="progressFill" style="width:0%;"></div>
+        </div>
+        <div class="progress-text" id="progressText">0%</div>
+      </div>
+
+      <div class="log-container" id="logContainer">
+        <div class="log-entry"><span class="time">[init]</span> <span class="info">Ready to deploy your website</span></div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="action-btn primary" id="deployBtn"><i class="fas fa-cloud-upload-alt"></i> Deploy to Vercel</button>
+        <button class="action-btn" id="previewBtn"><i class="fas fa-eye"></i> Preview Site</button>
+        <button class="action-btn success" id="downloadBtn"><i class="fas fa-download"></i> Download Code</button>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         DOMAIN SECTION
+         ========================================================== -->
+    <div class="domain-section">
+      <h3><i class="fas fa-globe" style="color:#b8860b; margin-right:6px;"></i> Get Your Custom Domain</h3>
+      <p class="sub">Search for your perfect domain. ₹3000/year — includes SSL & auto-renewal.</p>
+
+      <div class="domain-search">
+        <input type="text" id="domainInput" placeholder="yourbrand.com" value="mybrand.com" />
+        <button class="domain-btn" id="domainSearchBtn"><i class="fas fa-search"></i> Check</button>
+      </div>
+
+      <div class="domain-results" id="domainResults">
+        <!-- Results injected by JS -->
+        <div class="domain-result-item">
+          <span class="name">mybrand.com</span>
+          <span class="price">₹3000/year</span>
+          <button class="buy-btn" data-domain="mybrand.com">Buy Now</button>
+        </div>
+        <div class="domain-result-item">
+          <span class="name">mybrand.in</span>
+          <span class="price">₹3000/year</span>
+          <button class="buy-btn" data-domain="mybrand.in">Buy Now</button>
+        </div>
+        <div class="domain-result-item">
+          <span class="name">mybrand.co</span>
+          <span class="price">₹3000/year</span>
+          <button class="buy-btn" data-domain="mybrand.co">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="domain-info">
+        <i class="fas fa-info-circle" style="color:#b8860b; margin-right:4px;"></i>
+        All domains include <strong>free SSL</strong>, <strong>auto-renewal</strong>, and <strong>DNS management</strong>.
+        Connect your domain to Vercel in minutes.
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer container">
+    <p>Built with ॐ • <a href="#">Swayam</a> — Free AI Website Builder</p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- STATE -----
+      const state = {
+        deployed: false,
+        deploying: false,
+        progress: 0,
+        logs: [],
+        domain: null,
+        domainPurchased: false,
+        siteUrl: null,
+        siteName: 'mybrand.vercel.app',
+        steps: [
+          { label: 'Building project', progress: 10 },
+          { label: 'Optimizing assets', progress: 30 },
+          { label: 'Uploading to Vercel', progress: 60 },
+          { label: 'Deploying to edge', progress: 85 },
+          { label: 'Site is live! 🎉', progress: 100 }
+        ]
+      };
+
+      // ----- DOM REFS -----
+      const deployBtn = document.getElementById('deployBtn');
+      const previewBtn = document.getElementById('previewBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const backBtn = document.getElementById('backBtn');
+      const statusIcon = document.getElementById('statusIcon');
+      const statusTitle = document.getElementById('statusTitle');
+      const statusSub = document.getElementById('statusSub');
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      const logContainer = document.getElementById('logContainer');
+      const domainInput = document.getElementById('domainInput');
+      const domainSearchBtn = document.getElementById('domainSearchBtn');
+      const domainResults = document.getElementById('domainResults');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const celebrationContainer = document.getElementById('celebrationContainer');
+      const deployCard = document.getElementById('deployCard');
+
+      // ----- TOAST -----
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        try {
+          toastMessage.textContent = typeof message === 'string' ? message : String(message);
+          toast.className = 'toast';
+          if (type === 'error') toast.classList.add('error');
+          if (type === 'success') toast.classList.add('success');
+          toast.classList.add('show');
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(function() {
+            toast.classList.remove('show');
+          }, 3500);
+        } catch (err) {
+          console.warn('Toast error:', err);
+        }
+      }
+
+      // ----- LOGGING -----
+      function addLog(message, type) {
+        const time = new Date().toLocaleTimeString();
+        const entry = { time, message, type: type || 'info' };
+        state.logs.push(entry);
+        renderLogs();
+      }
+
+      function renderLogs() {
+        if (!logContainer) return;
+        let html = '';
+        state.logs.slice(-20).forEach(function(entry) {
+          const cls = entry.type || 'info';
+          html += `<div class="log-entry"><span class="time">[${entry.time}]</span> <span class="${cls}">${entry.message}</span></div>`;
+        });
+        logContainer.innerHTML = html;
+        logContainer.scrollTop = logContainer.scrollHeight;
+      }
+
+      // ----- DEPLOYMENT -----
+      function deploy() {
+        if (state.deploying || state.deployed) return;
+
+        // Validate
+        try {
+          // Check if we have site data from previous steps
+          const saved = localStorage.getItem('swayam_step3_state');
+          if (!saved) {
+            showToast('No website data found. Please go back to Step 3.', 'error');
+            return;
+          }
+          const data = JSON.parse(saved);
+          if (!data.siteTitle || data.siteTitle.trim() === '') {
+            showToast('Please set a site title in Step 3 before deploying.', 'error');
+            return;
+          }
+        } catch (err) {
+          showToast('Error loading website data: ' + err.message, 'error');
+          return;
+        }
+
+        state.deploying = true;
+        state.deployed = false;
+        state.progress = 0;
+        deployCard.classList.add('deploying');
+        deployBtn.disabled = true;
+        deployBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deploying...';
+        statusIcon.innerHTML = '<i class="fas fa-spinner spinner"></i>';
+        statusTitle.textContent = 'Deploying...';
+        statusSub.textContent = 'Your site is being built and deployed to Vercel.';
+        progressFill.style.width = '0%';
+        progressText.textContent = '0%';
+        state.logs = [];
+        addLog('Starting deployment process...', 'info');
+
+        // Simulate deployment steps
+        let stepIndex = 0;
+
+        function nextStep() {
+          if (stepIndex >= state.steps.length) {
+            finishDeploy();
+            return;
+          }
+          const step = state.steps[stepIndex];
+          addLog(step.label, 'info');
+          state.progress = step.progress;
+          progressFill.style.width = step.progress + '%';
+          progressText.textContent = step.progress + '%';
+          statusSub.textContent = step.label + '...';
+          stepIndex++;
+
+          // Random delay between 400-1200ms to simulate real work
+          const delay = 400 + Math.random() * 800;
+          setTimeout(nextStep, delay);
+        }
+
+        function finishDeploy() {
+          state.deploying = false;
+          state.deployed = true;
+          state.siteUrl = 'https://' + (state.siteName || 'mybrand') + '.vercel.app';
+          deployCard.classList.remove('deploying');
+          deployBtn.disabled = false;
+          deployBtn.innerHTML = '<i class="fas fa-check"></i> Deployed!';
+          statusIcon.innerHTML = '🎉';
+          statusTitle.textContent = 'Deployment Successful!';
+          statusSub.textContent = 'Your site is live at: ' + state.siteUrl;
+          progressFill.style.width = '100%';
+          progressText.textContent = '100%';
+          addLog('✅ Deployment complete! Site is live.', 'success');
+          addLog('🌐 URL: ' + state.siteUrl, 'info');
+          showToast('🎉 Your website is live!', 'success');
+
+          // Celebrate!
+          launchCelebration();
+
+          // Enable preview button
+          previewBtn.disabled = false;
+          previewBtn.style.opacity = '1';
+          previewBtn.style.pointerEvents = 'auto';
+
+          // Save deployment state
+          saveState();
+        }
+
+        // Start
+        setTimeout(nextStep, 300);
+      }
+
+      // ----- CELEBRATION / CONFETTI -----
+      function launchCelebration() {
+        const colors = ['#b8860b', '#d4a017', '#f59e0b', '#6d28d9', '#22c55e', '#ef4444', '#3b82f6', '#ec4899'];
+        const container = celebrationContainer;
+        container.innerHTML = '';
+        for (let i = 0; i < 120; i++) {
+          const piece = document.createElement('div');
+          piece.className = 'confetti-piece';
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const size = 4 + Math.random() * 12;
+          const left = Math.random() * 100;
+          const duration = 2 + Math.random() * 3;
+          const delay = Math.random() * 2;
+          const shape = Math.random() > 0.5 ? '50%' : '0%';
+          piece.style.cssText = `
+            left: ${left}%;
+            width: ${size}px;
+            height: ${size}px;
+            background: ${color};
+            border-radius: ${shape};
+            animation-duration: ${duration}s;
+            animation-delay: ${delay}s;
+          `;
+          container.appendChild(piece);
+        }
+        // Clean up after animation
+        setTimeout(function() {
+          container.innerHTML = '';
+        }, 6000);
+      }
+
+      // ----- PREVIEW -----
+      function previewSite() {
+        if (!state.deployed) {
+          showToast('Please deploy your site first.', 'error');
+          return;
+        }
+        if (state.siteUrl) {
+          window.open(state.siteUrl, '_blank');
+        } else {
+          showToast('Site URL not available.', 'error');
+        }
+      }
+
+      // ----- DOWNLOAD CODE -----
+      function downloadCode() {
+        try {
+          // Generate a mock zip or HTML bundle
+          const saved = localStorage.getItem('swayam_step3_state');
+          if (!saved) {
+            showToast('No website data found.', 'error');
+            return;
+          }
+          const data = JSON.parse(saved);
+          const html = `<!DOCTYPE html>
+        <html>
+        <head><title>${data.siteTitle || 'My Website'}</title>
+        <style>body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }</style>
+        </head>
+        <body>
+        <h1>${data.siteTitle || 'My Website'}</h1>
+        <p>${data.tagline || 'Welcome'}</p>
+        <h2>Services</h2>
+        <ul>
+          <li>${data.service1 || 'Service 1'}: ${data.service1Desc || ''}</li>
+          <li>${data.service2 || 'Service 2'}: ${data.service2Desc || ''}</li>
+          <li>${data.service3 || 'Service 3'}: ${data.service3Desc || ''}</li>
+        </ul>
+        <p>Built with Swayam — Free AI Website Builder</p>
+        </body>
+        </html>`;
+
+          const blob = new Blob([html], { type: 'text/html' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'index.html';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('Code downloaded!', 'success');
+        } catch (err) {
+          showToast('Error downloading code: ' + err.message, 'error');
+        }
+      }
+
+      // ----- DOMAIN SEARCH -----
+      function searchDomain() {
+        const query = domainInput.value.trim();
+        if (!query) {
+          showToast('Please enter a domain name.', 'error');
+          return;
+        }
+        if (!query.includes('.')) {
+          showToast('Please include a TLD like .com, .in, or .co', 'error');
+          return;
+        }
+
+        domainSearchBtn.disabled = true;
+        domainSearchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+
+        // Simulate API call
+        setTimeout(function() {
+          const base = query.split('.')[0] || 'mybrand';
+          const tlds = ['.com', '.in', '.co', '.org', '.io'];
+          let html = '';
+          tlds.forEach(function(tld) {
+            const full = base + tld;
+            const available = Math.random() > 0.3;
+            html += `
+              <div class="domain-result-item">
+                <span class="name">${full} ${available ? '✅' : '❌'}</span>
+                <span class="price">${available ? '₹3000/year' : 'Taken'}</span>
+                ${available ? `<button class="buy-btn" data-domain="${full}">Buy Now</button>` : `<span style="color:rgba(255,255,255,0.1);font-size:0.7rem;">Unavailable</span>`}
+              </div>
+            `;
+          });
+          domainResults.innerHTML = html;
+
+          // Attach buy events
+          document.querySelectorAll('.domain-results .buy-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              const domain = this.dataset.domain;
+              if (state.domainPurchased && state.domain === domain) {
+                showToast('Already purchased: ' + domain, 'error');
+                return;
+              }
+              state.domain = domain;
+              state.domainPurchased = true;
+              this.classList.add('purchased');
+              this.textContent = '✓ Purchased';
+              showToast('🎉 ' + domain + ' purchased successfully!', 'success');
+              saveState();
+            });
+          });
+
+          domainSearchBtn.disabled = false;
+          domainSearchBtn.innerHTML = '<i class="fas fa-search"></i> Check';
+          showToast('Domain search complete.', 'success');
+        }, 1200);
+      }
+
+      // ----- STATE PERSISTENCE -----
+      function saveState() {
+        try {
+          const data = {
+            deployed: state.deployed,
+            siteUrl: state.siteUrl,
+            siteName: state.siteName,
+            domain: state.domain,
+            domainPurchased: state.domainPurchased,
+            timestamp: Date.now()
+          };
+          localStorage.setItem('swayam_step4_state', JSON.stringify(data));
+        } catch (err) {
+          console.warn('Could not save state:', err);
+        }
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem('swayam_step4_state');
+          if (!raw) return false;
+          const data = JSON.parse(raw);
+          if (data.deployed && data.siteUrl) {
+            state.deployed = data.deployed;
+            state.siteUrl = data.siteUrl;
+            state.siteName = data.siteName || 'mybrand';
+            state.domain = data.domain || null;
+            state.domainPurchased = data.domainPurchased || false;
+            // Update UI to reflect deployed state
+            statusIcon.innerHTML = '🎉';
+            statusTitle.textContent = 'Deployment Successful!';
+            statusSub.textContent = 'Your site is live at: ' + state.siteUrl;
+            progressFill.style.width = '100%';
+            progressText.textContent = '100%';
+            deployBtn.innerHTML = '<i class="fas fa-check"></i> Deployed!';
+            deployBtn.disabled = false;
+            previewBtn.disabled = false;
+            previewBtn.style.opacity = '1';
+            previewBtn.style.pointerEvents = 'auto';
+            addLog('✅ Site already deployed: ' + state.siteUrl, 'success');
+            // If domain purchased, update
+            if (state.domainPurchased && state.domain) {
+              // Find and mark domain button
+              document.querySelectorAll('.domain-results .buy-btn').forEach(function(btn) {
+                if (btn.dataset.domain === state.domain) {
+                  btn.classList.add('purchased');
+                  btn.textContent = '✓ Purchased';
+                }
+              });
+            }
+            return true;
+          }
+          return false;
+        } catch (err) {
+          console.warn('Could not load state:', err);
+          return false;
+        }
+      }
+
+      // ----- NAVIGATION -----
+      backBtn.addEventListener('click', function() {
+        try {
+          saveState();
+          window.location.href = 'step-3.html';
+        } catch (err) {
+          showToast('Error navigating back: ' + err.message, 'error');
+        }
+      });
+
+      // ----- EVENT BINDING -----
+      deployBtn.addEventListener('click', deploy);
+      previewBtn.addEventListener('click', previewSite);
+      downloadBtn.addEventListener('click', downloadCode);
+      domainSearchBtn.addEventListener('click', searchDomain);
+      domainInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          searchDomain();
+        }
+      });
+
+      // ----- KEYBOARD SHORTCUTS -----
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+          e.preventDefault();
+          if (!state.deployed) deploy();
+        }
+        if (e.key === 'Escape') {
+          toast.classList.remove('show');
+        }
+      });
+
+      // ----- BEFOREUNLOAD -----
+      window.addEventListener('beforeunload', function() {
+        saveState();
+      });
+
+      // ----- INIT -----
+      function init() {
+        try {
+          // Load state
+          const loaded = loadState();
+
+          // If not deployed, set default state
+          if (!loaded) {
+            addLog('Ready to deploy your website.', 'info');
+            // Check if we have site data from step 3
+            const saved3 = localStorage.getItem('swayam_step3_state');
+            if (saved3) {
+              try {
+                const data = JSON.parse(saved3);
+                if (data.siteTitle) {
+                  state.siteName = data.siteTitle.toLowerCase().replace(/[^a-z0-9]/g, '-') || 'mybrand';
+                  addLog('Site name: ' + state.siteName, 'info');
+                }
+              } catch (e) { /* ignore */ }
+            }
+          }
+
+          // Sync domain input with state
+          if (state.domain) {
+            domainInput.value = state.domain;
+          }
+
+          // Enable preview only if deployed
+          if (!state.deployed) {
+            previewBtn.disabled = true;
+            previewBtn.style.opacity = '0.3';
+            previewBtn.style.pointerEvents = 'none';
+          }
+
+          console.log('Step 4 initialized successfully.');
+        } catch (err) {
+          console.error('Fatal init error:', err);
+          showToast('Failed to initialize. Please refresh.', 'error');
+        }
+      }
+
+      // ----- ERROR BOUNDARY -----
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please try again.', 'error');
+        return true;
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled rejection:', e.reason);
+        showToast('An unexpected error occurred. Please try again.', 'error');
+        return true;
+      });
+
+      // ----- START -----
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
