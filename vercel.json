@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "trailingSlash": false,
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/builder", "destination": "/builder.html" },
+    { "source": "/themes", "destination": "/themes.html" },
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/domain", "destination": "/domain.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
