@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 1: Describe — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      /* subtle animated background */
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.04) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.04) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+    }
+
+    /* ============================================================
+       HEADER (minimal)
+       ============================================================ */
+    .header {
+      padding: 24px 0 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i {
+      color: #b8860b;
+    }
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .step-indicator .current {
+      color: #b8860b;
+      font-weight: 600;
+    }
+    .step-indicator .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      transition: 0.3s;
+    }
+    .step-indicator .dot.active {
+      background: #b8860b;
+      box-shadow: 0 0 12px rgba(184, 134, 11, 0.3);
+    }
+
+    /* ============================================================
+       MAIN CONTENT
+       ============================================================ */
+    .builder-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 0 60px;
+      animation: fadeUp 0.6s ease both;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(24px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .builder-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 8px;
+    }
+    .builder-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .builder-sub {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 32px;
+    }
+
+    /* ============================================================
+       QUICK SELECT (Business Types)
+       ============================================================ */
+    .quick-select {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .quick-option {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 16px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .quick-option::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(184, 134, 11, 0.06), transparent);
+      opacity: 0;
+      transition: 0.3s;
+    }
+    .quick-option:hover {
+      border-color: rgba(184, 134, 11, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    .quick-option:hover::after {
+      opacity: 1;
+    }
+    .quick-option.selected {
+      border-color: #b8860b;
+      background: rgba(184, 134, 11, 0.04);
+      box-shadow: 0 0 0 1px #b8860b, 0 8px 24px rgba(184, 134, 11, 0.06);
+    }
+    .quick-option .icon {
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .quick-option .label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.5);
+      transition: 0.3s;
+    }
+    .quick-option.selected .label {
+      color: #b8860b;
+    }
+
+    /* ============================================================
+       TEXTAREA WITH AI GLOW
+       ============================================================ */
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .input-group textarea {
+      width: 100%;
+      padding: 20px 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      color: #f0ece6;
+      font-size: 1.05rem;
+      font-family: inherit;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 140px;
+      outline: none;
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .input-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.15);
+      font-weight: 300;
+    }
+    .input-group textarea:focus {
+      border-color: #b8860b;
+      box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.08), 0 8px 32px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    /* AI glow ring (pulsing) */
+    .input-group::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 22px;
+      background: conic-gradient(from 0deg, transparent, rgba(184, 134, 11, 0.2), transparent 60%);
+      opacity: 0;
+      transition: 0.6s;
+      pointer-events: none;
+      z-index: -1;
+      animation: spinGlow 6s linear infinite;
+    }
+    .input-group:focus-within::before {
+      opacity: 1;
+    }
+    @keyframes spinGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Character counter */
+    .char-counter {
+      text-align: right;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.1);
+      margin-top: 6px;
+      transition: 0.3s;
+    }
+    .char-counter.active {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ============================================================
+       SUGGESTIONS / AI PROMPTS
+       ============================================================ */
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .suggestion-chip {
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .suggestion-chip:hover {
+      background: rgba(184, 134, 11, 0.04);
+      border-color: rgba(184, 134, 11, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+    }
+    .suggestion-chip:active {
+      transform: scale(0.96);
+    }
+
+    /* ============================================================
+       FLOATING GENERATE BUTTON
+       ============================================================ */
+    .generate-area {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+    .btn-generate {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 40px;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 4px 24px rgba(184, 134, 11, 0.15);
+      position: relative;
+      overflow: hidden;
+      opacity: 0.3;
+      pointer-events: none;
+      transform: translateY(8px);
+    }
+    .btn-generate.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .btn-generate:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 36px rgba(184, 134, 11, 0.3);
+    }
+    .btn-generate:active {
+      transform: scale(0.96);
+    }
+    .btn-generate .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(0);
+      animation: rippleEffect 0.6s ease-out;
+    }
+    @keyframes rippleEffect {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    /* ============================================================
+       AI STATUS INDICATOR (pulsing dot)
+       ============================================================ */
+    .ai-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.15);
+      margin-top: 12px;
+      justify-content: center;
+    }
+    .ai-status .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #b8860b;
+      opacity: 0.2;
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    .ai-status .dot.active {
+      opacity: 1;
+      box-shadow: 0 0 16px rgba(184, 134, 11, 0.3);
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 0.15; transform: scale(0.8); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      text-align: center;
+      padding: 20px 0;
+      color: rgba(255, 255, 255, 0.04);
+      font-size: 0.7rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      margin-top: auto;
+    }
+    .footer a {
+      color: rgba(255, 255, 255, 0.06);
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 600px) {
+      .builder-title {
+        font-size: 1.8rem;
+      }
+      .quick-select {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .btn-generate {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+      }
+      .input-group textarea {
+        font-size: 0.95rem;
+        padding: 16px 18px;
+        min-height: 120px;
+      }
+      .suggestions {
+        gap: 6px;
+      }
+      .suggestion-chip {
+        font-size: 0.65rem;
+        padding: 4px 12px;
+      }
+    }
+    @media (max-width: 400px) {
+      .quick-select {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="container header">
+    <a href="../index.html" class="logo">
+      <i class="fas fa-om"></i> Swayam<span style="font-weight:300; opacity:0.3;">AI</span>
+    </a>
+    <div class="step-indicator">
+      <span class="current">1</span><span style="opacity:0.3;">/ 4</span>
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main class="container builder-main">
+
+    <div class="builder-label">Step 1</div>
+    <h1 class="builder-title">Tell us about your business</h1>
+    <p class="builder-sub">Describe your brand in a few sentences. Our AI will build a custom website just for you.</p>
+
+    <!-- Quick select -->
+    <div class="quick-select" id="quickSelect">
+      <div class="quick-option" data-type="startup">
+        <span class="icon">🚀</span>
+        <span class="label">Startup</span>
+      </div>
+      <div class="quick-option" data-type="agency">
+        <span class="icon">🎯</span>
+        <span class="label">Agency</span>
+      </div>
+      <div class="quick-option" data-type="ecommerce">
+        <span class="icon">🛍️</span>
+        <span class="label">E‑commerce</span>
+      </div>
+      <div class="quick-option" data-type="portfolio">
+        <span class="icon">🎨</span>
+        <span class="label">Portfolio</span>
+      </div>
+      <div class="quick-option" data-type="blog">
+        <span class="icon">📝</span>
+        <span class="label">Blog</span>
+      </div>
+      <div class="quick-option" data-type="consulting">
+        <span class="icon">📊</span>
+        <span class="label">Consulting</span>
+      </div>
+    </div>
+
+    <!-- Text input -->
+    <div class="input-group">
+      <textarea id="businessDesc" placeholder="Example: I run a digital marketing agency in Delhi. We help small businesses grow their online presence with SEO and social media."></textarea>
+    </div>
+    <div class="char-counter" id="charCounter">0 characters</div>
+
+    <!-- Suggestions (AI prompt starters) -->
+    <div class="suggestions" id="suggestionChips">
+      <button class="suggestion-chip" data-prompt="I run a yoga studio in Bangalore. I offer online and offline classes for all levels.">🧘 Yoga studio</button>
+      <button class="suggestion-chip" data-prompt="I'm a freelance photographer specializing in weddings and portraits based in Mumbai.">📸 Photographer</button>
+      <button class="suggestion-chip" data-prompt="We are a SaaS startup building AI-powered analytics tools for e-commerce businesses.">💻 SaaS startup</button>
+      <button class="suggestion-chip" data-prompt="I'm a life coach helping professionals find work-life balance and purpose.">🌟 Life coach</button>
+    </div>
+
+    <!-- Generate button (floating) -->
+    <div class="generate-area">
+      <button class="btn-generate" id="generateBtn" disabled>
+        <i class="fas fa-rocket"></i> Generate Website
+        <span class="ripple" id="rippleEffect"></span>
+      </button>
+    </div>
+
+    <!-- AI status -->
+    <div class="ai-status">
+      <span class="dot" id="aiDot"></span>
+      <span id="aiStatusText">AI ready • Groq + Zhipu</span>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer container">
+    <p>Built with ॐ • <a href="#">Swayam</a> — Free AI Website Builder</p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- DOM refs -----
+      const textarea = document.getElementById('businessDesc');
+      const charCounter = document.getElementById('charCounter');
+      const generateBtn = document.getElementById('generateBtn');
+      const quickOptions = document.querySelectorAll('.quick-option');
+      const suggestionChips = document.querySelectorAll('.suggestion-chip');
+      const aiDot = document.getElementById('aiDot');
+      const aiStatusText = document.getElementById('aiStatusText');
+
+      // ----- Ripple effect on button -----
+      generateBtn.addEventListener('click', function(e) {
+        const ripple = document.getElementById('rippleEffect');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.opacity = '1';
+        // Force reflow to restart animation
+        void ripple.offsetWidth;
+        ripple.style.transform = 'scale(4)';
+        ripple.style.opacity = '0';
+        // Simulate AI generation
+        aiDot.classList.add('active');
+        aiStatusText.textContent = 'AI is thinking...';
+        generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+        generateBtn.disabled = true;
+        setTimeout(function() {
+          aiDot.classList.remove('active');
+          aiStatusText.textContent = '✅ Ready!';
+          generateBtn.innerHTML = '<i class="fas fa-rocket"></i> Generated!';
+          // In real app, redirect to step-2 or show preview
+          alert('🎉 Your website is being generated! (Step 2 would load here)');
+          // Reset for demo
+          setTimeout(function() {
+            generateBtn.innerHTML = '<i class="fas fa-rocket"></i> Generate Website';
+            generateBtn.disabled = false;
+            aiStatusText.textContent = 'AI ready • Groq + Zhipu';
+            generateBtn.classList.add('active');
+          }, 1000);
+        }, 1800);
+      });
+
+      // ----- Enable/disable generate button based on input -----
+      function updateGenerateButton() {
+        const val = textarea.value.trim();
+        if (val.length >= 10) {
+          generateBtn.disabled = false;
+          generateBtn.classList.add('active');
+        } else {
+          generateBtn.disabled = true;
+          generateBtn.classList.remove('active');
+        }
+        // update char counter
+        charCounter.textContent = val.length + ' characters';
+        if (val.length > 0) {
+          charCounter.classList.add('active');
+        } else {
+          charCounter.classList.remove('active');
+        }
+      }
+
+      textarea.addEventListener('input', updateGenerateButton);
+      // initial check
+      updateGenerateButton();
+
+      // ----- Quick select: fill textarea with a template -----
+      quickOptions.forEach(function(opt) {
+        opt.addEventListener('click', function() {
+          quickOptions.forEach(function(o) { o.classList.remove('selected'); });
+          this.classList.add('selected');
+          const type = this.dataset.type;
+          let prompt = '';
+          switch (type) {
+            case 'startup':
+              prompt = 'I am a tech startup building innovative solutions for the modern world. Our mission is to simplify complex problems with AI and automation.';
+              break;
+            case 'agency':
+              prompt = 'We are a full-service digital agency specializing in branding, web development, and performance marketing. We help businesses grow their online presence.';
+              break;
+            case 'ecommerce':
+              prompt = 'I run an online store selling sustainable, eco-friendly products. Our collection includes organic clothing, home goods, and wellness accessories.';
+              break;
+            case 'portfolio':
+              prompt = 'I am a creative professional — a designer and illustrator based in India. My portfolio showcases branding, UI/UX, and visual storytelling projects.';
+              break;
+            case 'blog':
+              prompt = 'I write about technology, productivity, and personal growth. My blog helps readers stay ahead in the digital age with practical insights.';
+              break;
+            case 'consulting':
+              prompt = 'I am a management consultant helping businesses streamline operations, drive growth, and navigate change. I offer strategy, implementation, and advisory services.';
+              break;
+            default: prompt = '';
+          }
+          textarea.value = prompt;
+          updateGenerateButton();
+          // animate textarea
+          textarea.focus();
+          textarea.style.transition = '0.2s';
+          textarea.style.borderColor = '#b8860b';
+          setTimeout(function() {
+            textarea.style.borderColor = '';
+          }, 600);
+        });
+      });
+
+      // ----- Suggestion chips: fill textarea -----
+      suggestionChips.forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          const prompt = this.dataset.prompt;
+          if (prompt) {
+            textarea.value = prompt;
+            updateGenerateButton();
+            textarea.focus();
+            // subtle flash
+            textarea.style.transition = '0.2s';
+            textarea.style.borderColor = '#b8860b';
+            setTimeout(function() {
+              textarea.style.borderColor = '';
+            }, 600);
+          }
+        });
+      });
+
+      // ----- AI dot pulse simulation (already animating via CSS) -----
+      // Toggle active state when typing to show "listening"
+      textarea.addEventListener('focus', function() {
+        aiDot.classList.add('active');
+        aiStatusText.textContent = 'AI listening...';
+      });
+      textarea.addEventListener('blur', function() {
+        aiDot.classList.remove('active');
+        aiStatusText.textContent = 'AI ready • Groq + Zhipu';
+      });
+
+      // ----- Keyboard shortcut: Ctrl+Enter to generate -----
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          if (!generateBtn.disabled) {
+            generateBtn.click();
+          }
+        }
+      });
+
+      // ----- Animated placeholder via typing simulation (just for fun) -----
+      const placeholders = [
+        "Example: I run a digital marketing agency in Delhi...",
+        "Describe your business, product, or service...",
+        "Tell us who you serve and what makes you unique..."
+      ];
+      let phIndex = 0;
+      setInterval(function() {
+        if (!textarea.value.trim()) {
+          textarea.placeholder = placeholders[phIndex % placeholders.length];
+          phIndex++;
+        }
+      }, 5000);
+
+      // ----- On page load, if input is empty, focus the textarea after a delay -----
+      setTimeout(function() {
+        if (!textarea.value.trim()) {
+          textarea.focus();
+        }
+      }, 600);
+
+      // ----- Handle textarea auto-resize (optional) -----
+      textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
