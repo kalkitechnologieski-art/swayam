@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Crawl-delay: 1.0
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+Sitemap: https://swayam.vercel.app/sitemap.xml
