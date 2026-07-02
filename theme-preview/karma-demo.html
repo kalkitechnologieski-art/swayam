@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karma — Digital Agency Theme Preview | Swayam</title>
+  <meta name="description" content="Karma theme preview — a bold, modern, digital agency theme with dark mode, neon accents, and interactive portfolio." />
+  <link rel="canonical" href="https://swayam.vercel.app/theme-preview/karma-demo.html" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       RESET & BASE
+       ========================================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a12;
+      color: #e8e8f0;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #14141e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #6d28d9;
+      border-radius: 10px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    .section-padding {
+      padding: 80px 0;
+    }
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #6d28d9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+    .section-sub {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.4);
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .mx-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(109, 40, 217, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(109, 40, 217, 0.4);
+    }
+    .btn-secondary {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 60px;
+      background: transparent;
+      color: #e8e8f0;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .btn-secondary:hover {
+      border-color: #6d28d9;
+      background: rgba(109, 40, 217, 0.1);
+    }
+    /* ==========================================================================
+       HEADER
+       ========================================================================== */
+    .header {
+      background: rgba(10, 10, 18, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(109, 40, 217, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 16px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .logo i {
+      color: #6d28d9;
+      font-size: 1.6rem;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.5);
+      transition: 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: #fff;
+    }
+    .nav-links a.active {
+      color: #8b5cf6;
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #6d28d9, #8b5cf6);
+      border-radius: 4px;
+    }
+    .header-cta {
+      padding: 8px 22px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+      color: #fff !important;
+      font-weight: 600;
+      box-shadow: 0 2px 12px rgba(109, 40, 217, 0.25);
+    }
+    .header-cta:hover {
+      transform: scale(1.02);
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       HERO
+       ========================================================================== */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+      background: radial-gradient(ellipse at 80% 20%, rgba(109, 40, 217, 0.08), transparent 60%);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '⚡';
+      position: absolute;
+      right: -40px;
+      top: -60px;
+      font-size: 24rem;
+      opacity: 0.03;
+      pointer-events: none;
+      transform: rotate(-20deg);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-content .badge {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 30px;
+      background: rgba(109, 40, 217, 0.12);
+      border: 1px solid rgba(109, 40, 217, 0.15);
+      color: #8b5cf6;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero-content h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.6rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .hero-content h1 span {
+      color: #6d28d9;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 480px;
+      margin-bottom: 28px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hero-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image .placeholder {
+      width: 100%;
+      aspect-ratio: 1/1;
+      max-width: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #6d28d9, #2d1b4e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 60px rgba(109, 40, 217, 0.15);
+    }
+
+    /* ==========================================================================
+       STATS
+       ========================================================================== */
+    .stats {
+      padding: 60px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    .stat-item .number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .stat-item .number span {
+      color: #6d28d9;
+    }
+    .stat-item .label {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ==========================================================================
+       PORTFOLIO
+       ========================================================================== */
+    .portfolio {
+      background: #0a0a12;
+    }
+    .portfolio-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .portfolio-filter button {
+      padding: 8px 24px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .portfolio-filter button:hover {
+      background: rgba(109, 40, 217, 0.1);
+      border-color: #6d28d9;
+      color: #fff;
+    }
+    .portfolio-filter button.active {
+      background: rgba(109, 40, 217, 0.15);
+      border-color: #6d28d9;
+      color: #8b5cf6;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .portfolio-item {
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .portfolio-item:hover {
+      transform: translateY(-6px);
+      border-color: #6d28d9;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+    .portfolio-item .img {
+      height: 220px;
+      background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.03);
+    }
+    .portfolio-item .info {
+      padding: 16px 20px 20px;
+    }
+    .portfolio-item .info h4 {
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+    .portfolio-item .info p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+    .portfolio-item .info .tag {
+      display: inline-block;
+      padding: 2px 12px;
+      border-radius: 20px;
+      background: rgba(109, 40, 217, 0.1);
+      border: 1px solid rgba(109, 40, 217, 0.1);
+      color: #8b5cf6;
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+
+    /* ==========================================================================
+       SERVICES
+       ========================================================================== */
+    .services {
+      background: #0e0e1a;
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+    }
+    .service-card {
+      padding: 30px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: 0.3s;
+    }
+    .service-card:hover {
+      border-color: #6d28d9;
+      transform: translateY(-4px);
+    }
+    .service-card i {
+      font-size: 2.4rem;
+      color: #6d28d9;
+      margin-bottom: 12px;
+    }
+    .service-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ==========================================================================
+       TESTIMONIALS
+       ========================================================================== */
+    .testimonials {
+      background: #0a0a12;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .testimonial-card p {
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 12px;
+    }
+    .testimonial-card .author {
+      font-weight: 600;
+      color: #8b5cf6;
+      font-style: normal;
+    }
+    .testimonial-card .role {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.3);
+      font-style: normal;
+    }
+
+    /* ==========================================================================
+       CTA
+       ========================================================================== */
+    .cta-section {
+      background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
+      text-align: center;
+      padding: 80px 0;
+      border-top: 1px solid rgba(109, 40, 217, 0.2);
+      border-bottom: 1px solid rgba(109, 40, 217, 0.2);
+    }
+    .cta-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .cta-section p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .footer {
+      background: #0a0a12;
+      color: rgba(255, 255, 255, 0.3);
+      padding: 40px 0 28px;
+      text-align: center;
+    }
+    .footer a {
+      color: #8b5cf6;
+    }
+    .footer a:hover {
+      color: #a78bfa;
+    }
+    .footer .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+    .footer .footer-links a {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
+    }
+    .footer .footer-links a:hover {
+      color: #8b5cf6;
+    }
+    .footer .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 12px 0;
+    }
+    .footer .footer-social a {
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
+    .footer .footer-social a:hover {
+      color: #8b5cf6;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-content p {
+        max-width: 100%;
+      }
+      .hero-cta {
+        justify-content: center;
+      }
+      .hero-image .placeholder {
+        max-width: 300px;
+      }
+      .section-title {
+        font-size: 2.2rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .menu-toggle {
+        display: block;
+        align-self: flex-end;
+      }
+      .hero {
+        padding: 60px 0 40px;
+      }
+      .hero-content h1 {
+        font-size: 2.6rem;
+      }
+      .section-padding {
+        padding: 50px 0;
+      }
+      .portfolio-grid,
+      .service-grid,
+      .testimonial-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .portfolio-grid,
+      .service-grid,
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       HEADER
+       ================================================================ -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <i class="fas fa-bolt"></i>
+        <span>Karma</span>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#hero" class="active">Home</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#services">Services</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="https://swayam.vercel.app/builder/step-1.html" class="header-cta">Build with Swayam</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       HERO
+       ================================================================ -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="badge">⚡ Next‑Gen Agency</div>
+        <h1>We Build <span>Digital</span> Empires</h1>
+        <p>Karma is a creative force — crafting bold brands, immersive experiences, and high‑impact digital solutions.</p>
+        <div class="hero-cta">
+          <a href="#portfolio" class="btn-primary">View Our Work</a>
+          <a href="#services" class="btn-secondary">Explore Services</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="placeholder">
+          <span>🚀</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       STATS
+       ================================================================ -->
+  <section class="stats">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <div class="number">150<span>+</span></div>
+        <div class="label">Projects Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="number">98<span>%</span></div>
+        <div class="label">Client Satisfaction</div>
+      </div>
+      <div class="stat-item">
+        <div class="number">4.9<span>★</span></div>
+        <div class="label">Average Rating</div>
+      </div>
+      <div class="stat-item">
+        <div class="number">12<span>+</span></div>
+        <div class="label">Industry Awards</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       PORTFOLIO
+       ================================================================ -->
+  <section class="portfolio section-padding" id="portfolio">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Our Work</h2>
+        <p class="section-sub mx-auto">Showcasing bold ideas brought to life.</p>
+      </div>
+      <div class="portfolio-filter" id="filterButtons">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="branding">Branding</button>
+        <button data-filter="web">Web</button>
+        <button data-filter="product">Product</button>
+        <button data-filter="campaign">Campaign</button>
+      </div>
+      <div class="portfolio-grid" id="portfolioGrid">
+        <div class="portfolio-item" data-category="branding">
+          <div class="img"><span>🎨</span></div>
+          <div class="info">
+            <h4>Brand Identity — Nexus</h4>
+            <p>Complete visual identity for a tech startup.</p>
+            <span class="tag">Branding</span>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="web">
+          <div class="img"><span>💻</span></div>
+          <div class="info">
+            <h4>Web App — Flow</h4>
+            <p>Full‑stack dashboard for project management.</p>
+            <span class="tag">Web</span>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="product">
+          <div class="img"><span>📱</span></div>
+          <div class="info">
+            <h4>Product — Vibe</h4>
+            <p>AI‑powered wellness app for iOS & Android.</p>
+            <span class="tag">Product</span>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="campaign">
+          <div class="img"><span>📣</span></div>
+          <div class="info">
+            <h4>Campaign — Future Now</h4>
+            <p>Global awareness campaign for climate action.</p>
+            <span class="tag">Campaign</span>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="branding">
+          <div class="img"><span>🖌️</span></div>
+          <div class="info">
+            <h4>Brand Refresh — Oasis</h4>
+            <p>Rebranding for a luxury wellness resort.</p>
+            <span class="tag">Branding</span>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="web">
+          <div class="img"><span>🌐</span></div>
+          <div class="info">
+            <h4>E‑commerce — Terra</h4>
+            <p>High‑performance store for sustainable goods.</p>
+            <span class="tag">Web</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SERVICES
+       ================================================================ -->
+  <section class="services section-padding" id="services">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">What We Do</h2>
+        <p class="section-sub mx-auto">Full‑service creative and technology solutions.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <i class="fas fa-pen-fancy"></i>
+          <h4>Brand Strategy</h4>
+          <p>Positioning, identity, storytelling — we build brands that resonate.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-code"></i>
+          <h4>Web Development</h4>
+          <p>Fast, responsive, and visually stunning websites and apps.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-rocket"></i>
+          <h4>Growth Marketing</h4>
+          <p>SEO, paid media, content, and conversion optimization.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-robot"></i>
+          <h4>AI Solutions</h4>
+          <p>Custom AI tools, automation, and intelligent systems.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       TESTIMONIALS
+       ================================================================ -->
+  <section class="testimonials section-padding" id="testimonials">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Client Voices</h2>
+        <p class="section-sub mx-auto">What partners say about working with Karma.</p>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p>"Karma rebranded our startup and we saw a 300% increase in engagement. They truly understand modern audiences."</p>
+          <div class="author">— Rohan Mehta</div>
+          <div class="role">CEO, Nexus Tech</div>
+        </div>
+        <div class="testimonial-card">
+          <p>"The web app Karma built for us is fast, intuitive, and our team loves it. They are true partners."</p>
+          <div class="author">— Sneha Reddy</div>
+          <div class="role">Product Lead, Flow</div>
+        </div>
+        <div class="testimonial-card">
+          <p>"Our campaign with Karma went viral. Their creative vision and execution are unmatched."</p>
+          <div class="author">— Arjun Singh</div>
+          <div class="role">Marketing Director, Future Now</div>
+        </div>
+        <div class="testimonial-card">
+          <p>"Karma delivered our e‑commerce site in record time. The design is beautiful and conversions are up 40%."</p>
+          <div class="author">— Priya Sharma</div>
+          <div class="role">Founder, Terra</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       CTA SECTION
+       ================================================================ -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <h2>Ready to Build Something Bold?</h2>
+      <p>Let's create digital experiences that leave a mark.</p>
+      <a href="https://swayam.vercel.app/pages/contact.html" class="btn-primary">Start Your Project</a>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       FOOTER
+       ================================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="#hero">Home</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#services">Services</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="https://swayam.vercel.app/index.html">Swayam</a>
+        <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+        <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p>© 2026 Karma — A Theme by <a href="https://swayam.vercel.app" target="_blank">Swayam</a> &amp; <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+      <p style="font-size:0.7rem; margin-top:6px; opacity:0.4;">⚡ Built for bold thinkers.</p>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       JAVASCRIPT
+       ================================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- MOBILE MENU -----
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          if (window.innerWidth <= 768) {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            if (navLinks.style.display === 'flex') {
+              navLinks.style.flexDirection = 'column';
+              navLinks.style.alignItems = 'center';
+              navLinks.style.width = '100%';
+            }
+          }
+        });
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 768) {
+            navLinks.style.display = 'flex';
+            navLinks.style.flexDirection = 'row';
+          } else {
+            navLinks.style.display = 'none';
+          }
+        });
+        if (window.innerWidth <= 768) {
+          navLinks.style.display = 'none';
+        }
+      }
+
+      // ----- PORTFOLIO FILTER -----
+      const filterButtons = document.querySelectorAll('#filterButtons button');
+      const portfolioItems = document.querySelectorAll('#portfolioGrid .portfolio-item');
+
+      filterButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          filterButtons.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          const filter = this.dataset.filter;
+          portfolioItems.forEach(function(item) {
+            const category = item.dataset.category;
+            if (filter === 'all' || category === filter) {
+              item.style.display = '';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // ----- SMOOTH SCROLL -----
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (window.innerWidth <= 768 && navLinks) {
+              navLinks.style.display = 'none';
+            }
+          }
+        });
+      });
+
+      // ----- ACTIVE NAV LINK ON SCROLL -----
+      const sections = document.querySelectorAll('section[id]');
+      const navLinkItems = document.querySelectorAll('.nav-links a:not(.header-cta)');
+      window.addEventListener('scroll', function() {
+        let current = '';
+        sections.forEach(function(section) {
+          const sectionTop = section.offsetTop - 120;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+          }
+        });
+        navLinkItems.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
