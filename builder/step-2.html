@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 2: Choose Theme — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700;800;900&family=Orbitron:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.03) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.03) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+    }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .header {
+      padding: 18px 0 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i { color: #b8860b; }
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .step-indicator .current { color: #b8860b; font-weight: 600; }
+    .step-indicator .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      transition: 0.3s;
+    }
+    .step-indicator .dot.active { background: #b8860b; box-shadow: 0 0 12px rgba(184, 134, 11, 0.3); }
+
+    /* ============================================================
+       NAVIGATION BUTTONS
+       ============================================================ */
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn-back {
+      padding: 8px 20px;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .btn-next {
+      padding: 8px 24px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25);
+    }
+    .btn-next:disabled {
+      opacity: 0.3;
+      pointer-events: none;
+      transform: none;
+    }
+
+    /* ============================================================
+       MAIN LAYOUT
+       ============================================================ */
+    .builder-main {
+      flex: 1;
+      padding: 30px 0 40px;
+      animation: fadeUp 0.5s ease both;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .builder-header {
+      margin-bottom: 28px;
+    }
+    .builder-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 4px;
+    }
+    .builder-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .builder-sub {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       TWO-COLUMN LAYOUT
+       ============================================================ */
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    /* ============================================================
+       LEFT: THEME GALLERY
+       ============================================================ */
+    .theme-gallery {
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .theme-gallery h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .theme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .theme-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 16px 14px 14px;
+      cursor: pointer;
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(184, 134, 11, 0.04), transparent);
+      opacity: 0;
+      transition: 0.4s;
+    }
+    .theme-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(184, 134, 11, 0.15);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+    .theme-card:hover::before { opacity: 1; }
+    .theme-card.selected {
+      border-color: #b8860b;
+      background: rgba(184, 134, 11, 0.03);
+      box-shadow: 0 0 0 1px #b8860b, 0 8px 30px rgba(184, 134, 11, 0.04);
+    }
+    .theme-card.selected .check {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .theme-card .check {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #b8860b;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 12px rgba(184, 134, 11, 0.3);
+    }
+    .theme-card .preview {
+      height: 100px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      color: rgba(255, 255, 255, 0.04);
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-card .preview .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+    }
+    .theme-card:hover .preview .overlay { opacity: 1; }
+    .theme-card .name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #f0ece6;
+    }
+    .theme-card .desc {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Theme preview colors */
+    .theme-card[data-theme="veda"] .preview {
+      background: linear-gradient(135deg, #faf0e6, #e8ddd0);
+      color: rgba(184, 134, 11, 0.08);
+    }
+    .theme-card[data-theme="karma"] .preview {
+      background: linear-gradient(135deg, #0a0a12, #1a1a2e);
+      color: rgba(109, 40, 217, 0.08);
+    }
+    .theme-card[data-theme="sattva"] .preview {
+      background: linear-gradient(135deg, #f8f6f2, #e8f5e9);
+      color: rgba(46, 125, 50, 0.08);
+    }
+    .theme-card[data-theme="dharma"] .preview {
+      background: linear-gradient(135deg, #f8fafc, #dbeafe);
+      color: rgba(59, 130, 246, 0.08);
+    }
+
+    /* ============================================================
+       RIGHT: CUSTOMIZATION PANEL
+       ============================================================ */
+    .customization-panel {
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      position: sticky;
+      top: 100px;
+    }
+    .customization-panel h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .customization-panel .sub {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.15);
+      margin-bottom: 20px;
+    }
+
+    /* ---- Live Preview Mini ---- */
+    .mini-preview {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+    .mini-preview .preview-icon {
+      font-size: 2.8rem;
+      margin-bottom: 8px;
+      opacity: 0.2;
+    }
+    .mini-preview .preview-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .mini-preview .preview-desc {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .mini-preview .preview-colors {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .mini-preview .preview-colors span {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    /* ---- Customization Controls ---- */
+    .control-group {
+      margin-bottom: 18px;
+    }
+    .control-group label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .control-group .control-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .color-picker {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .color-picker button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+    }
+    .color-picker button:hover {
+      transform: scale(1.1);
+    }
+    .color-picker button.active {
+      border-color: #fff;
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.3), 0 0 20px rgba(184, 134, 11, 0.1);
+    }
+    .color-picker button .check {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.5rem;
+      opacity: 0;
+      transition: 0.3s;
+    }
+    .color-picker button.active .check { opacity: 1; }
+
+    .font-select {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .font-select button {
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .font-select button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .font-select button.active {
+      background: rgba(184, 134, 11, 0.06);
+      border-color: #b8860b;
+      color: #b8860b;
+    }
+    .font-select button[data-font="playfair"] { font-family: 'Playfair Display', serif; }
+    .font-select button[data-font="orbitron"] { font-family: 'Orbitron', sans-serif; }
+    .font-select button[data-font="inter"] { font-family: 'Inter', sans-serif; }
+
+    /* ---- Page Toggles ---- */
+    .page-toggles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .page-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .page-toggle:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .page-toggle.active {
+      border-color: rgba(184, 134, 11, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .page-toggle input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: transparent;
+      cursor: pointer;
+      transition: 0.3s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .page-toggle input[type="checkbox"]:checked {
+      background: #b8860b;
+      border-color: #b8860b;
+    }
+    .page-toggle input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+    }
+
+    /* ============================================================
+       ERROR / NOTIFICATION
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 14px 28px;
+      border-radius: 16px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.9rem;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+      z-index: 9999;
+      opacity: 0;
+      transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .toast.error {
+      border-color: rgba(239, 68, 68, 0.2);
+    }
+    .toast.error i { color: #ef4444; }
+    .toast.success {
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+    .toast.success i { color: #22c55e; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      text-align: center;
+      padding: 16px 0;
+      color: rgba(255, 255, 255, 0.03);
+      font-size: 0.65rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.01);
+      margin-top: auto;
+    }
+    .footer a {
+      color: rgba(255, 255, 255, 0.05);
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 992px) {
+      .builder-grid {
+        grid-template-columns: 1fr;
+      }
+      .customization-panel {
+        position: relative;
+        top: 0;
+      }
+      .theme-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .theme-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .page-toggles {
+        grid-template-columns: 1fr 1fr;
+      }
+      .builder-title {
+        font-size: 1.6rem;
+      }
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .step-indicator {
+        justify-content: center;
+      }
+      .nav-actions {
+        justify-content: center;
+      }
+    }
+    @media (max-width: 480px) {
+      .theme-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .theme-card .preview {
+        height: 70px;
+      }
+      .theme-card .name {
+        font-size: 0.7rem;
+      }
+      .theme-card .desc {
+        font-size: 0.55rem;
+      }
+      .page-toggles {
+        grid-template-columns: 1fr 1fr;
+      }
+      .color-picker button {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       TOAST NOTIFICATION
+       ============================================================ -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="container header">
+    <a href="../index.html" class="logo">
+      <i class="fas fa-om"></i> Swayam<span style="font-weight:300; opacity:0.3;">AI</span>
+    </a>
+    <div class="step-indicator">
+      <span style="opacity:0.3;">1</span>
+      <span class="current">2</span>
+      <span style="opacity:0.3;">/ 4</span>
+      <span class="dot"></span>
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-back" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
+      <button class="btn-next" id="nextBtn" disabled>Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main class="container builder-main">
+
+    <div class="builder-header">
+      <div class="builder-label">Step 2</div>
+      <h1 class="builder-title">Choose & Customize Your Theme</h1>
+      <p class="builder-sub">Select a theme that matches your brand. Customize colors, fonts, and pages — or keep the defaults.</p>
+    </div>
+
+    <div class="builder-grid">
+
+      <!-- ==========================================================
+           LEFT: THEME GALLERY
+           ========================================================== -->
+      <div class="theme-gallery">
+        <h3><i class="fas fa-palette" style="color:#b8860b; margin-right:8px;"></i> Select Theme</h3>
+        <div class="theme-grid" id="themeGrid">
+          <!-- Theme cards injected by JS -->
+        </div>
+      </div>
+
+      <!-- ==========================================================
+           RIGHT: CUSTOMIZATION PANEL
+           ========================================================== -->
+      <div class="customization-panel" id="customPanel">
+        <h3><i class="fas fa-sliders-h" style="color:#b8860b; margin-right:8px;"></i> Customize</h3>
+        <p class="sub">Adjust the look and feel of your chosen theme.</p>
+
+        <!-- Live Mini Preview -->
+        <div class="mini-preview" id="miniPreview">
+          <div class="preview-icon" id="previewIcon">🕉</div>
+          <div class="preview-name" id="previewName">Your Brand</div>
+          <div class="preview-desc" id="previewDesc">A beautiful website for your business</div>
+          <div class="preview-colors" id="previewColors">
+            <span style="background:#b8860b;"></span>
+            <span style="background:#8b6508;"></span>
+            <span style="background:#f0ece6;"></span>
+          </div>
+        </div>
+
+        <!-- Primary Color -->
+        <div class="control-group">
+          <label>Primary Color</label>
+          <div class="color-picker" id="colorPicker">
+            <button data-color="#b8860b" style="background:#b8860b;" class="active"><span class="check">✓</span></button>
+            <button data-color="#6d28d9" style="background:#6d28d9;"><span class="check">✓</span></button>
+            <button data-color="#2e7d32" style="background:#2e7d32;"><span class="check">✓</span></button>
+            <button data-color="#3b82f6" style="background:#3b82f6;"><span class="check">✓</span></button>
+            <button data-color="#dc2626" style="background:#dc2626;"><span class="check">✓</span></button>
+            <button data-color="#f59e0b" style="background:#f59e0b;"><span class="check">✓</span></button>
+            <button data-color="#8b5cf6" style="background:#8b5cf6;"><span class="check">✓</span></button>
+            <button data-color="#ec4899" style="background:#ec4899;"><span class="check">✓</span></button>
+          </div>
+        </div>
+
+        <!-- Font Selection -->
+        <div class="control-group">
+          <label>Font Style</label>
+          <div class="font-select" id="fontSelect">
+            <button data-font="inter" class="active">Inter</button>
+            <button data-font="playfair">Playfair</button>
+            <button data-font="orbitron">Orbitron</button>
+          </div>
+        </div>
+
+        <!-- Page Toggles -->
+        <div class="control-group">
+          <label>Pages to Include</label>
+          <div class="page-toggles" id="pageToggles">
+            <label class="page-toggle active">
+              <input type="checkbox" checked value="home" /> Home
+            </label>
+            <label class="page-toggle active">
+              <input type="checkbox" checked value="about" /> About
+            </label>
+            <label class="page-toggle active">
+              <input type="checkbox" checked value="services" /> Services
+            </label>
+            <label class="page-toggle">
+              <input type="checkbox" value="blog" /> Blog
+            </label>
+            <label class="page-toggle active">
+              <input type="checkbox" checked value="contact" /> Contact
+            </label>
+            <label class="page-toggle">
+              <input type="checkbox" value="portfolio" /> Portfolio
+            </label>
+          </div>
+        </div>
+
+        <!-- Selection summary -->
+        <div style="margin-top:12px; padding:12px 16px; background:rgba(184,134,11,0.02); border-radius:12px; border:1px solid rgba(184,134,11,0.04);">
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem;">
+            <span style="color:rgba(255,255,255,0.2);">Selected Theme</span>
+            <span style="color:#b8860b; font-weight:600;" id="selectedThemeName">None</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-top:4px;">
+            <span style="color:rgba(255,255,255,0.2);">Pages</span>
+            <span style="color:rgba(255,255,255,0.3);" id="selectedPageCount">0</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer container">
+    <p>Built with ॐ • <a href="#">Swayam</a> — Free AI Website Builder</p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- THEME DATA -----
+      const themes = [{
+        id: 'veda',
+        name: 'Veda',
+        desc: 'Spiritual • Wellness',
+        icon: '🕉',
+        colors: ['#b8860b', '#8b6508', '#f0ece6'],
+        primary: '#b8860b',
+        defaultFont: 'playfair'
+      }, {
+        id: 'karma',
+        name: 'Karma',
+        desc: 'Agency • Creative',
+        icon: '🚀',
+        colors: ['#6d28d9', '#1a1a2e', '#e8e8f0'],
+        primary: '#6d28d9',
+        defaultFont: 'orbitron'
+      }, {
+        id: 'sattva',
+        name: 'Sattva',
+        desc: 'E‑commerce • Retail',
+        icon: '🛍️',
+        colors: ['#2e7d32', '#1b5e20', '#f8f6f2'],
+        primary: '#2e7d32',
+        defaultFont: 'inter'
+      }, {
+        id: 'dharma',
+        name: 'Dharma',
+        desc: 'Consulting • Corporate',
+        icon: '📊',
+        colors: ['#3b82f6', '#1e293b', '#f8fafc'],
+        primary: '#3b82f6',
+        defaultFont: 'inter'
+      }];
+
+      // ----- STATE -----
+      let state = {
+        selectedTheme: null, // theme id
+        primaryColor: '#b8860b',
+        font: 'inter',
+        pages: ['home', 'about', 'services', 'contact'],
+        initialized: false
+      };
+
+      // ----- DOM REFS -----
+      const themeGrid = document.getElementById('themeGrid');
+      const nextBtn = document.getElementById('nextBtn');
+      const backBtn = document.getElementById('backBtn');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const miniPreview = document.getElementById('miniPreview');
+      const previewIcon = document.getElementById('previewIcon');
+      const previewName = document.getElementById('previewName');
+      const previewDesc = document.getElementById('previewDesc');
+      const previewColors = document.getElementById('previewColors');
+      const selectedThemeName = document.getElementById('selectedThemeName');
+      const selectedPageCount = document.getElementById('selectedPageCount');
+      const colorPicker = document.getElementById('colorPicker');
+      const fontSelect = document.getElementById('fontSelect');
+      const pageToggles = document.getElementById('pageToggles');
+
+      // ============================================================
+      // 1. RENDER THEME CARDS
+      // ============================================================
+      function renderThemes() {
+        if (!themeGrid) return;
+        let html = '';
+        themes.forEach(function(theme) {
+          const isSelected = state.selectedTheme === theme.id;
+          html += `
+            <div class="theme-card ${isSelected ? 'selected' : ''}" data-theme="${theme.id}">
+              <div class="check"><i class="fas fa-check"></i></div>
+              <div class="preview">
+                <span>${theme.icon}</span>
+                <div class="overlay">Preview</div>
+              </div>
+              <div class="name">${theme.name}</div>
+              <div class="desc">${theme.desc}</div>
+            </div>
+          `;
+        });
+        themeGrid.innerHTML = html;
+
+        // Attach click events
+        document.querySelectorAll('.theme-card').forEach(function(card) {
+          card.addEventListener('click', function() {
+            const themeId = this.dataset.theme;
+            selectTheme(themeId);
+          });
+        });
+
+        // If no theme selected, auto-select first
+        if (!state.selectedTheme && themes.length > 0) {
+          selectTheme(themes[0].id);
+        }
+      }
+
+      // ============================================================
+      // 2. SELECT THEME
+      // ============================================================
+      function selectTheme(themeId) {
+        const theme = themes.find(function(t) { return t.id === themeId; });
+        if (!theme) {
+          showToast('Theme not found. Please try again.', 'error');
+          return;
+        }
+
+        // Validate that theme exists and has required data
+        try {
+          if (!theme.id || !theme.name) {
+            throw new Error('Invalid theme data structure.');
+          }
+        } catch (err) {
+          showToast('Error loading theme: ' + err.message, 'error');
+          return;
+        }
+
+        // Update state
+        state.selectedTheme = themeId;
+        state.primaryColor = theme.primary;
+        state.font = theme.defaultFont || 'inter';
+
+        // Update UI
+        document.querySelectorAll('.theme-card').forEach(function(c) {
+          c.classList.toggle('selected', c.dataset.theme === themeId);
+        });
+
+        // Update color picker
+        document.querySelectorAll('.color-picker button').forEach(function(btn) {
+          btn.classList.toggle('active', btn.dataset.color === theme.primary);
+        });
+
+        // Update font select
+        document.querySelectorAll('.font-select button').forEach(function(btn) {
+          btn.classList.toggle('active', btn.dataset.font === theme.defaultFont);
+        });
+
+        // Update preview
+        updatePreview(theme);
+
+        // Update selected theme name
+        selectedThemeName.textContent = theme.name;
+
+        // Update page count
+        updatePageCount();
+
+        // Enable next button
+        nextBtn.disabled = false;
+
+        // Save to localStorage
+        saveState();
+
+        showToast('Selected: ' + theme.name, 'success');
+      }
+
+      // ============================================================
+      // 3. UPDATE PREVIEW
+      // ============================================================
+      function updatePreview(theme) {
+        if (!theme) {
+          const found = themes.find(function(t) { return t.id === state.selectedTheme; });
+          if (!found) return;
+          theme = found;
+        }
+
+        try {
+          previewIcon.textContent = theme.icon || '🕉';
+          previewName.textContent = theme.name + ' Theme';
+          previewName.style.color = state.primaryColor;
+          previewDesc.textContent = 'Custom ' + theme.desc + ' website';
+          previewDesc.style.color = 'rgba(255,255,255,0.3)';
+
+          // Update colors
+          previewColors.innerHTML = '';
+          const colors = theme.colors || ['#b8860b', '#8b6508', '#f0ece6'];
+          colors.forEach(function(c) {
+            const span = document.createElement('span');
+            span.style.background = c;
+            previewColors.appendChild(span);
+          });
+
+          // Update mini preview background
+          miniPreview.style.background = 'rgba(255,255,255,0.01)';
+          miniPreview.style.borderColor = state.primaryColor + '33';
+
+        } catch (err) {
+          showToast('Error updating preview: ' + err.message, 'error');
+        }
+      }
+
+      // ============================================================
+      // 4. PAGE TOGGLES
+      // ============================================================
+      function updatePageCount() {
+        const checked = document.querySelectorAll('#pageToggles input[type="checkbox"]:checked');
+        selectedPageCount.textContent = checked.length + ' pages';
+        // Update state
+        state.pages = Array.from(checked).map(function(el) { return el.value; });
+        saveState();
+      }
+
+      // ============================================================
+      // 5. COLOR PICKER
+      // ============================================================
+      function setupColorPicker() {
+        const buttons = colorPicker.querySelectorAll('button');
+        buttons.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            const color = this.dataset.color;
+            if (!color) {
+              showToast('Invalid color selection.', 'error');
+              return;
+            }
+            buttons.forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            state.primaryColor = color;
+            // Update preview
+            const theme = themes.find(function(t) { return t.id === state.selectedTheme; });
+            if (theme) {
+              // Override primary color
+              const updatedTheme = { ...theme, primary: color };
+              updatePreview(updatedTheme);
+            }
+            // Update mini preview border
+            miniPreview.style.borderColor = color + '44';
+            saveState();
+            showToast('Color updated', 'success');
+          });
+        });
+      }
+
+      // ============================================================
+      // 6. FONT SELECTION
+      // ============================================================
+      function setupFontSelect() {
+        const buttons = fontSelect.querySelectorAll('button');
+        buttons.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            const font = this.dataset.font;
+            if (!font) {
+              showToast('Invalid font selection.', 'error');
+              return;
+            }
+            buttons.forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            state.font = font;
+            // Apply to preview
+            previewName.style.fontFamily = font === 'playfair' ? "'Playfair Display', serif" :
+              font === 'orbitron' ? "'Orbitron', sans-serif" :
+              "'Inter', sans-serif";
+            saveState();
+            showToast('Font updated: ' + font, 'success');
+          });
+        });
+      }
+
+      // ============================================================
+      // 7. PAGE TOGGLES SETUP
+      // ============================================================
+      function setupPageToggles() {
+        const toggles = pageToggles.querySelectorAll('.page-toggle');
+        toggles.forEach(function(toggle) {
+          const checkbox = toggle.querySelector('input[type="checkbox"]');
+          if (!checkbox) return;
+          checkbox.addEventListener('change', function() {
+            toggle.classList.toggle('active', this.checked);
+            updatePageCount();
+            // Re-validate
+            validateSelection();
+          });
+          // Click on the label toggles checkbox
+          toggle.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'INPUT') {
+              const cb = this.querySelector('input[type="checkbox"]');
+              if (cb) {
+                cb.checked = !cb.checked;
+                cb.dispatchEvent(new Event('change'));
+              }
+            }
+          });
+        });
+        updatePageCount();
+      }
+
+      // ============================================================
+      // 8. VALIDATION
+      // ============================================================
+      function validateSelection() {
+        const checked = document.querySelectorAll('#pageToggles input[type="checkbox"]:checked');
+        if (checked.length === 0) {
+          showToast('Please select at least one page to include.', 'error');
+          nextBtn.disabled = true;
+          return false;
+        }
+        if (!state.selectedTheme) {
+          showToast('Please select a theme.', 'error');
+          nextBtn.disabled = true;
+          return false;
+        }
+        nextBtn.disabled = false;
+        return true;
+      }
+
+      // ============================================================
+      // 9. TOAST SYSTEM
+      // ============================================================
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        try {
+          if (typeof message !== 'string') {
+            message = String(message);
+          }
+          toastMessage.textContent = message;
+          toast.className = 'toast';
+          if (type === 'error') toast.classList.add('error');
+          if (type === 'success') toast.classList.add('success');
+          toast.classList.add('show');
+
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(function() {
+            toast.classList.remove('show');
+          }, 3500);
+        } catch (err) {
+          // Fallback: console log
+          console.error('Toast error:', err);
+          console.log('Message:', message);
+        }
+      }
+
+      // ============================================================
+      // 10. STATE PERSISTENCE (localStorage)
+      // ============================================================
+      function saveState() {
+        try {
+          const data = {
+            selectedTheme: state.selectedTheme,
+            primaryColor: state.primaryColor,
+            font: state.font,
+            pages: state.pages,
+            timestamp: Date.now()
+          };
+          localStorage.setItem('swayam_builder_state', JSON.stringify(data));
+        } catch (err) {
+          console.warn('Could not save state:', err);
+        }
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem('swayam_builder_state');
+          if (!raw) return false;
+          const data = JSON.parse(raw);
+          // Validate data structure
+          if (!data.selectedTheme || !data.primaryColor || !data.font) {
+            console.warn('Invalid state data, ignoring.');
+            return false;
+          }
+          // Check if theme still exists
+          const themeExists = themes.some(function(t) { return t.id === data.selectedTheme; });
+          if (!themeExists) {
+            console.warn('Saved theme no longer exists, ignoring.');
+            return false;
+          }
+          state.selectedTheme = data.selectedTheme;
+          state.primaryColor = data.primaryColor;
+          state.font = data.font;
+          if (data.pages && Array.isArray(data.pages)) {
+            state.pages = data.pages;
+          }
+          return true;
+        } catch (err) {
+          console.warn('Could not load state:', err);
+          return false;
+        }
+      }
+
+      function restoreState() {
+        const loaded = loadState();
+        if (loaded && state.selectedTheme) {
+          // Restore theme selection
+          const theme = themes.find(function(t) { return t.id === state.selectedTheme; });
+          if (theme) {
+            selectTheme(state.selectedTheme);
+            // Restore color
+            document.querySelectorAll('.color-picker button').forEach(function(btn) {
+              btn.classList.toggle('active', btn.dataset.color === state.primaryColor);
+            });
+            // Restore font
+            document.querySelectorAll('.font-select button').forEach(function(btn) {
+              btn.classList.toggle('active', btn.dataset.font === state.font);
+            });
+            // Restore pages
+            document.querySelectorAll('#pageToggles input[type="checkbox"]').forEach(function(cb) {
+              cb.checked = state.pages.includes(cb.value);
+              cb.dispatchEvent(new Event('change'));
+            });
+            // Update preview
+            const updatedTheme = { ...theme, primary: state.primaryColor };
+            updatePreview(updatedTheme);
+            selectedThemeName.textContent = theme.name;
+            updatePageCount();
+            nextBtn.disabled = false;
+            showToast('Restored your previous selection.', 'success');
+            return true;
+          }
+        }
+        // Fallback: select first theme
+        if (themes.length > 0) {
+          selectTheme(themes[0].id);
+          return true;
+        }
+        return false;
+      }
+
+      // ============================================================
+      // 11. NAVIGATION
+      // ============================================================
+      function goToStep1() {
+        try {
+          // Save state before leaving
+          saveState();
+          window.location.href = 'step-1.html';
+        } catch (err) {
+          showToast('Error navigating back: ' + err.message, 'error');
+        }
+      }
+
+      function goToStep3() {
+        try {
+          // Validate before proceeding
+          if (!validateSelection()) {
+            return;
+          }
+          // Save final state
+          saveState();
+          // In production, would navigate to step-3.html
+          // For demo, show success
+          showToast('🎉 Theme saved! Proceeding to Step 3...', 'success');
+          setTimeout(function() {
+            // Simulate navigation
+            // window.location.href = 'step-3.html';
+            alert('Step 3: Preview & Generate would load here.\n\nSelected Theme: ' + state.selectedTheme +
+              '\nPrimary Color: ' + state.primaryColor +
+              '\nFont: ' + state.font +
+              '\nPages: ' + state.pages.join(', '));
+          }, 800);
+        } catch (err) {
+          showToast('Error proceeding: ' + err.message, 'error');
+        }
+      }
+
+      // ============================================================
+      // 12. INITIALIZATION
+      // ============================================================
+      function init() {
+        try {
+          // Render themes
+          renderThemes();
+
+          // Setup controls
+          setupColorPicker();
+          setupFontSelect();
+          setupPageToggles();
+
+          // Restore state or select default
+          const restored = restoreState();
+
+          // If no theme selected yet, select first
+          if (!state.selectedTheme && themes.length > 0) {
+            selectTheme(themes[0].id);
+          }
+
+          // Setup navigation
+          backBtn.addEventListener('click', goToStep1);
+          nextBtn.addEventListener('click', goToStep3);
+
+          // Keyboard shortcuts
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+              e.preventDefault();
+              goToStep3();
+            }
+            if (e.key === 'Escape') {
+              // Close toast if open
+              toast.classList.remove('show');
+            }
+          });
+
+          // Handle page visibility change to save state
+          document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+              saveState();
+            }
+          });
+
+          // Handle beforeunload
+          window.addEventListener('beforeunload', function() {
+            saveState();
+          });
+
+          // Initial validation
+          validateSelection();
+
+          state.initialized = true;
+          console.log('Swayam Step 2 initialized successfully.');
+
+        } catch (err) {
+          console.error('Fatal initialization error:', err);
+          showToast('Failed to initialize. Please refresh the page.', 'error');
+        }
+      }
+
+      // ============================================================
+      // 13. ERROR BOUNDARY (global)
+      // ============================================================
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please try again.', 'error');
+        return true;
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled promise rejection:', e.reason);
+        showToast('An unexpected error occurred. Please try again.', 'error');
+        return true;
+      });
+
+      // ============================================================
+      // 14. START
+      // ============================================================
+      // Wait for DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
