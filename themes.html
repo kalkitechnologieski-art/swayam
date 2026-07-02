@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Themes — Swayam</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Same base styles as previous pages, plus theme gallery */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:#0a0a1a; color:#f0ece6; }
+    .container { max-width:1280px; margin:0 auto; padding:0 24px; }
+    /* header same as before (omitted for brevity, but include) */
+    .header { background:rgba(10,10,26,0.92); backdrop-filter:blur(18px); border-bottom:1px solid rgba(184,134,11,0.15); position:sticky; top:0; z-index:1000; padding:14px 0; }
+    .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+    .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .logo-icon { width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #b8860b, #8b6508); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; color:#fff; }
+    .logo-text { font-size:1.6rem; font-weight:700; background:linear-gradient(135deg,#f0ece6, #b8860b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text span { font-weight:300; -webkit-text-fill-color:rgba(255,255,255,0.4); }
+    .nav-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.9rem; font-weight:500; margin-left:28px; }
+    .nav-links a:hover { color:#fff; }
+    .nav-links a.active { color:#b8860b; }
+    .header-cta { padding:8px 24px; border-radius:40px; background:linear-gradient(135deg,#b8860b,#d4a017); color:#fff !important; font-weight:600; margin-left:20px; }
+
+    .themes-header { padding:40px 0 20px; text-align:center; }
+    .themes-header h1 { font-size:2.8rem; }
+    .filter-bar { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:20px 0 30px; }
+    .filter-btn { padding:6px 20px; border-radius:40px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.6); cursor:pointer; transition:0.3s; font-family:inherit; }
+    .filter-btn:hover { background:rgba(184,134,11,0.1); border-color:#b8860b; color:#fff; }
+    .filter-btn.active { background:rgba(184,134,11,0.15); border-color:#b8860b; color:#b8860b; }
+
+    .theme-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:24px; padding-bottom:40px; }
+    .theme-card { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); border-radius:16px; overflow:hidden; transition:0.3s; cursor:pointer; }
+    .theme-card:hover { transform:translateY(-6px); border-color:rgba(184,134,11,0.2); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
+    .theme-card .preview { height:140px; background:linear-gradient(135deg,#1a1a2e,#2d2d44); }
+    .theme-card .info { padding:14px; }
+    .theme-card .info h4 { color:#fff; font-size:1rem; }
+    .theme-card .info p { font-size:0.8rem; color:rgba(255,255,255,0.3); }
+
+    /* footer same as before */
+  </style>
+</head>
+<body>
+  <header class="header"><!-- same header as previous --></header>
+
+  <div class="container">
+    <div class="themes-header">
+      <h1>100+ Vedic & Modern Themes</h1>
+      <p style="color:rgba(255,255,255,0.4);">Choose the perfect design for your brand.</p>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="vedic">Vedic</button>
+      <button class="filter-btn" data-filter="modern">Modern</button>
+      <button class="filter-btn" data-filter="business">Business</button>
+      <button class="filter-btn" data-filter="creative">Creative</button>
+      <button class="filter-btn" data-filter="dark">Dark</button>
+      <button class="filter-btn" data-filter="light">Light</button>
+    </div>
+
+    <div class="theme-grid" id="themeGrid">
+      <!-- 20 example themes; in production, 100+ would be generated -->
+      <div class="theme-card" data-tags="vedic,business"><div class="preview" style="background:linear-gradient(135deg,#b8860b,#8b6508);"></div><div class="info"><h4>Vedic Gold</h4><p>Business • Premium</p></div></div>
+      <div class="theme-card" data-tags="modern,light"><div class="preview" style="background:linear-gradient(135deg,#f0ece6,#c4b5fd);"></div><div class="info"><h4>Minimal Light</h4><p>Creative • Clean</p></div></div>
+      <div class="theme-card" data-tags="dark,modern"><div class="preview" style="background:linear-gradient(135deg,#1a1a2e,#2d2d44);"></div><div class="info"><h4>Dark Elegance</h4><p>Agency • Bold</p></div></div>
+      <div class="theme-card" data-tags="creative,vedic"><div class="preview" style="background:linear-gradient(135deg,#d4a017,#f59e0b);"></div><div class="info"><h4>Kalaripayattu</h4><p>Creative • Traditional</p></div></div>
+      <div class="theme-card" data-tags="business,light"><div class="preview" style="background:linear-gradient(135deg,#ffffff,#e0e7ff);"></div><div class="info"><h4>Corporate White</h4><p>Business • Formal</p></div></div>
+      <div class="theme-card" data-tags="dark,creative"><div class="preview" style="background:linear-gradient(135deg,#0f0f23,#6d28d9);"></div><div class="info"><h4>Cosmic Vedic</h4><p>Creative • Mystic</p></div></div>
+      <!-- Add more as needed -->
+    </div>
+  </div>
+
+  <script>
+    // Filtering
+    const filters = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.theme-card');
+
+    filters.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filters.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        cards.forEach(card => {
+          const tags = card.dataset.tags.split(',');
+          if (filter === 'all' || tags.includes(filter)) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
