@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veda — Spiritual & Wellness Theme Preview | Swayam</title>
+  <meta name="description" content="Veda theme preview — a spiritual and wellness website with calm, earthy design, Vedic motifs, and production‑grade features." />
+  <link rel="canonical" href="https://swayam.vercel.app/theme-preview/veda-demo.html" />
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* ==========================================================================
+       RESET & BASE
+       ========================================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #faf0e6;
+      color: #2d1b0e;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #e8ddd0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b8860b;
+      border-radius: 10px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    .section-padding {
+      padding: 80px 0;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #2d1b0e;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .section-sub {
+      font-size: 1.1rem;
+      color: #7a6b5a;
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .mx-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(184, 134, 11, 0.3);
+    }
+    .btn-secondary {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 60px;
+      background: transparent;
+      color: #2d1b0e;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid #2d1b0e;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .btn-secondary:hover {
+      background: #2d1b0e;
+      color: #fff;
+    }
+    /* ==========================================================================
+       HEADER
+       ========================================================================== */
+    .header {
+      background: rgba(250, 240, 230, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184, 134, 11, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 16px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2d1b0e;
+    }
+    .logo i {
+      color: #b8860b;
+      font-size: 1.6rem;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #5a4a3a;
+      transition: 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: #b8860b;
+    }
+    .nav-links a.active {
+      color: #b8860b;
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #b8860b;
+      border-radius: 4px;
+    }
+    .header-cta {
+      padding: 8px 22px;
+      border-radius: 40px;
+      background: #b8860b;
+      color: #fff !important;
+      font-weight: 600;
+    }
+    .header-cta:hover {
+      background: #d4a017;
+      color: #fff !important;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      color: #2d1b0e;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       HERO
+       ========================================================================== */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+      background: linear-gradient(135deg, #faf0e6 40%, #f5e6d3);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '🕉';
+      position: absolute;
+      right: -60px;
+      top: -80px;
+      font-size: 28rem;
+      opacity: 0.04;
+      pointer-events: none;
+      transform: rotate(15deg);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-content .badge {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 30px;
+      background: rgba(184, 134, 11, 0.1);
+      color: #b8860b;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.6rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #2d1b0e;
+      margin-bottom: 16px;
+    }
+    .hero-content h1 span {
+      color: #b8860b;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #5a4a3a;
+      max-width: 480px;
+      margin-bottom: 28px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hero-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image .placeholder {
+      width: 100%;
+      aspect-ratio: 1/1;
+      max-width: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #d4a017, #b8860b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 60px rgba(184, 134, 11, 0.2);
+    }
+
+    /* ==========================================================================
+       FEATURES
+       ========================================================================== */
+    .features {
+      background: #fff;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+    }
+    .feature-card {
+      text-align: center;
+      padding: 30px 20px;
+      border-radius: 16px;
+      background: #faf0e6;
+      transition: 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    }
+    .feature-card i {
+      font-size: 2.6rem;
+      color: #b8860b;
+      margin-bottom: 12px;
+    }
+    .feature-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2d1b0e;
+      margin-bottom: 4px;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #7a6b5a;
+    }
+
+    /* ==========================================================================
+       ABOUT
+       ========================================================================== */
+    .about {
+      background: #faf0e6;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .about-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #2d1b0e;
+      margin-bottom: 16px;
+    }
+    .about-content p {
+      color: #5a4a3a;
+      margin-bottom: 16px;
+    }
+    .about-image {
+      display: flex;
+      justify-content: center;
+    }
+    .about-image .placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      max-width: 500px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #e8ddd0, #d4c5b0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: rgba(45, 27, 14, 0.1);
+    }
+
+    /* ==========================================================================
+       SERVICES
+       ========================================================================== */
+    .services {
+      background: #fff;
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+    .service-card {
+      padding: 30px;
+      border-radius: 16px;
+      background: #faf0e6;
+      transition: 0.3s;
+      border: 1px solid rgba(184, 134, 11, 0.05);
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: #b8860b;
+      box-shadow: 0 8px 30px rgba(184, 134, 11, 0.06);
+    }
+    .service-card i {
+      font-size: 2.4rem;
+      color: #b8860b;
+      margin-bottom: 12px;
+    }
+    .service-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2d1b0e;
+      margin-bottom: 6px;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: #7a6b5a;
+    }
+
+    /* ==========================================================================
+       BLOG / ARTICLES
+       ========================================================================== */
+    .blog {
+      background: #faf0e6;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .blog-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: 0.3s;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+    }
+    .blog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    }
+    .blog-card .img {
+      height: 200px;
+      background: linear-gradient(135deg, #d4c5b0, #e8ddd0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: rgba(45, 27, 14, 0.08);
+    }
+    .blog-card .content {
+      padding: 20px 24px 24px;
+    }
+    .blog-card .content .date {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #b8860b;
+      font-weight: 600;
+    }
+    .blog-card .content h4 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #2d1b0e;
+      margin: 6px 0 8px;
+    }
+    .blog-card .content p {
+      font-size: 0.9rem;
+      color: #7a6b5a;
+    }
+    .blog-card .content a {
+      display: inline-block;
+      margin-top: 10px;
+      font-weight: 600;
+      color: #b8860b;
+    }
+    .blog-card .content a:hover {
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       TESTIMONIALS
+       ========================================================================== */
+    .testimonials {
+      background: #fff;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: #faf0e6;
+      padding: 24px;
+      border-radius: 16px;
+      font-style: italic;
+    }
+    .testimonial-card p {
+      font-size: 1rem;
+      color: #2d1b0e;
+      margin-bottom: 12px;
+    }
+    .testimonial-card .author {
+      font-weight: 600;
+      color: #b8860b;
+      font-style: normal;
+    }
+    .testimonial-card .role {
+      font-size: 0.8rem;
+      color: #7a6b5a;
+      font-style: normal;
+    }
+
+    /* ==========================================================================
+       CTA
+       ========================================================================== */
+    .cta-section {
+      background: linear-gradient(135deg, #b8860b, #8b6508);
+      color: #fff;
+      text-align: center;
+      padding: 80px 0;
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+    }
+    .cta-section p {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+    .cta-section .btn-primary {
+      background: #fff;
+      color: #2d1b0e;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    }
+    .cta-section .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .footer {
+      background: #2d1b0e;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 40px 0 28px;
+      text-align: center;
+    }
+    .footer a {
+      color: #b8860b;
+    }
+    .footer a:hover {
+      color: #d4a017;
+    }
+    .footer .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+    .footer .footer-links a {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.85rem;
+    }
+    .footer .footer-links a:hover {
+      color: #b8860b;
+    }
+    .footer .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 12px 0;
+    }
+    .footer .footer-social a {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
+    .footer .footer-social a:hover {
+      color: #b8860b;
+    }
+    .footer p {
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-content p {
+        max-width: 100%;
+      }
+      .hero-cta {
+        justify-content: center;
+      }
+      .hero-image .placeholder {
+        max-width: 300px;
+      }
+      .about-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .section-title {
+        font-size: 2.2rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .menu-toggle {
+        display: block;
+        align-self: flex-end;
+      }
+      .hero {
+        padding: 60px 0 40px;
+      }
+      .hero-content h1 {
+        font-size: 2.6rem;
+      }
+      .section-padding {
+        padding: 50px 0;
+      }
+      .feature-grid,
+      .service-grid,
+      .blog-grid,
+      .testimonial-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .feature-grid,
+      .service-grid,
+      .blog-grid,
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       HEADER
+       ================================================================ -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <i class="fas fa-om"></i>
+        <span>Veda</span>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#hero" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+        <a href="https://swayam.vercel.app/builder/step-1.html" class="header-cta">Build with Swayam</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       HERO
+       ================================================================ -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="badge">🌿 Vedic Wellness</div>
+        <h1>Find Your Inner <span>Balance</span></h1>
+        <p>Discover ancient wisdom for modern living. We offer meditation, yoga, astrology, and holistic healing to guide your journey.</p>
+        <div class="hero-cta">
+          <a href="#services" class="btn-primary">Explore Services</a>
+          <a href="#about" class="btn-secondary">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="placeholder">
+          <span>🕉</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       FEATURES
+       ================================================================ -->
+  <section class="features section-padding" id="features">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Why Veda?</h2>
+        <p class="section-sub mx-auto">Holistic, authentic, and deeply rooted in tradition.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <i class="fas fa-spa"></i>
+          <h4>Meditation</h4>
+          <p>Guided sessions for mindfulness and clarity.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-yoga"></i>
+          <h4>Yoga</h4>
+          <p>Ancient postures for strength and flexibility.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-moon"></i>
+          <h4>Astrology</h4>
+          <p>Personalized readings to align with cosmic energy.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-leaf"></i>
+          <h4>Holistic Healing</h4>
+          <p>Ayurveda, energy work, and natural therapies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       ABOUT
+       ================================================================ -->
+  <section class="about section-padding" id="about">
+    <div class="container about-grid">
+      <div class="about-content">
+        <h2>About Veda</h2>
+        <p>Veda is a sanctuary for those seeking balance, purpose, and connection. Our approach combines ancient Indian wisdom with modern science to create transformative experiences.</p>
+        <p>Whether you're a beginner or a seasoned practitioner, our community welcomes you. We offer workshops, one-on-one coaching, and digital resources to support your journey.</p>
+        <a href="#contact" class="btn-primary" style="margin-top:12px;">Join Our Community</a>
+      </div>
+      <div class="about-image">
+        <div class="placeholder">
+          <span>🌿</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SERVICES
+       ================================================================ -->
+  <section class="services section-padding" id="services">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-sub mx-auto">Tailored experiences to nurture your mind, body, and spirit.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <i class="fas fa-om"></i>
+          <h4>Guided Meditation</h4>
+          <p>Daily live sessions and recorded meditations for all levels.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-praying-hands"></i>
+          <h4>Yoga Retreats</h4>
+          <p>Immersive retreats in nature, combining yoga, meditation, and Ayurveda.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-star"></i>
+          <h4>Astrology Consultations</h4>
+          <p>Personal birth chart readings and transit predictions.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-heart"></i>
+          <h4>Energy Healing</h4>
+          <p>Reiki, sound healing, and chakra balancing sessions.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-book"></i>
+          <h4>Workshops & Courses</h4>
+          <p>In-depth programs on Vedic philosophy, mindfulness, and self-discovery.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-hand-holding-heart"></i>
+          <h4>Community Support</h4>
+          <p>Group circles, online forums, and peer mentoring.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       BLOG
+       ================================================================ -->
+  <section class="blog section-padding" id="blog">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">From the Blog</h2>
+        <p class="section-sub mx-auto">Wisdom, stories, and practical guides.</p>
+      </div>
+      <div class="blog-grid">
+        <div class="blog-card">
+          <div class="img"><span>📿</span></div>
+          <div class="content">
+            <div class="date">July 1, 2026</div>
+            <h4>5 Mantras for Daily Peace</h4>
+            <p>Ancient chants to calm the mind and elevate your vibration.</p>
+            <a href="#">Read More →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="img"><span>🧘</span></div>
+          <div class="content">
+            <div class="date">June 25, 2026</div>
+            <h4>The Science of Meditation</h4>
+            <p>How 10 minutes of mindfulness transforms your brain.</p>
+            <a href="#">Read More →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="img"><span>🌟</span></div>
+          <div class="content">
+            <div class="date">June 18, 2026</div>
+            <h4>Vedic Astrology for Beginners</h4>
+            <p>Understand your birth chart and planetary influences.</p>
+            <a href="#">Read More →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       TESTIMONIALS
+       ================================================================ -->
+  <section class="testimonials section-padding" id="testimonials">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">What Our Community Says</h2>
+        <p class="section-sub mx-auto">Real voices, real transformations.</p>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p>"Veda has completely changed my life. The meditation sessions brought me clarity I never thought possible."</p>
+          <div class="author">— Ananya Sharma</div>
+          <div class="role">Yoga Practitioner</div>
+        </div>
+        <div class="testimonial-card">
+          <p>"The astrology consultation was incredibly accurate. It gave me direction during a confusing time."</p>
+          <div class="author">— Rajesh Kumar</div>
+          <div class="role">Entrepreneur</div>
+        </div>
+        <div class="testimonial-card">
+          <p>"I joined the retreat and felt reborn. The combination of yoga, nature, and community was magical."</p>
+          <div class="author">— Priya Patel</div>
+          <div class="role">Wellness Coach</div>
+        </div>
+        <div class="testimonial-card">
+          <p>"Veda's workshops are beautifully structured. I've learned so much about Vedic philosophy and self-care."</p>
+          <div class="author">— Vikram Singh</div>
+          <div class="role">Software Engineer</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       CONTACT / CTA
+       ================================================================ -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <h2>Begin Your Journey Today</h2>
+      <p>Connect with our experts and start your path to balance and fulfillment.</p>
+      <a href="https://swayam.vercel.app/pages/contact.html" class="btn-primary">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       FOOTER
+       ================================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+        <a href="https://swayam.vercel.app/index.html">Swayam</a>
+        <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+      <p>© 2026 Veda — A Theme by <a href="https://swayam.vercel.app" target="_blank">Swayam</a> &amp; <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+      <p style="font-size:0.7rem; margin-top:6px; opacity:0.4;">Built with ॐ • Vedic Intelligence for the modern world.</p>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       JAVASCRIPT
+       ================================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- MOBILE MENU -----
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          if (window.innerWidth <= 768) {
+            if (navLinks.style.display === 'flex') {
+              navLinks.style.display = 'none';
+            } else {
+              navLinks.style.display = 'flex';
+              navLinks.style.flexDirection = 'column';
+              navLinks.style.alignItems = 'center';
+              navLinks.style.width = '100%';
+            }
+          }
+        });
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 768) {
+            navLinks.style.display = 'flex';
+            navLinks.style.flexDirection = 'row';
+          } else {
+            navLinks.style.display = 'none';
+          }
+        });
+        if (window.innerWidth <= 768) {
+          navLinks.style.display = 'none';
+        }
+      }
+
+      // ----- SMOOTH SCROLL -----
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Close mobile menu if open
+            if (window.innerWidth <= 768 && navLinks) {
+              navLinks.style.display = 'none';
+            }
+          }
+        });
+      });
+
+      // ----- ACTIVE NAV LINK ON SCROLL (simple highlight) -----
+      const sections = document.querySelectorAll('section[id]');
+      const navLinkItems = document.querySelectorAll('.nav-links a:not(.header-cta)');
+      window.addEventListener('scroll', function() {
+        let current = '';
+        sections.forEach(function(section) {
+          const sectionTop = section.offsetTop - 120;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+          }
+        });
+        navLinkItems.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
