@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dharma — Consulting & Corporate Theme Preview | Swayam</title>
+  <meta name="description" content="Dharma theme preview — a premium consulting and corporate theme with advanced interactions, service catalog, team profiles, and resource library." />
+  <link rel="canonical" href="https://swayam.vercel.app/theme-preview/dharma-demo.html" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       RESET & BASE
+       ========================================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8fafc;
+      color: #1a1a2e;
+      line-height: 1.7;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: #0a0a14;
+      color: #e8e8f0;
+    }
+    body.dark .header {
+      background: rgba(10, 10, 20, 0.95);
+      border-bottom-color: rgba(255, 255, 255, 0.04);
+    }
+    body.dark .logo {
+      color: #e8e8f0;
+    }
+    body.dark .nav-links a {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    body.dark .nav-links a:hover {
+      color: #fff;
+    }
+    body.dark .nav-links a.active {
+      color: #3b82f6;
+    }
+    body.dark .hero {
+      background: radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.06), transparent 60%);
+    }
+    body.dark .hero-content h1 {
+      color: #fff;
+    }
+    body.dark .hero-content p {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    body.dark .section-title {
+      color: #fff;
+    }
+    body.dark .section-sub {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    body.dark .feature-card,
+    body.dark .service-card,
+    body.dark .team-card,
+    body.dark .resource-card,
+    body.dark .testimonial-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.04);
+    }
+    body.dark .feature-card h4,
+    body.dark .service-card h4,
+    body.dark .team-card h4,
+    body.dark .resource-card h4 {
+      color: #fff;
+    }
+    body.dark .feature-card p,
+    body.dark .service-card p,
+    body.dark .resource-card p {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    body.dark .stat-item .number {
+      color: #fff;
+    }
+    body.dark .stat-item .label {
+      color: rgba(255, 255, 255, 0.3);
+    }
+    body.dark .footer {
+      border-top-color: rgba(255, 255, 255, 0.04);
+    }
+    body.dark .btn-secondary {
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #e8e8f0;
+    }
+    body.dark .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    body.dark .appointment-form input,
+    body.dark .appointment-form select,
+    body.dark .appointment-form textarea {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.06);
+      color: #e8e8f0;
+    }
+    body.dark .appointment-form input:focus,
+    body.dark .appointment-form select:focus,
+    body.dark .appointment-form textarea:focus {
+      border-color: #3b82f6;
+    }
+    body.dark .appointment-form label {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    body.dark .service-filter button {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.4);
+    }
+    body.dark .service-filter button:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: #3b82f6;
+      color: #fff;
+    }
+    body.dark .service-filter button.active {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #e8ecef;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 10px;
+    }
+    body.dark ::-webkit-scrollbar-track {
+      background: #14141e;
+    }
+    body.dark ::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    .section-padding {
+      padding: 80px 0;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+    .section-sub {
+      font-size: 1.1rem;
+      color: #6b6b80;
+      max-width: 640px;
+      margin-bottom: 40px;
+      transition: color 0.3s;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .mx-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 60px;
+      background: #3b82f6;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
+    }
+    .btn-primary:hover {
+      background: #2563eb;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.35);
+    }
+    .btn-secondary {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 60px;
+      background: transparent;
+      color: #1a1a2e;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid #1a1a2e;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .btn-secondary:hover {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    /* ==========================================================================
+       SCROLL PROGRESS BAR
+       ========================================================================== */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      z-index: 9999;
+      transition: width 0.1s;
+    }
+
+    /* ==========================================================================
+       THEME TOGGLE
+       ========================================================================== */
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #1a1a2e;
+      cursor: pointer;
+      transition: 0.3s;
+      padding: 4px 8px;
+      border-radius: 30px;
+      background: rgba(0, 0, 0, 0.04);
+    }
+    body.dark .theme-toggle {
+      color: #e8e8f0;
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .theme-toggle:hover {
+      transform: rotate(30deg);
+    }
+
+    /* ==========================================================================
+       HEADER
+       ========================================================================== */
+    .header {
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      transition: color 0.3s;
+    }
+    .logo i {
+      color: #3b82f6;
+      font-size: 1.6rem;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #4a4a60;
+      transition: 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: #3b82f6;
+    }
+    .nav-links a.active {
+      color: #3b82f6;
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #3b82f6;
+      border-radius: 4px;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-cta {
+      padding: 8px 22px;
+      border-radius: 40px;
+      background: #3b82f6;
+      color: #fff !important;
+      font-weight: 600;
+      box-shadow: 0 2px 12px rgba(59, 130, 246, 0.2);
+    }
+    .header-cta:hover {
+      background: #2563eb;
+      color: #fff !important;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      color: #1a1a2e;
+      cursor: pointer;
+    }
+    body.dark .menu-toggle {
+      color: #e8e8f0;
+    }
+
+    /* ==========================================================================
+       HERO
+       ========================================================================== */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+      background: radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.04), transparent 60%);
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .hero::before {
+      content: '📊';
+      position: absolute;
+      right: -40px;
+      top: -80px;
+      font-size: 24rem;
+      opacity: 0.02;
+      pointer-events: none;
+      transform: rotate(-15deg);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-content .badge {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 30px;
+      background: rgba(59, 130, 246, 0.08);
+      color: #3b82f6;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #1a1a2e;
+      margin-bottom: 16px;
+      transition: color 0.3s;
+    }
+    .hero-content h1 span {
+      color: #3b82f6;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #6b6b80;
+      max-width: 480px;
+      margin-bottom: 28px;
+      transition: color 0.3s;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 30px;
+      margin-top: 30px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+    }
+    .hero-stats .item .number {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #3b82f6;
+    }
+    .hero-stats .item .label {
+      font-size: 0.8rem;
+      color: #6b6b80;
+    }
+    body.dark .hero-stats {
+      border-top-color: rgba(255, 255, 255, 0.04);
+    }
+    body.dark .hero-stats .item .label {
+      color: rgba(255, 255, 255, 0.3);
+    }
+    body.dark .hero-stats .item .number {
+      color: #60a5fa;
+    }
+
+    .hero-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image .placeholder {
+      width: 100%;
+      aspect-ratio: 1/1;
+      max-width: 480px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      color: rgba(59, 130, 246, 0.08);
+      box-shadow: 0 20px 60px rgba(59, 130, 246, 0.06);
+      transition: background 0.3s;
+    }
+    body.dark .hero-image .placeholder {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+    }
+
+    /* ==========================================================================
+       CLIENTS / TRUST BAR
+       ========================================================================== */
+    .trust-bar {
+      padding: 30px 0;
+      background: rgba(0, 0, 0, 0.01);
+      border-top: 1px solid rgba(0, 0, 0, 0.03);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    }
+    body.dark .trust-bar {
+      background: rgba(255, 255, 255, 0.01);
+      border-color: rgba(255, 255, 255, 0.03);
+    }
+    .trust-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 30px 50px;
+    }
+    .trust-item {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: rgba(26, 26, 46, 0.15);
+      letter-spacing: 0.02em;
+      transition: 0.3s;
+    }
+    body.dark .trust-item {
+      color: rgba(255, 255, 255, 0.06);
+    }
+    .trust-item:hover {
+      color: #3b82f6;
+    }
+    body.dark .trust-item:hover {
+      color: #60a5fa;
+    }
+
+    /* ==========================================================================
+       FEATURES
+       ========================================================================== */
+    .features {
+      background: transparent;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      padding: 30px 24px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: 0.3s;
+      text-align: center;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    }
+    .feature-card i {
+      font-size: 2.4rem;
+      color: #3b82f6;
+      margin-bottom: 12px;
+    }
+    .feature-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #6b6b80;
+      transition: color 0.3s;
+    }
+
+    /* ==========================================================================
+       SERVICES / EXPERTISE
+       ========================================================================== */
+    .services {
+      background: rgba(0, 0, 0, 0.01);
+      padding: 80px 0;
+    }
+    body.dark .services {
+      background: rgba(255, 255, 255, 0.01);
+    }
+    .service-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .service-filter button {
+      padding: 8px 24px;
+      border-radius: 30px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      color: #4a4a60;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .service-filter button:hover {
+      background: rgba(59, 130, 246, 0.04);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+    .service-filter button.active {
+      background: rgba(59, 130, 246, 0.08);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      padding: 30px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0%;
+      background: #3b82f6;
+      transition: height 0.5s ease;
+    }
+    .service-card:hover::before {
+      height: 100%;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    }
+    .service-card i {
+      font-size: 2.2rem;
+      color: #3b82f6;
+      margin-bottom: 12px;
+    }
+    .service-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      transition: color 0.3s;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: #6b6b80;
+      transition: color 0.3s;
+    }
+    .service-card .tag {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 2px 14px;
+      border-radius: 20px;
+      background: rgba(59, 130, 246, 0.06);
+      color: #3b82f6;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       STATS COUNTER
+       ========================================================================== */
+    .stats-section {
+      padding: 60px 0;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: #fff;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    .stats-grid .stat-item .number {
+      font-size: 3rem;
+      font-weight: 800;
+      font-family: 'Playfair Display', serif;
+    }
+    .stats-grid .stat-item .label {
+      font-size: 0.9rem;
+      opacity: 0.75;
+    }
+
+    /* ==========================================================================
+       TEAM
+       ========================================================================== */
+    .team {
+      background: transparent;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+    }
+    .team-card {
+      text-align: center;
+      padding: 30px 20px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: 0.3s;
+    }
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    }
+    .team-card .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: rgba(59, 130, 246, 0.15);
+      transition: 0.3s;
+    }
+    .team-card:hover .avatar {
+      transform: scale(1.04);
+    }
+    body.dark .team-card .avatar {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+    }
+    .team-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      transition: color 0.3s;
+    }
+    .team-card .role {
+      font-size: 0.85rem;
+      color: #3b82f6;
+      font-weight: 500;
+    }
+    .team-card .bio {
+      font-size: 0.85rem;
+      color: #6b6b80;
+      margin-top: 8px;
+      transition: color 0.3s;
+    }
+    .team-card .social {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .team-card .social a {
+      color: #6b6b80;
+      transition: 0.3s;
+      font-size: 0.9rem;
+    }
+    .team-card .social a:hover {
+      color: #3b82f6;
+    }
+
+    /* ==========================================================================
+       RESOURCES
+       ========================================================================== */
+    .resources {
+      background: rgba(0, 0, 0, 0.01);
+      padding: 80px 0;
+    }
+    body.dark .resources {
+      background: rgba(255, 255, 255, 0.01);
+    }
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .resource-card {
+      padding: 24px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    }
+    .resource-card .icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .resource-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      transition: color 0.3s;
+    }
+    .resource-card p {
+      font-size: 0.85rem;
+      color: #6b6b80;
+      transition: color 0.3s;
+    }
+    .resource-card .meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #6b6b80;
+    }
+    .resource-card .meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ==========================================================================
+       TESTIMONIALS / CAROUSEL
+       ========================================================================== */
+    .testimonials {
+      background: transparent;
+      padding: 80px 0;
+    }
+    .testimonial-carousel {
+      position: relative;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .testimonial-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .testimonial-slide {
+      min-width: 100%;
+      padding: 0 20px;
+    }
+    .testimonial-slide .testimonial-card {
+      background: #fff;
+      padding: 30px 36px;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      text-align: center;
+    }
+    body.dark .testimonial-slide .testimonial-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.04);
+    }
+    .testimonial-slide .testimonial-card .stars {
+      color: #f59e0b;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+    .testimonial-slide .testimonial-card blockquote {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: #1a1a2e;
+      line-height: 1.8;
+      margin-bottom: 16px;
+      transition: color 0.3s;
+    }
+    body.dark .testimonial-slide .testimonial-card blockquote {
+      color: #e8e8f0;
+    }
+    .testimonial-slide .testimonial-card .author {
+      font-weight: 600;
+      color: #3b82f6;
+    }
+    .testimonial-slide .testimonial-card .role {
+      font-size: 0.85rem;
+      color: #6b6b80;
+    }
+    body.dark .testimonial-slide .testimonial-card .role {
+      color: rgba(255, 255, 255, 0.3);
+    }
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .carousel-controls button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: #fff;
+      color: #1a1a2e;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+    .carousel-controls button:hover {
+      background: #3b82f6;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+    body.dark .carousel-controls button {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.06);
+      color: #e8e8f0;
+    }
+    body.dark .carousel-controls button:hover {
+      background: #3b82f6;
+      border-color: #3b82f6;
+    }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .carousel-dots button {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: none;
+      background: #d1d5db;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .carousel-dots button.active {
+      background: #3b82f6;
+      width: 30px;
+      border-radius: 10px;
+    }
+    body.dark .carousel-dots button {
+      background: #374151;
+    }
+    body.dark .carousel-dots button.active {
+      background: #3b82f6;
+    }
+
+    /* ==========================================================================
+       APPOINTMENT / CONTACT
+       ========================================================================== */
+    .appointment {
+      background: rgba(0, 0, 0, 0.01);
+      padding: 80px 0;
+    }
+    body.dark .appointment {
+      background: rgba(255, 255, 255, 0.01);
+    }
+    .appointment-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: start;
+    }
+    .appointment-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .appointment-info p {
+      color: #6b6b80;
+      margin-bottom: 20px;
+      transition: color 0.3s;
+    }
+    body.dark .appointment-info p {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .appointment-info .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+      color: #1a1a2e;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    body.dark .appointment-info .contact-detail {
+      color: #e8e8f0;
+      border-color: rgba(255, 255, 255, 0.03);
+    }
+    .appointment-info .contact-detail i {
+      color: #3b82f6;
+      width: 24px;
+    }
+    .appointment-form {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    body.dark .appointment-form {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.04);
+    }
+    .appointment-form .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .appointment-form label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #4a4a60;
+      margin-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .appointment-form input,
+    .appointment-form select,
+    .appointment-form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background: #f8fafc;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: 0.3s;
+      color: #1a1a2e;
+    }
+    .appointment-form input:focus,
+    .appointment-form select:focus,
+    .appointment-form textarea:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.06);
+    }
+    .appointment-form textarea {
+      height: 100px;
+      resize: vertical;
+    }
+    .appointment-form .btn-primary {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .footer {
+      background: transparent;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+      padding: 40px 0 28px;
+      text-align: center;
+      color: #6b6b80;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    body.dark .footer {
+      border-top-color: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+    }
+    .footer a {
+      color: #3b82f6;
+    }
+    .footer a:hover {
+      color: #2563eb;
+    }
+    .footer .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+    .footer .footer-links a {
+      color: #6b6b80;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    .footer .footer-links a:hover {
+      color: #3b82f6;
+    }
+    body.dark .footer .footer-links a {
+      color: rgba(255, 255, 255, 0.2);
+    }
+    body.dark .footer .footer-links a:hover {
+      color: #3b82f6;
+    }
+    .footer .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 12px 0;
+    }
+    .footer .footer-social a {
+      color: #6b6b80;
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
+    .footer .footer-social a:hover {
+      color: #3b82f6;
+    }
+    body.dark .footer .footer-social a {
+      color: rgba(255, 255, 255, 0.15);
+    }
+    body.dark .footer .footer-social a:hover {
+      color: #3b82f6;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-content p {
+        max-width: 100%;
+      }
+      .hero-cta {
+        justify-content: center;
+      }
+      .hero-stats {
+        justify-content: center;
+      }
+      .hero-image .placeholder {
+        max-width: 300px;
+      }
+      .section-title {
+        font-size: 2.2rem;
+      }
+      .appointment-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .header-actions {
+        align-self: center;
+      }
+      .menu-toggle {
+        display: block;
+        align-self: flex-end;
+      }
+      .hero {
+        padding: 60px 0 40px;
+      }
+      .hero-content h1 {
+        font-size: 2.6rem;
+      }
+      .section-padding {
+        padding: 50px 0;
+      }
+      .feature-grid,
+      .service-grid,
+      .team-grid,
+      .resource-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .appointment-form .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .feature-grid,
+      .service-grid,
+      .team-grid,
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero-stats {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+      }
+      .trust-grid {
+        gap: 16px 30px;
+      }
+      .trust-item {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       SCROLL PROGRESS BAR
+       ================================================================ -->
+  <div id="scrollProgress"></div>
+
+  <!-- ================================================================
+       HEADER
+       ================================================================ -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <i class="fas fa-scale-balanced"></i>
+        <span>Dharma</span>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#hero" class="active">Home</a>
+        <a href="#services">Services</a>
+        <a href="#team">Team</a>
+        <a href="#resources">Resources</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="https://swayam.vercel.app/builder/step-1.html" class="header-cta">Build with Swayam</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       HERO
+       ================================================================ -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="badge">⚡ Strategic Consulting</div>
+        <h1>Your Partner in <span>Growth</span></h1>
+        <p>Dharma provides expert advisory, data-driven insights, and actionable strategies to help your business thrive in a competitive landscape.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">Book a Consultation</a>
+          <a href="#services" class="btn-secondary">Explore Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="item">
+            <div class="number">15+</div>
+            <div class="label">Years Experience</div>
+          </div>
+          <div class="item">
+            <div class="number">200+</div>
+            <div class="label">Clients Served</div>
+          </div>
+          <div class="item">
+            <div class="number">98%</div>
+            <div class="label">Satisfaction Rate</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="placeholder">
+          <span>📈</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       TRUST BAR
+       ================================================================ -->
+  <section class="trust-bar">
+    <div class="container trust-grid">
+      <span class="trust-item">Trusted by</span>
+      <span class="trust-item">🏢 Microsoft</span>
+      <span class="trust-item">🏢 Google</span>
+      <span class="trust-item">🏢 Amazon</span>
+      <span class="trust-item">🏢 Tata</span>
+      <span class="trust-item">🏢 Reliance</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       FEATURES
+       ================================================================ -->
+  <section class="features section-padding" id="features">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Why Dharma?</h2>
+        <p class="section-sub mx-auto">We combine deep expertise with a human-centered approach to deliver measurable results.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <i class="fas fa-lightbulb"></i>
+          <h4>Strategic Clarity</h4>
+          <p>We cut through complexity to deliver clear, actionable roadmaps.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-chart-line"></i>
+          <h4>Data-Driven</h4>
+          <p>Every recommendation is backed by rigorous analysis and real-world data.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-handshake"></i>
+          <h4>Partnership Approach</h4>
+          <p>We work alongside you, not just for you. Your success is our success.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-rocket"></i>
+          <h4>Execution Focus</h4>
+          <p>Strategy without execution is a dream. We help you deliver.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SERVICES
+       ================================================================ -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Our Expertise</h2>
+        <p class="section-sub mx-auto">Tailored consulting services across business, technology, and strategy.</p>
+      </div>
+      <div class="service-filter" id="serviceFilter">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="strategy">Strategy</button>
+        <button data-filter="technology">Technology</button>
+        <button data-filter="operations">Operations</button>
+        <button data-filter="growth">Growth</button>
+      </div>
+      <div class="service-grid" id="serviceGrid">
+        <div class="service-card" data-category="strategy">
+          <i class="fas fa-chess-queen"></i>
+          <h4>Corporate Strategy</h4>
+          <p>Long-term vision, market positioning, and competitive advantage.</p>
+          <span class="tag">Strategy</span>
+        </div>
+        <div class="service-card" data-category="technology">
+          <i class="fas fa-code"></i>
+          <h4>Digital Transformation</h4>
+          <p>Modernize operations with AI, automation, and cloud solutions.</p>
+          <span class="tag">Technology</span>
+        </div>
+        <div class="service-card" data-category="operations">
+          <i class="fas fa-gears"></i>
+          <h4>Operational Excellence</h4>
+          <p>Streamline processes, reduce costs, and improve efficiency.</p>
+          <span class="tag">Operations</span>
+        </div>
+        <div class="service-card" data-category="growth">
+          <i class="fas fa-arrow-trend-up"></i>
+          <h4>Growth Advisory</h4>
+          <p>Market entry, fundraising, M&A, and scaling strategies.</p>
+          <span class="tag">Growth</span>
+        </div>
+        <div class="service-card" data-category="strategy">
+          <i class="fas fa-users"></i>
+          <h4>Organizational Design</h4>
+          <p>Culture, structure, and talent strategy for high-performance teams.</p>
+          <span class="tag">Strategy</span>
+        </div>
+        <div class="service-card" data-category="technology">
+          <i class="fas fa-database"></i>
+          <h4>Data & Analytics</h4>
+          <p>Data governance, BI dashboards, and predictive analytics.</p>
+          <span class="tag">Technology</span>
+        </div>
+        <div class="service-card" data-category="operations">
+          <i class="fas fa-truck-fast"></i>
+          <h4>Supply Chain Optimization</h4>
+          <p>End-to-end supply chain strategy and risk management.</p>
+          <span class="tag">Operations</span>
+        </div>
+        <div class="service-card" data-category="growth">
+          <i class="fas fa-globe"></i>
+          <h4>International Expansion</h4>
+          <p>Navigate cross-border regulations, culture, and market entry.</p>
+          <span class="tag">Growth</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       STATS SECTION
+       ================================================================ -->
+  <section class="stats-section">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <div class="number" data-target="15">0</div>
+        <div class="label">Years of Excellence</div>
+      </div>
+      <div class="stat-item">
+        <div class="number" data-target="200">0</div>
+        <div class="label">Happy Clients</div>
+      </div>
+      <div class="stat-item">
+        <div class="number" data-target="98">0</div>
+        <div class="label">% Client Satisfaction</div>
+      </div>
+      <div class="stat-item">
+        <div class="number" data-target="500">0</div>
+        <div class="label">Projects Delivered</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       TEAM
+       ================================================================ -->
+  <section class="team section-padding" id="team">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Meet Our Team</h2>
+        <p class="section-sub mx-auto">Experts with diverse backgrounds, united by a shared commitment to excellence.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar"><span>👤</span></div>
+          <h4>Dr. Ananya Sharma</h4>
+          <div class="role">Founder & Principal</div>
+          <div class="bio">20+ years in strategy and organizational transformation.</div>
+          <div class="social">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="avatar"><span>👤</span></div>
+          <h4>Vikram Mehta</h4>
+          <div class="role">Head of Technology</div>
+          <div class="bio">Ex-Google, AI specialist, cloud architecture expert.</div>
+          <div class="social">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="avatar"><span>👤</span></div>
+          <h4>Priya Patel</h4>
+          <div class="role">Head of Operations</div>
+          <div class="bio">Lean Six Sigma Master Black Belt, supply chain expert.</div>
+          <div class="social">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="avatar"><span>👤</span></div>
+          <h4>Rahul Singh</h4>
+          <div class="role">Head of Growth</div>
+          <div class="bio">MBA, former VC, fundraising and market expansion specialist.</div>
+          <div class="social">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       RESOURCES
+       ================================================================ -->
+  <section class="resources" id="resources">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Resource Library</h2>
+        <p class="section-sub mx-auto">Whitepapers, case studies, and guides to help you navigate complexity.</p>
+      </div>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <div class="icon">📄</div>
+          <h4>The Future of AI in Business</h4>
+          <p>A comprehensive guide to implementing AI across operations.</p>
+          <div class="meta">
+            <span><i class="far fa-file-pdf"></i> PDF</span>
+            <span><i class="far fa-clock"></i> 15 min read</span>
+          </div>
+        </div>
+        <div class="resource-card">
+          <div class="icon">📊</div>
+          <h4>2026 Market Outlook Report</h4>
+          <p>Key trends and predictions for the global economy.</p>
+          <div class="meta">
+            <span><i class="far fa-file-pdf"></i> PDF</span>
+            <span><i class="far fa-clock"></i> 20 min read</span>
+          </div>
+        </div>
+        <div class="resource-card">
+          <div class="icon">📈</div>
+          <h4>Case Study: Digital Transformation</h4>
+          <p>How a Fortune 500 company modernized its IT infrastructure.</p>
+          <div class="meta">
+            <span><i class="far fa-file-pdf"></i> PDF</span>
+            <span><i class="far fa-clock"></i> 12 min read</span>
+          </div>
+        </div>
+        <div class="resource-card">
+          <div class="icon">🎯</div>
+          <h4>Growth Strategy Framework</h4>
+          <p>A step-by-step framework for scaling your business.</p>
+          <div class="meta">
+            <span><i class="far fa-file-pdf"></i> PDF</span>
+            <span><i class="far fa-clock"></i> 18 min read</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       TESTIMONIALS CAROUSEL
+       ================================================================ -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <p class="section-sub mx-auto">Real feedback from real partnerships.</p>
+      </div>
+      <div class="testimonial-carousel" id="testimonialCarousel">
+        <div class="testimonial-track" id="testimonialTrack">
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <div class="stars">★★★★★</div>
+              <blockquote>"Dharma transformed our business. Their strategic insights and hands-on execution led to a 40% revenue increase in just one year."</blockquote>
+              <div class="author">— Rajesh Kumar</div>
+              <div class="role">CEO, TechNova Inc.</div>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <div class="stars">★★★★★</div>
+              <blockquote>"The team at Dharma is exceptional. They helped us navigate a complex merger and integration process seamlessly."</blockquote>
+              <div class="author">— Meera Reddy</div>
+              <div class="role">CFO, Global Solutions Ltd.</div>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <div class="stars">★★★★★</div>
+              <blockquote>"Working with Dharma was a game-changer. They brought clarity, structure, and a clear path to growth."</blockquote>
+              <div class="author">— Ankit Sharma</div>
+              <div class="role">Founder, GreenLeaf Ventures</div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button id="prevTestimonial"><i class="fas fa-chevron-left"></i></button>
+          <button id="nextTestimonial"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="carousel-dots" id="testimonialDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       APPOINTMENT / CONTACT
+       ================================================================ -->
+  <section class="appointment" id="contact">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="section-title">Let's Talk</h2>
+        <p class="section-sub mx-auto">Ready to take your business to the next level? We're here to help.</p>
+      </div>
+      <div class="appointment-wrapper">
+        <div class="appointment-info">
+          <h3>Book a Consultation</h3>
+          <p>Whether you're exploring growth opportunities, facing operational challenges, or need strategic guidance, we're just a conversation away.</p>
+          <div class="contact-detail">
+            <i class="fas fa-phone"></i>
+            <span>+91-98765-43210</span>
+          </div>
+          <div class="contact-detail">
+            <i class="fas fa-envelope"></i>
+            <span>hello@dharma.consulting</span>
+          </div>
+          <div class="contact-detail">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Delhi NCR, India</span>
+          </div>
+          <div style="margin-top:24px; padding:16px 20px; background:rgba(59,130,246,0.04); border-radius:12px; border-left:4px solid #3b82f6;">
+            <p style="font-size:0.9rem; color:#3b82f6; font-weight:500;">
+              <i class="fas fa-clock" style="margin-right:8px;"></i>
+              Free 30-minute discovery call
+            </p>
+          </div>
+        </div>
+        <form class="appointment-form" id="appointmentForm">
+          <div class="form-row">
+            <div>
+              <label>Full Name *</label>
+              <input type="text" placeholder="John Doe" required />
+            </div>
+            <div>
+              <label>Email Address *</label>
+              <input type="email" placeholder="john@example.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label>Phone Number</label>
+              <input type="tel" placeholder="+91-98765-43210" />
+            </div>
+            <div>
+              <label>Service Interest</label>
+              <select>
+                <option value="strategy">Strategy</option>
+                <option value="technology">Technology</option>
+                <option value="operations">Operations</option>
+                <option value="growth">Growth</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <label>Message *</label>
+          <textarea placeholder="Tell us about your goals and challenges..."></textarea>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-paper-plane" style="margin-right:8px;"></i> Request Consultation
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       FOOTER
+       ================================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="#hero">Home</a>
+        <a href="#services">Services</a>
+        <a href="#team">Team</a>
+        <a href="#resources">Resources</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="https://swayam.vercel.app/index.html">Swayam</a>
+        <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+      <p>© 2026 Dharma — A Theme by <a href="https://swayam.vercel.app" target="_blank">Swayam</a> &amp; <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+      <p style="font-size:0.7rem; margin-top:6px; opacity:0.4;">⚖️ Guiding businesses toward sustainable growth.</p>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       JAVASCRIPT
+       ================================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- SCROLL PROGRESS BAR -----
+      const progressBar = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', function() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        progressBar.style.width = progress + '%';
+      });
+
+      // ----- THEME TOGGLE -----
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      let darkMode = localStorage.getItem('dharmaTheme') === 'dark';
+
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add('dark');
+          themeIcon.className = 'fas fa-sun';
+        } else {
+          document.body.classList.remove('dark');
+          themeIcon.className = 'fas fa-moon';
+        }
+        localStorage.setItem('dharmaTheme', dark ? 'dark' : 'light');
+        darkMode = dark;
+      }
+
+      setTheme(darkMode);
+      themeToggle.addEventListener('click', function() {
+        setTheme(!darkMode);
+      });
+
+      // ----- MOBILE MENU -----
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          if (window.innerWidth <= 768) {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            if (navLinks.style.display === 'flex') {
+              navLinks.style.flexDirection = 'column';
+              navLinks.style.alignItems = 'center';
+              navLinks.style.width = '100%';
+              navLinks.style.padding = '12px 0';
+            }
+          }
+        });
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 768) {
+            navLinks.style.display = 'flex';
+            navLinks.style.flexDirection = 'row';
+          } else {
+            navLinks.style.display = 'none';
+          }
+        });
+        if (window.innerWidth <= 768) {
+          navLinks.style.display = 'none';
+        }
+      }
+
+      // ----- SMOOTH SCROLL -----
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (window.innerWidth <= 768 && navLinks) {
+              navLinks.style.display = 'none';
+            }
+          }
+        });
+      });
+
+      // ----- ACTIVE NAV LINK ON SCROLL -----
+      const sections = document.querySelectorAll('section[id]');
+      const navLinkItems = document.querySelectorAll('.nav-links a:not(.header-cta)');
+      window.addEventListener('scroll', function() {
+        let current = '';
+        sections.forEach(function(section) {
+          const sectionTop = section.offsetTop - 120;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+          }
+        });
+        navLinkItems.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+      // ----- SERVICE FILTER -----
+      const filterButtons = document.querySelectorAll('#serviceFilter button');
+      const serviceCards = document.querySelectorAll('#serviceGrid .service-card');
+
+      filterButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          filterButtons.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          const filter = this.dataset.filter;
+          serviceCards.forEach(function(card) {
+            const category = card.dataset.category;
+            if (filter === 'all' || category === filter) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // ----- STATS COUNTER ANIMATION -----
+      const statNumbers = document.querySelectorAll('.stats-section .number');
+      let statsAnimated = false;
+
+      function animateStats() {
+        if (statsAnimated) return;
+        const rect = document.querySelector('.stats-section').getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          statsAnimated = true;
+          statNumbers.forEach(function(el) {
+            const target = parseInt(el.dataset.target);
+            if (isNaN(target)) return;
+            let current = 0;
+            const increment = target / 80;
+            const timer = setInterval(function() {
+              current += increment;
+              if (current >= target) {
+                el.textContent = target + (el.dataset.target === '98' ? '%' : '+');
+                clearInterval(timer);
+              } else {
+                el.textContent = Math.round(current);
+              }
+            }, 20);
+          });
+        }
+      }
+      window.addEventListener('scroll', animateStats);
+      window.addEventListener('load', function() {
+        setTimeout(animateStats, 300);
+      });
+
+      // ----- TESTIMONIAL CAROUSEL -----
+      const track = document.getElementById('testimonialTrack');
+      const slides = track.querySelectorAll('.testimonial-slide');
+      const dotsContainer = document.getElementById('testimonialDots');
+      const prevBtn = document.getElementById('prevTestimonial');
+      const nextBtn = document.getElementById('nextTestimonial');
+      let currentSlide = 0;
+      const totalSlides = slides.length;
+
+      // Create dots
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        if (i === 0) dot.classList.add('active');
+        dot.dataset.index = i;
+        dot.addEventListener('click', function() {
+          goToSlide(parseInt(this.dataset.index));
+        });
+        dotsContainer.appendChild(dot);
+      }
+      const dots = dotsContainer.querySelectorAll('button');
+
+      function goToSlide(index) {
+        currentSlide = (index + totalSlides) % totalSlides;
+        track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+        dots.forEach(function(dot, i) {
+          dot.classList.toggle('active', i === currentSlide);
+        });
+      }
+
+      prevBtn.addEventListener('click', function() { goToSlide(currentSlide - 1); });
+      nextBtn.addEventListener('click', function() { goToSlide(currentSlide + 1); });
+
+      // Auto-play with pause on hover
+      let autoPlay = setInterval(function() { goToSlide(currentSlide + 1); }, 6000);
+      const carousel = document.getElementById('testimonialCarousel');
+      carousel.addEventListener('mouseenter', function() { clearInterval(autoPlay); });
+      carousel.addEventListener('mouseleave', function() {
+        autoPlay = setInterval(function() { goToSlide(currentSlide + 1); }, 6000);
+      });
+
+      // ----- APPOINTMENT FORM -----
+      const appointmentForm = document.getElementById('appointmentForm');
+      appointmentForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('📋 Thank you! We will reach out within 24 hours to confirm your consultation.');
+        this.reset();
+      });
+
+      // ----- RESOURCE CARD CLICK -----
+      document.querySelectorAll('.resource-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+          const title = this.querySelector('h4')?.textContent || 'Resource';
+          alert('📄 You selected: "' + title + '"\n\nThis resource would be available for download in the full version.');
+        });
+      });
+
+      // ----- WISHLIST LIKE BUTTON (bonus) -----
+      document.querySelectorAll('.resource-card .icon').forEach(function(icon) {
+        icon.style.cursor = 'pointer';
+        icon.addEventListener('click', function(e) {
+          e.stopPropagation();
+          this.textContent = this.textContent === '📄' ? '❤️' : '📄';
+          this.style.transition = '0.3s';
+        });
+      });
+
+      // ----- KEYBOARD NAVIGATION FOR CAROUSEL -----
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') { goToSlide(currentSlide - 1); }
+        if (e.key === 'ArrowRight') { goToSlide(currentSlide + 1); }
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
