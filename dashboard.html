@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Swayam</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* same base styles */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:#0a0a1a; color:#f0ece6; }
+    .container { max-width:1280px; margin:0 auto; padding:0 24px; }
+    /* header ... */
+    .header { background:rgba(10,10,26,0.92); backdrop-filter:blur(18px); border-bottom:1px solid rgba(184,134,11,0.15); position:sticky; top:0; z-index:1000; padding:14px 0; }
+    .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+    .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .logo-icon { width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #b8860b, #8b6508); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; color:#fff; }
+    .logo-text { font-size:1.6rem; font-weight:700; background:linear-gradient(135deg,#f0ece6, #b8860b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text span { font-weight:300; -webkit-text-fill-color:rgba(255,255,255,0.4); }
+    .nav-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.9rem; font-weight:500; margin-left:28px; }
+    .nav-links a:hover { color:#fff; }
+    .nav-links a.active { color:#b8860b; }
+    .header-cta { padding:8px 24px; border-radius:40px; background:linear-gradient(135deg,#b8860b,#d4a017); color:#fff !important; font-weight:600; margin-left:20px; }
+
+    .dashboard-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:30px 0; }
+    .stat-card { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); border-radius:16px; padding:24px; }
+    .stat-card h3 { color:rgba(255,255,255,0.4); font-weight:400; font-size:0.9rem; }
+    .stat-card .number { font-size:2.4rem; font-weight:700; color:#fff; }
+    .stat-card .sub { color:rgba(255,255,255,0.3); font-size:0.8rem; }
+
+    .website-list { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); border-radius:16px; padding:20px; grid-column:1/-1; }
+    .website-list table { width:100%; border-collapse:collapse; }
+    .website-list th { text-align:left; color:rgba(255,255,255,0.3); font-weight:400; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .website-list td { padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.03); }
+    .website-list td a { color:#b8860b; text-decoration:none; }
+    .status-badge { padding:2px 12px; border-radius:20px; font-size:0.7rem; background:rgba(184,134,11,0.15); color:#b8860b; }
+    .status-badge.live { background:rgba(46,125,50,0.15); color:#66bb6a; }
+
+    @media (max-width:768px) { .dashboard-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header class="header"><!-- same header --></header>
+
+  <div class="container">
+    <div class="dashboard-grid">
+      <div class="stat-card"><h3>Total Websites</h3><div class="number">3</div><div class="sub">Active: 2</div></div>
+      <div class="stat-card"><h3>Domain Status</h3><div class="number">1</div><div class="sub">Expires in 300 days</div></div>
+      <div class="stat-card"><h3>Total Visits</h3><div class="number">1,247</div><div class="sub">Last 30 days</div></div>
+      <div class="stat-card"><h3>SEO Score</h3><div class="number">89</div><div class="sub">+4 this week</div></div>
+
+      <div class="website-list">
+        <h3 style="margin-bottom:16px;">Your Websites</h3>
+        <table>
+          <thead><tr><th>Name</th><th>URL</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td>My Vedic Brand</td><td><a href="#">myvedicbrand.vercel.app</a></td><td><span class="status-badge live">Live</span></td><td><a href="#" style="color:#b8860b;">Edit</a> • <a href="#" style="color:#b8860b;">Analytics</a></td></tr>
+            <tr><td>Kalki Agency</td><td><a href="#">kalkiagency.vercel.app</a></td><td><span class="status-badge">Draft</span></td><td><a href="#" style="color:#b8860b;">Edit</a> • <a href="#" style="color:#b8860b;">Publish</a></td></tr>
+            <tr><td>Vedic Wellness</td><td><a href="#">vedicwellness.vercel.app</a></td><td><span class="status-badge live">Live</span></td><td><a href="#" style="color:#b8860b;">Edit</a> • <a href="#" style="color:#b8860b;">Domain</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
