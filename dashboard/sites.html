@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sites — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.01) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.01) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.2); border-radius: 10px; }
+
+    /* ============================================================
+       SIDEBAR
+       ============================================================ */
+    .sidebar {
+      width: 260px;
+      background: rgba(255, 255, 255, 0.01);
+      border-right: 1px solid rgba(255, 255, 255, 0.02);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
+    .sidebar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+      margin-bottom: 30px;
+      padding: 0 8px;
+    }
+    .sidebar .logo i { color: #b8860b; }
+    .sidebar .logo span { font-weight: 300; opacity: 0.3; }
+    .sidebar .nav-section { margin-bottom: 8px; }
+    .sidebar .nav-section .label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.06);
+      padding: 8px 12px 4px;
+    }
+    .sidebar .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+    }
+    .sidebar .nav-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .sidebar .nav-item.active {
+      background: rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+    }
+    .sidebar .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      height: 60%;
+      width: 3px;
+      background: #b8860b;
+      border-radius: 0 4px 4px 0;
+    }
+    .sidebar .nav-item .icon { width: 20px; text-align: center; font-size: 1rem; }
+    .sidebar .nav-item .badge {
+      margin-left: auto;
+      padding: 0 8px;
+      border-radius: 20px;
+      background: rgba(184, 134, 11, 0.08);
+      color: #b8860b;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+    .sidebar .nav-item .badge.success { background: rgba(34, 197, 94, 0.08); color: #22c55e; }
+    .sidebar .user-section {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .sidebar .user-section .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+    }
+    .sidebar .user-section .user-info .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .sidebar .user-section .user-info .name { font-size: 0.85rem; font-weight: 600; color: #f0ece6; }
+    .sidebar .user-section .user-info .email { font-size: 0.65rem; color: rgba(255, 255, 255, 0.15); }
+
+    /* ============================================================
+       MAIN CONTENT
+       ============================================================ */
+    .main-content {
+      flex: 1;
+      padding: 24px 32px 32px;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    /* ----- Top Bar ----- */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topbar .greeting h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .topbar .greeting p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .topbar .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .topbar .actions .btn-new {
+      padding: 10px 24px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .topbar .actions .btn-new:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25);
+    }
+
+    /* ----- Toolbar ----- */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .toolbar .search-box {
+      flex: 1;
+      min-width: 180px;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 30px;
+      padding: 4px 4px 4px 16px;
+      transition: 0.3s;
+    }
+    .toolbar .search-box:focus-within {
+      border-color: #b8860b;
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.06);
+    }
+    .toolbar .search-box input {
+      flex: 1;
+      padding: 8px 6px;
+      background: transparent;
+      border: none;
+      color: #f0ece6;
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .toolbar .search-box input::placeholder { color: rgba(255, 255, 255, 0.1); }
+    .toolbar .search-box button {
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .toolbar .search-box button:hover { transform: scale(1.02); }
+
+    .toolbar .filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .toolbar .filters select {
+      padding: 8px 14px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      font-family: inherit;
+      font-size: 0.75rem;
+      outline: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .toolbar .filters select:hover { border-color: rgba(255, 255, 255, 0.06); }
+    .toolbar .filters select option { background: #1a1a2e; color: #f0ece6; }
+    .toolbar .filters select:focus { border-color: #b8860b; }
+
+    .toolbar .bulk-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-left: auto;
+      opacity: 0.3;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+    .toolbar .bulk-actions.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .toolbar .bulk-actions button {
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.65rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .toolbar .bulk-actions button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .toolbar .bulk-actions button.danger:hover { border-color: #ef4444; color: #ef4444; }
+
+    /* ----- Stats Summary ----- */
+    .stats-summary {
+      display: flex;
+      gap: 20px;
+      padding: 0 4px 16px;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .stats-summary span { display: flex; align-items: center; gap: 4px; }
+    .stats-summary strong { color: #f0ece6; }
+
+    /* ----- Sites Table ----- */
+    .table-container {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .table-container table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .table-container thead {
+      background: rgba(255, 255, 255, 0.01);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .table-container th {
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: 0.3s;
+      user-select: none;
+      position: relative;
+    }
+    .table-container th:hover { color: rgba(255, 255, 255, 0.3); }
+    .table-container th .sort-icon {
+      margin-left: 4px;
+      opacity: 0.2;
+      font-size: 0.5rem;
+    }
+    .table-container th.active .sort-icon { opacity: 1; color: #b8860b; }
+    .table-container td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+      vertical-align: middle;
+    }
+    .table-container tr:hover td { background: rgba(255, 255, 255, 0.005); }
+    .table-container tr:last-child td { border-bottom: none; }
+
+    .table-container td .site-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .table-container td .site-info .thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .table-container td .site-info .details .name {
+      font-weight: 600;
+      color: #f0ece6;
+    }
+    .table-container td .site-info .details .url {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .table-container td .site-info .details .url a {
+      color: #b8860b;
+      text-decoration: none;
+    }
+    .table-container td .site-info .details .url a:hover { text-decoration: underline; }
+
+    .status-badge {
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: inline-block;
+    }
+    .status-badge.live { background: rgba(34, 197, 94, 0.08); color: #22c55e; }
+    .status-badge.draft { background: rgba(251, 191, 36, 0.08); color: #fbbf24; }
+    .status-badge.archived { background: rgba(239, 68, 68, 0.08); color: #ef4444; }
+    .status-badge.building { background: rgba(96, 165, 250, 0.08); color: #60a5fa; animation: pulseBadge 1.5s ease-in-out infinite; }
+    @keyframes pulseBadge { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+    .table-container td .actions-cell {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .table-container td .actions-cell button {
+      padding: 4px 10px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.6rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .table-container td .actions-cell button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .table-container td .actions-cell button.primary {
+      background: rgba(184, 134, 11, 0.04);
+      border-color: rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+    }
+    .table-container td .actions-cell button.primary:hover { background: rgba(184, 134, 11, 0.08); }
+    .table-container td .actions-cell button.danger:hover { border-color: #ef4444; color: #ef4444; }
+
+    .table-container td .checkbox-cell input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: transparent;
+      cursor: pointer;
+      transition: 0.3s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .table-container td .checkbox-cell input[type="checkbox"]:checked {
+      background: #b8860b;
+      border-color: #b8860b;
+    }
+    .table-container td .checkbox-cell input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+    }
+    .table-container th .checkbox-cell input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: transparent;
+      cursor: pointer;
+      transition: 0.3s;
+      position: relative;
+    }
+    .table-container th .checkbox-cell input[type="checkbox"]:checked {
+      background: #b8860b;
+      border-color: #b8860b;
+    }
+    .table-container th .checkbox-cell input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+    }
+
+    /* ----- Empty State ----- */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .empty-state .icon { font-size: 4rem; opacity: 0.05; margin-bottom: 16px; }
+    .empty-state h3 { font-size: 1.2rem; color: rgba(255, 255, 255, 0.3); }
+    .empty-state p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.1); }
+
+    /* ----- Pagination ----- */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pagination .info {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .pagination .controls {
+      display: flex;
+      gap: 4px;
+    }
+    .pagination .controls button {
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .pagination .controls button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .pagination .controls button.active {
+      background: rgba(184, 134, 11, 0.04);
+      border-color: #b8860b;
+      color: #b8860b;
+    }
+    .pagination .controls button:disabled {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+    .toast.warning { border-color: rgba(251,191,36,0.2); }
+    .toast.warning i { color: #fbbf24; }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 992px) {
+      .sidebar { width: 80px; padding: 16px 8px; }
+      .sidebar .logo { font-size: 1.2rem; justify-content: center; }
+      .sidebar .logo span { display: none; }
+      .sidebar .nav-item { padding: 10px 12px; justify-content: center; }
+      .sidebar .nav-item .label-text { display: none; }
+      .sidebar .nav-item .badge { display: none; }
+      .sidebar .nav-section .label { display: none; }
+      .sidebar .user-section .user-info .name,
+      .sidebar .user-section .user-info .email { display: none; }
+      .main-content { padding: 16px; }
+      .table-container { overflow-x: auto; }
+      .table-container table { font-size: 0.75rem; }
+      .table-container td, .table-container th { padding: 8px 10px; }
+    }
+    @media (max-width: 768px) {
+      body { overflow: auto; flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 26, 0.92);
+        backdrop-filter: blur(12px);
+        gap: 4px;
+      }
+      .sidebar .logo { margin-bottom: 0; font-size: 1.1rem; }
+      .sidebar .logo span { display: inline; }
+      .sidebar .nav-section { display: flex; gap: 4px; margin-bottom: 0; }
+      .sidebar .nav-section .label { display: none; }
+      .sidebar .nav-item { padding: 6px 10px; font-size: 0.7rem; }
+      .sidebar .nav-item .label-text { display: inline; }
+      .sidebar .nav-item .badge { display: inline; }
+      .sidebar .user-section { display: none; }
+      .main-content { height: auto; padding: 16px; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      .toolbar .bulk-actions { margin-left: 0; }
+      .topbar .greeting h1 { font-size: 1.2rem; }
+      .topbar .actions .btn-new { padding: 8px 16px; font-size: 0.75rem; }
+    }
+    @media (max-width: 480px) {
+      .table-container td .site-info .thumb { width: 30px; height: 30px; font-size: 0.9rem; }
+      .table-container td .site-info .details .name { font-size: 0.8rem; }
+      .stats-summary { gap: 10px; font-size: 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       TOAST
+       ============================================================ -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- ============================================================
+       SIDEBAR
+       ============================================================ -->
+  <nav class="sidebar" id="sidebar">
+    <a href="../index.html" class="logo">
+      <i class="fas fa-om"></i>
+      Swayam<span>AI</span>
+    </a>
+    <div class="nav-section">
+      <div class="label">Main</div>
+      <a href="index.html" class="nav-item">
+        <span class="icon"><i class="fas fa-th-large"></i></span>
+        <span class="label-text">Dashboard</span>
+      </a>
+      <a href="sites.html" class="nav-item active">
+        <span class="icon"><i class="fas fa-globe"></i></span>
+        <span class="label-text">Sites</span>
+        <span class="badge success" id="siteCountBadge">4</span>
+      </a>
+      <a href="analytics.html" class="nav-item">
+        <span class="icon"><i class="fas fa-chart-line"></i></span>
+        <span class="label-text">Analytics</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="label">Management</div>
+      <a href="../builder/step-1.html" class="nav-item">
+        <span class="icon"><i class="fas fa-plus-circle"></i></span>
+        <span class="label-text">New Website</span>
+      </a>
+      <a href="domain.html" class="nav-item">
+        <span class="icon"><i class="fas fa-globe-asia"></i></span>
+        <span class="label-text">Domains</span>
+        <span class="badge">1</span>
+      </a>
+      <a href="billing.html" class="nav-item">
+        <span class="icon"><i class="fas fa-credit-card"></i></span>
+        <span class="label-text">Billing</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="label">Support</div>
+      <a href="support.html" class="nav-item">
+        <span class="icon"><i class="fas fa-headset"></i></span>
+        <span class="label-text">Support</span>
+      </a>
+      <a href="../pages/about.html" class="nav-item">
+        <span class="icon"><i class="fas fa-info-circle"></i></span>
+        <span class="label-text">About</span>
+      </a>
+    </div>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="avatar">AK</div>
+        <div>
+          <div class="name">Arjun Kumar</div>
+          <div class="email">arjun@example.com</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="greeting">
+        <h1><i class="fas fa-globe" style="color:#b8860b; margin-right:10px;"></i> Your Sites</h1>
+        <p>Manage all your websites from one place.</p>
+      </div>
+      <div class="actions">
+        <button class="btn-new" id="newSiteBtn">
+          <i class="fas fa-plus"></i> New Site
+        </button>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar" id="toolbar">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search sites by name or URL..." />
+        <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+      </div>
+      <div class="filters">
+        <select id="statusFilter">
+          <option value="all">All Status</option>
+          <option value="live">Live</option>
+          <option value="draft">Draft</option>
+          <option value="building">Building</option>
+          <option value="archived">Archived</option>
+        </select>
+        <select id="themeFilter">
+          <option value="all">All Themes</option>
+          <option value="veda">Veda</option>
+          <option value="karma">Karma</option>
+          <option value="sattva">Sattva</option>
+          <option value="dharma">Dharma</option>
+        </select>
+        <select id="sortFilter">
+          <option value="name-asc">Name A→Z</option>
+          <option value="name-desc">Name Z→A</option>
+          <option value="created-desc">Newest</option>
+          <option value="created-asc">Oldest</option>
+          <option value="visits-desc">Most Visited</option>
+        </select>
+      </div>
+      <div class="bulk-actions" id="bulkActions">
+        <span style="font-size:0.65rem; color:rgba(255,255,255,0.1);" id="selectedCount">0 selected</span>
+        <button id="bulkDeploy"><i class="fas fa-cloud-upload-alt"></i> Deploy</button>
+        <button id="bulkArchive"><i class="fas fa-archive"></i> Archive</button>
+        <button class="danger" id="bulkDelete"><i class="fas fa-trash"></i> Delete</button>
+        <button id="bulkClear"><i class="fas fa-times"></i> Clear</button>
+      </div>
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="stats-summary" id="statsSummary">
+      <span>Total: <strong id="totalCount">0</strong></span>
+      <span>● Live: <strong id="liveCount">0</strong></span>
+      <span>● Draft: <strong id="draftCount">0</strong></span>
+      <span>● Building: <strong id="buildingCount">0</strong></span>
+      <span>● Archived: <strong id="archivedCount">0</strong></span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:40px;">
+              <div class="checkbox-cell">
+                <input type="checkbox" id="selectAll" />
+              </div>
+            </th>
+            <th class="active" data-sort="name">Site <span class="sort-icon"><i class="fas fa-arrow-up"></i></span></th>
+            <th data-sort="status">Status</th>
+            <th data-sort="theme">Theme</th>
+            <th data-sort="visits">Visits</th>
+            <th data-sort="createdAt">Created</th>
+            <th style="min-width:160px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="sitesTableBody">
+          <!-- Rows injected by JS -->
+        </tbody>
+      </table>
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <div class="info" id="paginationInfo">Showing 0-0 of 0</div>
+        <div class="controls" id="paginationControls">
+          <button id="prevPage" disabled><i class="fas fa-chevron-left"></i></button>
+          <button class="active" data-page="1">1</button>
+          <button id="nextPage"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- DATA -----
+      let sitesData = [
+        { id: 1, name: 'Veda Wellness', url: 'veda-wellness.vercel.app', status: 'live', theme: 'veda', visits: 1247, createdAt: '2026-07-01', lastDeployed: '2026-07-02' },
+        { id: 2, name: 'Karma Agency', url: 'karma-agency.vercel.app', status: 'draft', theme: 'karma', visits: 0, createdAt: '2026-06-28', lastDeployed: null },
+        { id: 3, name: 'Sattva Store', url: 'sattva-store.vercel.app', status: 'live', theme: 'sattva', visits: 893, createdAt: '2026-06-15', lastDeployed: '2026-06-28' },
+        { id: 4, name: 'Dharma Consulting', url: 'dharma-consulting.vercel.app', status: 'building', theme: 'dharma', visits: 0, createdAt: '2026-07-02', lastDeployed: null },
+        { id: 5, name: 'Aura Beauty', url: 'aura-beauty.vercel.app', status: 'live', theme: 'veda', visits: 342, createdAt: '2026-06-20', lastDeployed: '2026-06-22' },
+        { id: 6, name: 'TechFlow Solutions', url: 'techflow.vercel.app', status: 'draft', theme: 'karma', visits: 0, createdAt: '2026-07-03', lastDeployed: null },
+        { id: 7, name: 'GreenLife Organics', url: 'greenlife.vercel.app', status: 'archived', theme: 'sattva', visits: 156, createdAt: '2026-05-10', lastDeployed: '2026-05-12' },
+        { id: 8, name: 'Apex Consulting', url: 'apex-consulting.vercel.app', status: 'live', theme: 'dharma', visits: 2104, createdAt: '2026-06-01', lastDeployed: '2026-06-05' },
+        { id: 9, name: 'Zen Meditation', url: 'zen-meditation.vercel.app', status: 'building', theme: 'veda', visits: 0, createdAt: '2026-07-04', lastDeployed: null },
+        { id: 10, name: 'Pixel Perfect Design', url: 'pixel-perfect.vercel.app', status: 'draft', theme: 'karma', visits: 0, createdAt: '2026-06-25', lastDeployed: null },
+        { id: 11, name: 'EcoHome Goods', url: 'ecohome.vercel.app', status: 'live', theme: 'sattva', visits: 567, createdAt: '2026-06-10', lastDeployed: '2026-06-12' },
+        { id: 12, name: 'Strategy Partners', url: 'strategy-partners.vercel.app', status: 'archived', theme: 'dharma', visits: 89, createdAt: '2026-04-15', lastDeployed: '2026-04-18' }
+      ];
+
+      // ----- STATE -----
+      let state = {
+        filteredData: [],
+        currentPage: 1,
+        pageSize: 5,
+        sortField: 'name',
+        sortDirection: 'asc',
+        selectedIds: new Set(),
+        searchQuery: '',
+        statusFilter: 'all',
+        themeFilter: 'all'
+      };
+
+      // ----- DOM REFS -----
+      const tableBody = document.getElementById('sitesTableBody');
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const statusFilter = document.getElementById('statusFilter');
+      const themeFilter = document.getElementById('themeFilter');
+      const sortFilter = document.getElementById('sortFilter');
+      const selectAll = document.getElementById('selectAll');
+      const bulkActions = document.getElementById('bulkActions');
+      const selectedCount = document.getElementById('selectedCount');
+      const paginationInfo = document.getElementById('paginationInfo');
+      const paginationControls = document.getElementById('paginationControls');
+      const prevPage = document.getElementById('prevPage');
+      const nextPage = document.getElementById('nextPage');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const newSiteBtn = document.getElementById('newSiteBtn');
+      const siteCountBadge = document.getElementById('siteCountBadge');
+
+      // Stats refs
+      const totalCount = document.getElementById('totalCount');
+      const liveCount = document.getElementById('liveCount');
+      const draftCount = document.getElementById('draftCount');
+      const buildingCount = document.getElementById('buildingCount');
+      const archivedCount = document.getElementById('archivedCount');
+
+      // Bulk buttons
+      const bulkDeploy = document.getElementById('bulkDeploy');
+      const bulkArchive = document.getElementById('bulkArchive');
+      const bulkDelete = document.getElementById('bulkDelete');
+      const bulkClear = document.getElementById('bulkClear');
+
+      // ----- TOAST -----
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        try {
+          toastMessage.textContent = typeof message === 'string' ? message : String(message);
+          toast.className = 'toast';
+          if (type === 'error') toast.classList.add('error');
+          if (type === 'success') toast.classList.add('success');
+          if (type === 'warning') toast.classList.add('warning');
+          toast.classList.add('show');
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(function() {
+            toast.classList.remove('show');
+          }, 3500);
+        } catch (err) {
+          console.warn('Toast error:', err);
+        }
+      }
+
+      // ----- FILTER & SORT -----
+      function filterAndSort() {
+        try {
+          const query = state.searchQuery.toLowerCase().trim();
+          const status = state.statusFilter;
+          const theme = state.themeFilter;
+          const sort = state.sortField;
+          const dir = state.sortDirection;
+
+          let result = sitesData.filter(function(site) {
+            const matchQuery = !query ||
+              site.name.toLowerCase().includes(query) ||
+              site.url.toLowerCase().includes(query);
+            const matchStatus = status === 'all' || site.status === status;
+            const matchTheme = theme === 'all' || site.theme === theme;
+            return matchQuery && matchStatus && matchTheme;
+          });
+
+          // Sort
+          result.sort(function(a, b) {
+            let aVal = a[sort] || '';
+            let bVal = b[sort] || '';
+            if (sort === 'visits') {
+              aVal = parseInt(aVal) || 0;
+              bVal = parseInt(bVal) || 0;
+              return dir === 'asc' ? aVal - bVal : bVal - aVal;
+            }
+            if (sort === 'createdAt') {
+              return dir === 'asc' ?
+                new Date(aVal) - new Date(bVal) :
+                new Date(bVal) - new Date(aVal);
+            }
+            aVal = String(aVal).toLowerCase();
+            bVal = String(bVal).toLowerCase();
+            return dir === 'asc' ?
+              aVal.localeCompare(bVal) :
+              bVal.localeCompare(aVal);
+          });
+
+          state.filteredData = result;
+          state.currentPage = 1;
+          renderTable();
+          updateStats();
+          updatePagination();
+        } catch (err) {
+          console.error('Filter/sort error:', err);
+          showToast('Error filtering sites: ' + err.message, 'error');
+        }
+      }
+
+      // ----- RENDER TABLE -----
+      function renderTable() {
+        try {
+          const start = (state.currentPage - 1) * state.pageSize;
+          const end = Math.min(start + state.pageSize, state.filteredData.length);
+          const pageItems = state.filteredData.slice(start, end);
+
+          if (pageItems.length === 0) {
+            tableBody.innerHTML = `
+              <tr>
+                <td colspan="7">
+                  <div class="empty-state">
+                    <div class="icon">🌐</div>
+                    <h3>No sites found</h3>
+                    <p>Try adjusting your filters or create a new site.</p>
+                  </div>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          const themeIcons = { veda: '🕉', karma: '🚀', sattva: '🛍️', dharma: '📊' };
+
+          let html = '';
+          pageItems.forEach(function(site) {
+            const checked = state.selectedIds.has(site.id) ? 'checked' : '';
+            const statusMap = {
+              live: { label: 'Live', class: 'live' },
+              draft: { label: 'Draft', class: 'draft' },
+              archived: { label: 'Archived', class: 'archived' },
+              building: { label: 'Building...', class: 'building' }
+            };
+            const status = statusMap[site.status] || statusMap.draft;
+            const icon = themeIcons[site.theme] || '🌐';
+            const visits = site.visits || 0;
+            const createdAt = site.createdAt || '—';
+
+            html += `
+              <tr data-id="${site.id}">
+                <td>
+                  <div class="checkbox-cell">
+                    <input type="checkbox" class="site-checkbox" data-id="${site.id}" ${checked} />
+                  </div>
+                </td>
+                <td>
+                  <div class="site-info">
+                    <div class="thumb">${icon}</div>
+                    <div class="details">
+                      <div class="name">${site.name}</div>
+                      <div class="url">
+                        <a href="https://${site.url}" target="_blank">${site.url}</a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="status-badge ${status.class}">${status.label}</span></td>
+                <td style="text-transform:capitalize; color:rgba(255,255,255,0.3);">${site.theme}</td>
+                <td>${visits.toLocaleString()}</td>
+                <td style="color:rgba(255,255,255,0.2); font-size:0.75rem;">${createdAt}</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="primary" onclick="handleEditSite(${site.id})"><i class="fas fa-edit"></i> Edit</button>
+                    <button onclick="handlePreviewSite('${site.url}')"><i class="fas fa-eye"></i> View</button>
+                    ${site.status === 'live' ? `<button onclick="handleDeploySite(${site.id})"><i class="fas fa-sync"></i></button>` :
+                      `<button class="primary" onclick="handleDeploySite(${site.id})"><i class="fas fa-cloud-upload-alt"></i></button>`}
+                    <button class="danger" onclick="handleDeleteSite(${site.id})"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          });
+          tableBody.innerHTML = html;
+
+          // Update pagination info
+          paginationInfo.textContent = `Showing ${start + 1}-${end} of ${state.filteredData.length}`;
+
+          // Update select all state
+          const checkboxes = document.querySelectorAll('.site-checkbox');
+          const checkedBoxes = document.querySelectorAll('.site-checkbox:checked');
+          selectAll.checked = checkboxes.length > 0 && checkedBoxes.length === checkboxes.length;
+
+          // Update bulk actions
+          updateBulkActions();
+
+          // Update sidebar badge
+          siteCountBadge.textContent = sitesData.length;
+
+        } catch (err) {
+          console.error('Render error:', err);
+          showToast('Error rendering table: ' + err.message, 'error');
+        }
+      }
+
+      // ----- UPDATE STATS -----
+      function updateStats() {
+        try {
+          const total = state.filteredData.length;
+          const live = state.filteredData.filter(function(s) { return s.status === 'live'; }).length;
+          const draft = state.filteredData.filter(function(s) { return s.status === 'draft'; }).length;
+          const building = state.filteredData.filter(function(s) { return s.status === 'building'; }).length;
+          const archived = state.filteredData.filter(function(s) { return s.status === 'archived'; }).length;
+
+          totalCount.textContent = total;
+          liveCount.textContent = live;
+          draftCount.textContent = draft;
+          buildingCount.textContent = building;
+          archivedCount.textContent = archived;
+        } catch (err) {
+          console.warn('Stats update error:', err);
+        }
+      }
+
+      // ----- UPDATE PAGINATION -----
+      function updatePagination() {
+        try {
+          const totalPages = Math.ceil(state.filteredData.length / state.pageSize) || 1;
+          let controlsHtml = '';
+          const maxVisible = 5;
+          let startPage = Math.max(1, state.currentPage - Math.floor(maxVisible / 2));
+          let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+          if (endPage - startPage < maxVisible - 1) {
+            startPage = Math.max(1, endPage - maxVisible + 1);
+          }
+
+          controlsHtml += `<button ${state.currentPage <= 1 ? 'disabled' : ''} data-page="${state.currentPage - 1}"><i class="fas fa-chevron-left"></i></button>`;
+          for (let i = startPage; i <= endPage; i++) {
+            controlsHtml += `<button class="${i === state.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+          }
+          controlsHtml += `<button ${state.currentPage >= totalPages ? 'disabled' : ''} data-page="${state.currentPage + 1}"><i class="fas fa-chevron-right"></i></button>`;
+
+          paginationControls.innerHTML = controlsHtml;
+
+          // Attach events
+          paginationControls.querySelectorAll('button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              const page = parseInt(this.dataset.page);
+              if (!isNaN(page) && page >= 1 && page <= totalPages) {
+                state.currentPage = page;
+                renderTable();
+                updatePagination();
+              }
+            });
+          });
+
+          // Update prev/next buttons
+          const prevBtn = paginationControls.querySelector('button:first-child');
+          const nextBtn = paginationControls.querySelector('button:last-child');
+          if (prevBtn) prevBtn.disabled = state.currentPage <= 1;
+          if (nextBtn) nextBtn.disabled = state.currentPage >= totalPages;
+
+        } catch (err) {
+          console.warn('Pagination update error:', err);
+        }
+      }
+
+      // ----- UPDATE BULK ACTIONS -----
+      function updateBulkActions() {
+        const count = state.selectedIds.size;
+        selectedCount.textContent = count + ' selected';
+        bulkActions.classList.toggle('active', count > 0);
+        // Update select all
+        const checkboxes = document.querySelectorAll('.site-checkbox');
+        const checkedBoxes = document.querySelectorAll('.site-checkbox:checked');
+        selectAll.checked = checkboxes.length > 0 && checkedBoxes.length === checkboxes.length;
+      }
+
+      // ----- BULK OPERATIONS -----
+      function getSelectedSites() {
+        return sitesData.filter(function(s) { return state.selectedIds.has(s.id); });
+      }
+
+      function bulkDeploySites() {
+        const selected = getSelectedSites();
+        if (selected.length === 0) {
+          showToast('No sites selected.', 'warning');
+          return;
+        }
+        if (!confirm('Deploy ' + selected.length + ' site(s)?')) return;
+        try {
+          selected.forEach(function(site) {
+            site.status = 'building';
+          });
+          renderTable();
+          updateStats();
+          showToast('Deploying ' + selected.length + ' site(s)...', 'success');
+          setTimeout(function() {
+            selected.forEach(function(site) {
+              site.status = 'live';
+            });
+            renderTable();
+            updateStats();
+            showToast('✅ ' + selected.length + ' site(s) deployed successfully!', 'success');
+          }, 2000);
+        } catch (err) {
+          showToast('Error deploying sites: ' + err.message, 'error');
+        }
+      }
+
+      function bulkArchiveSites() {
+        const selected = getSelectedSites();
+        if (selected.length === 0) {
+          showToast('No sites selected.', 'warning');
+          return;
+        }
+        if (!confirm('Archive ' + selected.length + ' site(s)?')) return;
+        try {
+          selected.forEach(function(site) {
+            site.status = 'archived';
+          });
+          state.selectedIds.clear();
+          renderTable();
+          updateStats();
+          showToast('✅ ' + selected.length + ' site(s) archived.', 'success');
+        } catch (err) {
+          showToast('Error archiving sites: ' + err.message, 'error');
+        }
+      }
+
+      function bulkDeleteSites() {
+        const selected = getSelectedSites();
+        if (selected.length === 0) {
+          showToast('No sites selected.', 'warning');
+          return;
+        }
+        if (!confirm('⚠️ Permanently delete ' + selected.length + ' site(s)? This cannot be undone.')) return;
+        try {
+          const ids = new Set(selected.map(function(s) { return s.id; }));
+          sitesData = sitesData.filter(function(s) { return !ids.has(s.id); });
+          state.selectedIds.clear();
+          filterAndSort();
+          showToast('🗑️ ' + selected.length + ' site(s) deleted.', 'success');
+        } catch (err) {
+          showToast('Error deleting sites: ' + err.message, 'error');
+        }
+      }
+
+      function clearSelection() {
+        state.selectedIds.clear();
+        document.querySelectorAll('.site-checkbox').forEach(function(cb) {
+          cb.checked = false;
+        });
+        updateBulkActions();
+        showToast('Selection cleared.', 'success');
+      }
+
+      // ----- SITE ACTIONS -----
+      window.handleEditSite = function(id) {
+        const site = sitesData.find(function(s) { return s.id === id; });
+        if (site) {
+          showToast('Opening editor for: ' + site.name, 'success');
+          // In production: redirect to builder/step-3.html?site=id
+        }
+      };
+
+      window.handlePreviewSite = function(url) {
+        if (url) {
+          window.open('https://' + url, '_blank');
+        } else {
+          showToast('No URL available for preview.', 'warning');
+        }
+      };
+
+      window.handleDeploySite = function(id) {
+        const site = sitesData.find(function(s) { return s.id === id; });
+        if (!site) return;
+        if (site.status === 'live') {
+          showToast('Redeploying ' + site.name + '...', 'success');
+        } else {
+          showToast('Deploying ' + site.name + '...', 'success');
+        }
+        site.status = 'building';
+        renderTable();
+        updateStats();
+        setTimeout(function() {
+          site.status = 'live';
+          site.visits = (site.visits || 0) + Math.floor(Math.random() * 50);
+          renderTable();
+          updateStats();
+          showToast('✅ ' + site.name + ' is now live!', 'success');
+        }, 2500);
+      };
+
+      window.handleDeleteSite = function(id) {
+        const site = sitesData.find(function(s) { return s.id === id; });
+        if (!site) return;
+        if (confirm('Delete "' + site.name + '" permanently?')) {
+          sitesData = sitesData.filter(function(s) { return s.id !== id; });
+          state.selectedIds.delete(id);
+          filterAndSort();
+          showToast('🗑️ ' + site.name + ' deleted.', 'warning');
+        }
+      };
+
+      // ----- EVENT BINDING -----
+      // Search
+      searchBtn.addEventListener('click', function() {
+        state.searchQuery = searchInput.value;
+        filterAndSort();
+      });
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          state.searchQuery = this.value;
+          filterAndSort();
+        }
+      });
+
+      // Filters
+      statusFilter.addEventListener('change', function() {
+        state.statusFilter = this.value;
+        filterAndSort();
+      });
+      themeFilter.addEventListener('change', function() {
+        state.themeFilter = this.value;
+        filterAndSort();
+      });
+      sortFilter.addEventListener('change', function() {
+        const val = this.value;
+        const parts = val.split('-');
+        state.sortField = parts[0] || 'name';
+        state.sortDirection = parts[1] === 'desc' ? 'desc' : 'asc';
+        // Update header
+        document.querySelectorAll('th[data-sort]').forEach(function(th) {
+          th.classList.toggle('active', th.dataset.sort === state.sortField);
+        });
+        filterAndSort();
+      });
+
+      // Select All
+      selectAll.addEventListener('change', function() {
+        const checked = this.checked;
+        document.querySelectorAll('.site-checkbox').forEach(function(cb) {
+          cb.checked = checked;
+          const id = parseInt(cb.dataset.id);
+          if (checked) {
+            state.selectedIds.add(id);
+          } else {
+            state.selectedIds.delete(id);
+          }
+        });
+        updateBulkActions();
+      });
+
+      // Checkbox delegation
+      document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('site-checkbox')) {
+          const id = parseInt(e.target.dataset.id);
+          if (e.target.checked) {
+            state.selectedIds.add(id);
+          } else {
+            state.selectedIds.delete(id);
+          }
+          updateBulkActions();
+          // Update select all
+          const allCheckboxes = document.querySelectorAll('.site-checkbox');
+          const allChecked = document.querySelectorAll('.site-checkbox:checked');
+          selectAll.checked = allCheckboxes.length > 0 && allChecked.length === allCheckboxes.length;
+        }
+      });
+
+      // Bulk actions
+      bulkDeploy.addEventListener('click', bulkDeploySites);
+      bulkArchive.addEventListener('click', bulkArchiveSites);
+      bulkDelete.addEventListener('click', bulkDeleteSites);
+      bulkClear.addEventListener('click', clearSelection);
+
+      // New Site
+      newSiteBtn.addEventListener('click', function() {
+        window.location.href = '../builder/step-1.html';
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          toast.classList.remove('show');
+          clearSelection();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+          e.preventDefault();
+          document.querySelectorAll('.site-checkbox').forEach(function(cb) {
+            cb.checked = true;
+            const id = parseInt(cb.dataset.id);
+            state.selectedIds.add(id);
+          });
+          updateBulkActions();
+          selectAll.checked = true;
+        }
+        if (e.key === 'Delete' && state.selectedIds.size > 0) {
+          bulkDeleteSites();
+        }
+      });
+
+      // ----- STATE PERSISTENCE -----
+      function saveState() {
+        try {
+          localStorage.setItem('swayam_sites_data', JSON.stringify(sitesData));
+        } catch (err) {
+          console.warn('Could not save sites:', err);
+        }
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem('swayam_sites_data');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              sitesData = parsed;
+            }
+          }
+        } catch (err) {
+          console.warn('Could not load sites:', err);
+        }
+      }
+
+      // ----- INIT -----
+      function init() {
+        try {
+          loadState();
+          // Set initial sort header
+          document.querySelector('th[data-sort="name"]')?.classList.add('active');
+          filterAndSort();
+          saveState();
+          console.log('Sites page initialized successfully.');
+        } catch (err) {
+          console.error('Fatal init error:', err);
+          showToast('Failed to initialize. Please refresh.', 'error');
+        }
+      }
+
+      // ----- ERROR BOUNDARY -----
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled rejection:', e.reason);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
+      });
+
+      // ----- START -----
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
