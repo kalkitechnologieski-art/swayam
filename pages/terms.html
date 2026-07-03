@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Swayam AI Website Builder</title>
+  <meta name="description" content="Terms of Service for Swayam — Understand your rights and obligations when using our platform." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Same base as privacy.html — abbreviated for space */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.02) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .header {
+      background: rgba(10, 10, 26, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(184, 134, 11, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i { color: #b8860b; }
+    .logo span { font-weight: 300; opacity: 0.3; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #b8860b; }
+    .header-cta {
+      padding: 8px 24px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff !important;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .header-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25); }
+
+    /* Hero */
+    .hero { padding: 40px 0 20px; text-align: center; }
+    .hero .icon { font-size: 3rem; color: #b8860b; opacity: 0.15; margin-bottom: 8px; }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.15); margin-top: 4px; }
+    .hero .last-updated {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.06);
+      margin-top: 8px;
+    }
+
+    /* Content */
+    .content { padding: 20px 0 60px; }
+    .content .section {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
+    .content .section:hover { border-color: rgba(255, 255, 255, 0.03); }
+    .content .section h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #f0ece6;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .content .section h2 i { color: #b8860b; font-size: 1.2rem; }
+    .content .section p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .content .section p:last-child { margin-bottom: 0; }
+    .content .section ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 12px 0;
+    }
+    .content .section ul li {
+      padding: 6px 0 6px 28px;
+      position: relative;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.3);
+      line-height: 1.6;
+    }
+    .content .section ul li::before {
+      content: '›';
+      position: absolute;
+      left: 8px;
+      color: #b8860b;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .content .section .highlight { color: #b8860b; font-weight: 500; }
+    .content .section .date-badge {
+      display: inline-block;
+      padding: 2px 12px;
+      border-radius: 20px;
+      background: rgba(184, 134, 11, 0.04);
+      border: 1px solid rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+      font-size: 0.65rem;
+      font-weight: 500;
+    }
+    .content .toc {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 28px;
+    }
+    .content .toc h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 12px;
+    }
+    .content .toc a {
+      display: inline-block;
+      color: rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin: 0 12px 6px 0;
+      transition: 0.3s;
+    }
+    .content .toc a:hover { color: #b8860b; }
+
+    /* Footer */
+    .footer {
+      padding: 30px 0 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.06);
+      font-size: 0.8rem;
+    }
+    .footer a { color: rgba(255, 255, 255, 0.1); text-decoration: none; }
+    .footer a:hover { color: #b8860b; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+
+    @media (max-width: 768px) {
+      .header-inner { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: center; }
+      .hero h1 { font-size: 2rem; }
+      .content .section { padding: 20px; }
+      .content .toc { padding: 16px 20px; }
+    }
+    @media (max-width: 480px) {
+      .content .section ul li { font-size: 0.8rem; padding-left: 20px; }
+      .content .section ul li::before { left: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo"><i class="fas fa-om"></i> Swayam<span>AI</span></a>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../builder/step-1.html">Builder</a>
+        <a href="../themes.html">Themes</a>
+        <a href="../dashboard/index.html">Dashboard</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html" class="active">Terms</a>
+        <a href="https://kalki-intelligence.in" target="_blank" class="header-cta">Kalki AI</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="icon"><i class="fas fa-gavel"></i></div>
+      <h1>Terms of Service</h1>
+      <p>Understand your rights and obligations when using Swayam.</p>
+      <div class="last-updated">Last Updated: July 2, 2026</div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="content">
+    <div class="container">
+
+      <!-- Table of Contents -->
+      <div class="toc">
+        <h3><i class="fas fa-list" style="color:#b8860b; margin-right:6px;"></i> Table of Contents</h3>
+        <a href="#section-1">1. Agreement</a>
+        <a href="#section-2">2. Definitions</a>
+        <a href="#section-3">3. User Accounts</a>
+        <a href="#section-4">4. Services</a>
+        <a href="#section-5">5. User Content</a>
+        <a href="#section-6">6. Payment &amp; Billing</a>
+        <a href="#section-7">7. Intellectual Property</a>
+        <a href="#section-8">8. Prohibited Uses</a>
+        <a href="#section-9">9. Termination</a>
+        <a href="#section-10">10. Disclaimer</a>
+        <a href="#section-11">11. Liability</a>
+        <a href="#section-12">12. Governing Law</a>
+        <a href="#section-13">13. Contact</a>
+      </div>
+
+      <!-- Section 1 -->
+      <div class="section" id="section-1">
+        <h2><i class="fas fa-handshake"></i> 1. Agreement</h2>
+        <p>
+          By using <span class="highlight">Swayam</span> (the "Platform"), you agree to be bound by these Terms of Service
+          (the "Terms"). If you do not agree to these Terms, please do not use the Platform.
+        </p>
+        <p>
+          These Terms constitute a legally binding agreement between you ("User" or "You") and
+          <span class="highlight">Kalki Intelligence</span> ("Company", "We", "Us", "Our").
+        </p>
+        <p>
+          <span class="date-badge">Version 2.0</span>
+          <span class="date-badge" style="margin-left:6px;">Effective: July 2, 2026</span>
+        </p>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="section" id="section-2">
+        <h2><i class="fas fa-book"></i> 2. Definitions</h2>
+        <ul>
+          <li><strong>"Platform"</strong> means the Swayam website, AI builder, dashboard, and all associated services.</li>
+          <li><strong>"User"</strong> means any individual or entity that accesses or uses the Platform.</li>
+          <li><strong>"Content"</strong> means any text, images, code, data, or other materials uploaded, generated, or created by Users.</li>
+          <li><strong>"AI Generated"</strong> means content created by our artificial intelligence models.</li>
+          <li><strong>"Pro"</strong> means the paid subscription tier offering additional features and services.</li>
+          <li><strong>"Vercel"</strong> means the hosting platform used to deploy User websites.</li>
+        </ul>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="section" id="section-3">
+        <h2><i class="fas fa-user-plus"></i> 3. User Accounts</h2>
+        <p>
+          To use certain features of the Platform, you must create an account. You are responsible for maintaining the
+          confidentiality of your account credentials and for all activities that occur under your account.
+        </p>
+        <ul>
+          <li>You must provide accurate and complete information when creating your account.</li>
+          <li>You are solely responsible for the content you publish or generate using the Platform.</li>
+          <li>You must notify us immediately of any unauthorized use of your account.</li>
+          <li>You may not share your account credentials with others or allow others to use your account.</li>
+        </ul>
+        <p>
+          We reserve the right to suspend or terminate accounts that violate these Terms or applicable laws.
+        </p>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="section" id="section-4">
+        <h2><i class="fas fa-cogs"></i> 4. Services</h2>
+        <p>
+          Swayam provides the following core services:
+        </p>
+        <ul>
+          <li><strong>AI Website Builder:</strong> Generate websites using artificial intelligence based on your input.</li>
+          <li><strong>Hosting:</strong> Deploy websites to Vercel with a free *.vercel.app subdomain.</li>
+          <li><strong>Custom Domains:</strong> Purchase and manage custom domains (₹3000/year).</li>
+          <li><strong>Pro Subscription:</strong> Optional paid tier with additional features (₹4,999/month).</li>
+          <li><strong>Code Export:</strong> Download your website's full source code anytime.</li>
+        </ul>
+        <p>
+          We reserve the right to modify, suspend, or discontinue any service at any time with reasonable notice.
+        </p>
+      </div>
+
+      <!-- Section 5 -->
+      <div class="section" id="section-5">
+        <h2><i class="fas fa-file-alt"></i> 5. User Content</h2>
+        <p>
+          You retain full ownership of all Content you create, upload, or generate using the Platform.
+          By using Swayam, you grant us a license to process, store, and display your Content as necessary
+          to provide and improve our services.
+        </p>
+        <ul>
+          <li><strong>Ownership:</strong> You own your website content, designs, and data.</li>
+          <li><strong>License:</strong> You grant us a worldwide, non-exclusive, royalty-free license to use your Content for the purpose of operating and improving the Platform.</li>
+          <li><strong>AI Training:</strong> By default, we do not use your Content to train our AI models. You may opt-in to this separately.</li>
+          <li><strong>Prohibited Content:</strong> You may not upload or generate Content that is illegal, offensive, defamatory, or infringes on third-party rights.</li>
+        </ul>
+        <p>
+          We do not claim ownership of your Content. Your code, designs, and data remain yours.
+        </p>
+      </div>
+
+      <!-- Section 6 -->
+      <div class="section" id="section-6">
+        <h2><i class="fas fa-credit-card"></i> 6. Payment &amp; Billing</h2>
+        <p>
+          Certain features of Swayam require payment:
+        </p>
+        <ul>
+          <li><strong>Pro Subscription:</strong> ₹4,999/month (billed monthly). Includes 30-page Next.js site, international SEO, GEO, AEO, and dedicated support.</li>
+          <li><strong>Custom Domains:</strong> ₹3,000/year (includes SSL and auto-renewal).</li>
+          <li><strong>Premium Themes:</strong> ₹999 one-time (optional).</li>
+        </ul>
+        <p>
+          All payments are processed securely via Razorpay or Stripe. Subscription fees are non-refundable
+          except as required by law. You may cancel your subscription at any time through your dashboard.
+        </p>
+        <p>
+          <span class="date-badge" style="background:rgba(34,197,94,0.04); border-color:rgba(34,197,94,0.04); color:#22c55e;">
+            <i class="fas fa-lock"></i> Secure Payments
+          </span>
+        </p>
+      </div>
+
+      <!-- Section 7 -->
+      <div class="section" id="section-7">
+        <h2><i class="fas fa-copyright"></i> 7. Intellectual Property</h2>
+        <p>
+          The Platform, including its design, code, branding, and underlying technology, is the intellectual property
+          of <span class="highlight">Kalki Intelligence</span>. You may not:
+        </p>
+        <ul>
+          <li>Copy, modify, or distribute the Platform's source code or design.</li>
+          <li>Reverse engineer, decompile, or disassemble any part of the Platform.</li>
+          <li>Use the Platform's branding without express written permission.</li>
+          <li>Claim ownership of the Platform or its underlying technology.</li>
+        </ul>
+        <p>
+          All content generated by the AI remains your property, but the underlying models, algorithms,
+          and platform infrastructure are owned by Kalki Intelligence.
+        </p>
+      </div>
+
+      <!-- Section 8 -->
+      <div class="section" id="section-8">
+        <h2><i class="fas fa-ban"></i> 8. Prohibited Uses</h2>
+        <p>You agree not to use the Platform for any of the following:</p>
+        <ul>
+          <li>Illegal activities or unlawful purposes.</li>
+          <li>Hate speech, harassment, or discrimination.</li>
+          <li>Malware, phishing, or other malicious activities.</li>
+          <li>Spam, unsolicited marketing, or deceptive practices.</li>
+          <li>Infringing on intellectual property rights of others.</li>
+          <li>Attempting to gain unauthorized access to our systems.</li>
+          <li>Interfering with the operation of the Platform or other users.</li>
+        </ul>
+        <p>
+          Violation of these prohibitions may result in immediate termination of your account and legal action.
+        </p>
+      </div>
+
+      <!-- Section 9 -->
+      <div class="section" id="section-9">
+        <h2><i class="fas fa-power-off"></i> 9. Termination</h2>
+        <p>
+          We reserve the right to suspend or terminate your access to the Platform at any time, with or without cause,
+          with or without notice, effective immediately.
+        </p>
+        <ul>
+          <li><strong>By You:</strong> You may delete your account at any time via the dashboard.</li>
+          <li><strong>By Us:</strong> We may terminate accounts that violate these Terms, are inactive for extended periods, or for any other reason.</li>
+          <li><strong>Effect of Termination:</strong> Upon termination, we will delete your account data within 30 days, except as required by law.</li>
+        </ul>
+        <p>
+          If you cancel your Pro subscription, you will retain your website but lose access to Pro features.
+        </p>
+      </div>
+
+      <!-- Section 10 -->
+      <div class="section" id="section-10">
+        <h2><i class="fas fa-exclamation-triangle"></i> 10. Disclaimer</h2>
+        <p>
+          <span class="highlight">Swayam is provided "as is" and "as available" without warranties of any kind.</span>
+          We do not guarantee that the Platform will be error-free, uninterrupted, or secure. You use the Platform at your own risk.
+        </p>
+        <ul>
+          <li>We are not responsible for the content of websites you build using Swayam.</li>
+          <li>We do not warrant that AI-generated content will be error-free or suitable for your needs.</li>
+          <li>We are not liable for any downtime, data loss, or service interruptions.</li>
+          <li>Third-party services (Vercel, domain registrars, etc.) are subject to their own terms and conditions.</li>
+        </ul>
+        <p>
+          Please review the terms of any third-party services you use in conjunction with Swayam.
+        </p>
+      </div>
+
+      <!-- Section 11 -->
+      <div class="section" id="section-11">
+        <h2><i class="fas fa-balance-scale"></i> 11. Limitation of Liability</h2>
+        <p>
+          To the maximum extent permitted by law, <span class="highlight">Kalki Intelligence</span> shall not be liable for:
+        </p>
+        <ul>
+          <li>Any indirect, incidental, special, consequential, or punitive damages.</li>
+          <li>Loss of profits, revenue, data, or business opportunities.</li>
+          <li>Damages arising from the use or inability to use the Platform.</li>
+          <li>Damages resulting from third-party services integrated with Swayam.</li>
+        </ul>
+        <p>
+          Our total liability to you shall not exceed the amount you have paid to us in the preceding 12 months.
+        </p>
+      </div>
+
+      <!-- Section 12 -->
+      <div class="section" id="section-12">
+        <h2><i class="fas fa-globe-asia"></i> 12. Governing Law</h2>
+        <p>
+          These Terms are governed by and construed in accordance with the laws of <span class="highlight">India</span>,
+          without regard to its conflict of law principles. Any disputes arising under these Terms shall be subject
+          to the exclusive jurisdiction of the courts in <span class="highlight">Delhi NCR</span>.
+        </p>
+        <p>
+          If any provision of these Terms is found to be unenforceable, the remaining provisions shall remain in full force and effect.
+        </p>
+      </div>
+
+      <!-- Section 13 -->
+      <div class="section" id="section-13">
+        <h2><i class="fas fa-envelope"></i> 13. Contact Us</h2>
+        <p>
+          If you have any questions about these Terms, please contact us:
+        </p>
+        <ul>
+          <li><strong>Email:</strong> <span class="highlight">legal@swayam.ai</span></li>
+          <li><strong>Address:</strong> Kalki Intelligence, Delhi NCR, India</li>
+          <li><strong>Phone:</strong> +91-98765-43210</li>
+        </ul>
+        <p style="margin-top:12px; padding:12px 16px; background:rgba(184,134,11,0.02); border-radius:12px; border-left:3px solid #b8860b;">
+          <i class="fas fa-om" style="color:#b8860b; margin-right:8px;"></i>
+          <span style="color:rgba(255,255,255,0.2); font-size:0.85rem;">
+            Thank you for trusting Swayam. We're honored to help you build your digital presence.
+          </span>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Swayam — An AI Website Builder by <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+      <p style="font-size:0.65rem; margin-top:4px; opacity:0.3;">
+        <a href="privacy.html">Privacy</a> • <a href="terms.html">Terms</a> • <a href="contact.html">Contact</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      let toastTimeout = null;
+
+      function showToast(msg, type) {
+        toastMessage.textContent = msg;
+        toast.className = 'toast';
+        if (type === 'success') toast.classList.add('success');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() { toast.classList.remove('show'); }, 3500);
+      }
+
+      // Smooth scroll for TOC
+      document.querySelectorAll('.toc a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const target = document.querySelector(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.style.transition = '0.3s';
+            target.style.borderColor = '#b8860b';
+            setTimeout(function() { target.style.borderColor = ''; }, 1500);
+          }
+        });
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { toast.classList.remove('show'); }
+        if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+          e.preventDefault();
+          window.print();
+        }
+      });
+
+      // Scroll progress
+      const progressBar = document.createElement('div');
+      progressBar.style.cssText = `
+        position: fixed; top: 0; left: 0; height: 2px;
+        background: linear-gradient(90deg, #b8860b, #d4a017);
+        z-index: 9999; transition: width 0.1s; width: 0%;
+      `;
+      document.body.appendChild(progressBar);
+      window.addEventListener('scroll', function() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (scrollTop / docHeight) * 100 + '%';
+      });
+
+      console.log('Terms of Service page initialized.');
+      showToast('⚖️ Please review our Terms of Service carefully.', 'success');
+    })();
+  </script>
+
+</body>
+</html>
