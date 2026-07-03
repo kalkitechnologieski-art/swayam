@@ -26,7 +26,7 @@
     ::-webkit-scrollbar-track { background: #141425; }
     ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
 
-    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; width: 100%; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
     /* ============================================================
        HEADER
@@ -86,7 +86,7 @@
     .btn-back:hover { background: rgba(255, 255, 255, 0.04); color: #fff; }
 
     /* ============================================================
-       MAIN
+       MAIN LAYOUT
        ============================================================ */
     .builder-main {
       flex: 1;
@@ -97,6 +97,7 @@
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
+
     .builder-header {
       text-align: center;
       margin-bottom: 30px;
@@ -126,7 +127,7 @@
        ============================================================ */
     .deploy-card {
       background: rgba(255, 255, 255, 0.01);
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.02);
       border-radius: 24px;
       padding: 32px;
       margin-bottom: 24px;
@@ -178,7 +179,7 @@
     }
 
     .deploy-card .progress-container {
-      max-width: 400px;
+      max-width: 500px;
       margin: 0 auto 20px;
     }
     .deploy-card .progress-bar {
@@ -204,9 +205,7 @@
       margin-top: 6px;
     }
 
-    /* ============================================================
-       LOGS
-       ============================================================ */
+    /* ----- Logs ----- */
     .log-container {
       background: rgba(0, 0, 0, 0.2);
       border-radius: 12px;
@@ -229,146 +228,136 @@
       transition: opacity 0.3s;
     }
     .log-container .log-entry:last-child { border-bottom: none; opacity: 1; }
-    .log-container .log-entry .time {
-      color: rgba(255, 255, 255, 0.08);
-      margin-right: 8px;
-    }
+    .log-container .log-entry .time { color: rgba(255, 255, 255, 0.08); margin-right: 8px; }
     .log-container .log-entry .success { color: #22c55e; }
     .log-container .log-entry .error { color: #ef4444; }
     .log-container .log-entry .info { color: #60a5fa; }
     .log-container .log-entry .warn { color: #f59e0b; }
 
-    /* ============================================================
-       DOMAIN SECTION
-       ============================================================ */
-    .domain-section {
+    /* ----- Subdomain Selection ----- */
+    .subdomain-section {
       background: rgba(255, 255, 255, 0.01);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      border-radius: 20px;
-      padding: 24px 28px;
-      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 20px 0;
     }
-    .domain-section h3 {
+    .subdomain-section h3 {
       font-size: 1rem;
       font-weight: 600;
+      color: rgba(255, 255, 255, 0.4);
       margin-bottom: 4px;
-      color: rgba(255, 255, 255, 0.6);
     }
-    .domain-section .sub {
+    .subdomain-section .sub {
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.15);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
-    .domain-search {
+    .subdomain-section .subdomain-input-group {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .domain-search input {
-      flex: 1;
-      padding: 10px 16px;
-      border-radius: 30px;
+      align-items: center;
+      gap: 4px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.04);
-      color: #f0ece6;
-      font-family: inherit;
-      font-size: 0.9rem;
-      outline: none;
+      border-radius: 12px;
+      padding: 4px 4px 4px 16px;
+      max-width: 500px;
       transition: 0.3s;
-      min-width: 180px;
     }
-    .domain-search input:focus {
+    .subdomain-section .subdomain-input-group:focus-within {
       border-color: #b8860b;
       box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.06);
     }
-    .domain-search .domain-btn {
-      padding: 10px 24px;
-      border-radius: 30px;
-      background: linear-gradient(135deg, #b8860b, #d4a017);
+    .subdomain-section .subdomain-input-group input {
+      flex: 1;
+      padding: 10px 0;
+      background: transparent;
       border: none;
-      color: #fff;
-      font-weight: 600;
+      color: #f0ece6;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      min-width: 80px;
+    }
+    .subdomain-section .subdomain-input-group input::placeholder {
+      color: rgba(255, 255, 255, 0.1);
+    }
+    .subdomain-section .subdomain-input-group .domain-suffix {
+      color: rgba(255, 255, 255, 0.15);
       font-size: 0.85rem;
+      padding-right: 4px;
+      white-space: nowrap;
+    }
+    .subdomain-section .subdomain-input-group .check-btn {
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(184, 134, 11, 0.04);
+      border: 1px solid rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+      font-size: 0.7rem;
+      font-weight: 500;
       cursor: pointer;
       transition: 0.3s;
       font-family: inherit;
     }
-    .domain-search .domain-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.2);
+    .subdomain-section .subdomain-input-group .check-btn:hover {
+      background: rgba(184, 134, 11, 0.08);
     }
-    .domain-search .domain-btn:disabled {
+    .subdomain-section .subdomain-input-group .check-btn:disabled {
       opacity: 0.3;
       pointer-events: none;
-      transform: none;
     }
+    .subdomain-section .availability-msg {
+      font-size: 0.75rem;
+      margin-top: 6px;
+    }
+    .subdomain-section .availability-msg.available { color: #22c55e; }
+    .subdomain-section .availability-msg.unavailable { color: #ef4444; }
+    .subdomain-section .availability-msg.checking { color: #fbbf24; }
 
-    .domain-results {
-      margin-top: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .domain-result-item {
+    /* ----- Domain Purchase ----- */
+    .domain-purchase-section {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 20px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 16px;
-      border-radius: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .domain-purchase-section .info h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .domain-purchase-section .info p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .domain-purchase-section .btn-buy-domain {
+      padding: 8px 24px;
+      border-radius: 30px;
       background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      transition: 0.3s;
-    }
-    .domain-result-item:hover {
-      background: rgba(255, 255, 255, 0.03);
-    }
-    .domain-result-item .name {
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
       font-weight: 500;
-      font-size: 0.95rem;
-    }
-    .domain-result-item .price {
-      font-weight: 600;
-      color: #b8860b;
-      font-size: 0.9rem;
-    }
-    .domain-result-item .buy-btn {
-      padding: 4px 16px;
-      border-radius: 20px;
-      background: rgba(184, 134, 11, 0.06);
-      border: 1px solid rgba(184, 134, 11, 0.1);
-      color: #b8860b;
-      font-size: 0.7rem;
-      font-weight: 600;
       cursor: pointer;
       transition: 0.3s;
       font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .domain-result-item .buy-btn:hover {
-      background: #b8860b;
-      color: #fff;
-    }
-    .domain-result-item .buy-btn.purchased {
-      background: #22c55e;
-      border-color: #22c55e;
+    .domain-purchase-section .btn-buy-domain:hover {
+      background: rgba(255, 255, 255, 0.04);
       color: #fff;
     }
 
-    .domain-info {
-      margin-top: 12px;
-      padding: 12px 16px;
-      border-radius: 12px;
-      background: rgba(184, 134, 11, 0.02);
-      border: 1px solid rgba(184, 134, 11, 0.04);
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.2);
-    }
-    .domain-info strong {
-      color: #b8860b;
-    }
-
-    /* ============================================================
-       ACTIONS
-       ============================================================ */
+    /* ----- Actions ----- */
     .action-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -421,35 +410,12 @@
     }
 
     /* ============================================================
-       CELEBRATION / CONFETTI
-       ============================================================ */
-    .celebration {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9998;
-      overflow: hidden;
-    }
-    .confetti-piece {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      top: -20px;
-      animation: confettiFall linear forwards;
-    }
-    @keyframes confettiFall {
-      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
-      100% { transform: translateY(110vh) rotate(720deg) scale(0.2); opacity: 0; }
-    }
-
-    /* ============================================================
        TOAST
        ============================================================ */
     .toast {
       position: fixed;
       bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
+      right: 30px;
       padding: 12px 24px;
       border-radius: 14px;
       background: #1a1a2e;
@@ -459,7 +425,8 @@
       box-shadow: 0 12px 48px rgba(0,0,0,0.4);
       z-index: 9999;
       opacity: 0;
-      transition: 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
       pointer-events: none;
       display: flex;
       align-items: center;
@@ -467,11 +434,13 @@
       backdrop-filter: blur(12px);
       max-width: 90vw;
     }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
     .toast.error { border-color: rgba(239,68,68,0.2); }
     .toast.error i { color: #ef4444; }
     .toast.success { border-color: rgba(34,197,94,0.2); }
     .toast.success i { color: #22c55e; }
+    .toast.warning { border-color: rgba(251,191,36,0.2); }
+    .toast.warning i { color: #fbbf24; }
 
     /* ============================================================
        FOOTER
@@ -489,24 +458,20 @@
        RESPONSIVE
        ============================================================ */
     @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 6px;
-      }
+      .header { flex-direction: column; align-items: stretch; gap: 6px; }
       .step-indicator { justify-content: center; }
       .nav-actions { justify-content: center; }
       .builder-title { font-size: 1.6rem; }
       .deploy-card { padding: 24px 16px; }
-      .domain-search { flex-direction: column; }
-      .domain-search input { width: 100%; }
+      .subdomain-section .subdomain-input-group { flex-wrap: wrap; padding: 8px; }
+      .subdomain-section .subdomain-input-group input { width: 100%; }
+      .domain-purchase-section { flex-direction: column; text-align: center; }
       .action-buttons { flex-direction: column; align-items: center; }
       .action-btn { width: 100%; justify-content: center; }
     }
     @media (max-width: 480px) {
       .deploy-card .status-icon { font-size: 3rem; }
       .deploy-card .status-title { font-size: 1.2rem; }
-      .domain-result-item { flex-wrap: wrap; gap: 6px; }
     }
   </style>
 </head>
@@ -519,11 +484,6 @@
     <i class="fas fa-info-circle"></i>
     <span id="toastMessage">Message</span>
   </div>
-
-  <!-- ============================================================
-       CELEBRATION CONTAINER
-       ============================================================ -->
-  <div class="celebration" id="celebrationContainer"></div>
 
   <!-- ============================================================
        HEADER
@@ -556,7 +516,7 @@
     <div class="builder-header">
       <div class="builder-label">Step 4 — Final</div>
       <h1 class="builder-title">Deploy & Launch Your Website</h1>
-      <p class="builder-sub">Your website is ready. Deploy to Vercel, get your free subdomain, and go live.</p>
+      <p class="builder-sub">Your site is ready. Choose your free subdomain and deploy to Vercel.</p>
     </div>
 
     <!-- ==========================================================
@@ -564,7 +524,7 @@
          ========================================================== -->
     <div class="deploy-card" id="deployCard">
       <div class="status-icon" id="statusIcon">
-        <i class="fas fa-rocket"></i>
+        <i class="fas fa-cloud-upload-alt"></i>
       </div>
       <div class="status-title" id="statusTitle">Ready to Deploy</div>
       <div class="status-sub" id="statusSub">Click the deploy button below to launch your site.</div>
@@ -582,47 +542,34 @@
 
       <div class="action-buttons">
         <button class="action-btn primary" id="deployBtn"><i class="fas fa-cloud-upload-alt"></i> Deploy to Vercel</button>
-        <button class="action-btn" id="previewBtn"><i class="fas fa-eye"></i> Preview Site</button>
+        <button class="action-btn" id="previewBtn" disabled><i class="fas fa-eye"></i> Preview Site</button>
         <button class="action-btn success" id="downloadBtn"><i class="fas fa-download"></i> Download Code</button>
       </div>
     </div>
 
     <!-- ==========================================================
-         DOMAIN SECTION
+         SUBDOMAIN SELECTION
          ========================================================== -->
-    <div class="domain-section">
-      <h3><i class="fas fa-globe" style="color:#b8860b; margin-right:6px;"></i> Get Your Custom Domain</h3>
-      <p class="sub">Search for your perfect domain. ₹3000/year — includes SSL & auto-renewal.</p>
-
-      <div class="domain-search">
-        <input type="text" id="domainInput" placeholder="yourbrand.com" value="mybrand.com" />
-        <button class="domain-btn" id="domainSearchBtn"><i class="fas fa-search"></i> Check</button>
+    <div class="subdomain-section">
+      <h3><i class="fas fa-link" style="color:#b8860b; margin-right:6px;"></i> Your Free Subdomain</h3>
+      <p class="sub">Get a free <strong style="color:rgba(255,255,255,0.2);">.vercel.app</strong> subdomain with SSL included.</p>
+      <div class="subdomain-input-group">
+        <input type="text" id="subdomainInput" placeholder="your-brand" value="my-brand" />
+        <span class="domain-suffix">.vercel.app</span>
+        <button class="check-btn" id="checkSubdomainBtn"><i class="fas fa-check"></i> Check</button>
       </div>
+      <div class="availability-msg" id="availabilityMsg">Enter a subdomain name to check availability.</div>
+    </div>
 
-      <div class="domain-results" id="domainResults">
-        <!-- Results injected by JS -->
-        <div class="domain-result-item">
-          <span class="name">mybrand.com</span>
-          <span class="price">₹3000/year</span>
-          <button class="buy-btn" data-domain="mybrand.com">Buy Now</button>
-        </div>
-        <div class="domain-result-item">
-          <span class="name">mybrand.in</span>
-          <span class="price">₹3000/year</span>
-          <button class="buy-btn" data-domain="mybrand.in">Buy Now</button>
-        </div>
-        <div class="domain-result-item">
-          <span class="name">mybrand.co</span>
-          <span class="price">₹3000/year</span>
-          <button class="buy-btn" data-domain="mybrand.co">Buy Now</button>
-        </div>
+    <!-- ==========================================================
+         DOMAIN PURCHASE (Optional)
+         ========================================================== -->
+    <div class="domain-purchase-section">
+      <div class="info">
+        <h3><i class="fas fa-globe-asia" style="color:#b8860b; margin-right:6px;"></i> Want a Custom Domain?</h3>
+        <p>Purchase your own domain (e.g., yourbrand.com) for ₹3,000/year.</p>
       </div>
-
-      <div class="domain-info">
-        <i class="fas fa-info-circle" style="color:#b8860b; margin-right:4px;"></i>
-        All domains include <strong>free SSL</strong>, <strong>auto-renewal</strong>, and <strong>DNS management</strong>.
-        Connect your domain to Vercel in minutes.
-      </div>
+      <button class="btn-buy-domain" id="buyDomainBtn"><i class="fas fa-shopping-cart"></i> Buy Domain</button>
     </div>
 
   </main>
@@ -641,16 +588,21 @@
     (function() {
       'use strict';
 
-      // ----- STATE -----
+      // ================================================================
+      // STATE
+      // ================================================================
       const state = {
         deployed: false,
         deploying: false,
         progress: 0,
         logs: [],
-        domain: null,
-        domainPurchased: false,
         siteUrl: null,
-        siteName: 'mybrand.vercel.app',
+        subdomain: 'my-brand',
+        subdomainAvailable: false,
+        checkingSubdomain: false,
+        siteName: 'My Brand',
+        theme: 'veda',
+        pages: [],
         steps: [
           { label: 'Building project', progress: 10 },
           { label: 'Optimizing assets', progress: 30 },
@@ -660,7 +612,9 @@
         ]
       };
 
-      // ----- DOM REFS -----
+      // ================================================================
+      // DOM REFS
+      // ================================================================
       const deployBtn = document.getElementById('deployBtn');
       const previewBtn = document.getElementById('previewBtn');
       const downloadBtn = document.getElementById('downloadBtn');
@@ -671,44 +625,127 @@
       const progressFill = document.getElementById('progressFill');
       const progressText = document.getElementById('progressText');
       const logContainer = document.getElementById('logContainer');
-      const domainInput = document.getElementById('domainInput');
-      const domainSearchBtn = document.getElementById('domainSearchBtn');
-      const domainResults = document.getElementById('domainResults');
       const toast = document.getElementById('toast');
       const toastMessage = document.getElementById('toastMessage');
-      const celebrationContainer = document.getElementById('celebrationContainer');
       const deployCard = document.getElementById('deployCard');
 
-      // ----- TOAST -----
+      const subdomainInput = document.getElementById('subdomainInput');
+      const checkSubdomainBtn = document.getElementById('checkSubdomainBtn');
+      const availabilityMsg = document.getElementById('availabilityMsg');
+      const buyDomainBtn = document.getElementById('buyDomainBtn');
+
+      // ================================================================
+      // TOAST
+      // ================================================================
       let toastTimeout = null;
 
       function showToast(message, type) {
         if (!message) return;
+        toastMessage.textContent = typeof message === 'string' ? message : String(message);
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        if (type === 'warning') toast.classList.add('warning');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() {
+          toast.classList.remove('show');
+        }, 3500);
+      }
+
+      // ================================================================
+      // LOAD SITE DATA
+      // ================================================================
+      function loadSiteData() {
         try {
-          toastMessage.textContent = typeof message === 'string' ? message : String(message);
-          toast.className = 'toast';
-          if (type === 'error') toast.classList.add('error');
-          if (type === 'success') toast.classList.add('success');
-          toast.classList.add('show');
-          clearTimeout(toastTimeout);
-          toastTimeout = setTimeout(function() {
-            toast.classList.remove('show');
-          }, 3500);
+          // Load content from step 3
+          const contentRaw = localStorage.getItem('swayam_step3_content');
+          if (contentRaw) {
+            const content = JSON.parse(contentRaw);
+            if (content.siteName) {
+              state.siteName = content.siteName;
+              // Pre-fill subdomain
+              const base = content.siteName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+              subdomainInput.value = base || 'my-brand';
+              state.subdomain = subdomainInput.value;
+            }
+          }
+
+          // Load builder state for theme and pages
+          const stateRaw = localStorage.getItem('swayam_builder_state');
+          if (stateRaw) {
+            const data = JSON.parse(stateRaw);
+            if (data.selectedTheme) state.theme = data.selectedTheme;
+            if (data.pages) state.pages = data.pages;
+          }
+
+          // Pre-check subdomain
+          setTimeout(function() {
+            checkSubdomain();
+          }, 300);
+
         } catch (err) {
-          console.warn('Toast error:', err);
+          console.warn('Error loading site data:', err);
+          showToast('Could not load all site data. Some features may be limited.', 'warning');
         }
       }
 
-      // ----- LOGGING -----
+      // ================================================================
+      // SUBDOMAIN CHECK
+      // ================================================================
+      function checkSubdomain() {
+        const sub = subdomainInput.value.trim().toLowerCase();
+        if (!sub) {
+          availabilityMsg.textContent = 'Please enter a subdomain name.';
+          availabilityMsg.className = 'availability-msg';
+          state.subdomainAvailable = false;
+          return;
+        }
+
+        // Validate: only letters, numbers, hyphens
+        if (!/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(sub) || sub.length < 3 || sub.length > 63) {
+          availabilityMsg.textContent = 'Invalid subdomain. Use only letters, numbers, hyphens (3-63 chars).';
+          availabilityMsg.className = 'availability-msg unavailable';
+          state.subdomainAvailable = false;
+          return;
+        }
+
+        state.checkingSubdomain = true;
+        availabilityMsg.textContent = 'Checking availability...';
+        availabilityMsg.className = 'availability-msg checking';
+        checkSubdomainBtn.disabled = true;
+
+        // Simulate API call
+        setTimeout(function() {
+          // Random availability (80% chance)
+          const available = Math.random() > 0.2;
+          state.subdomainAvailable = available;
+          state.subdomain = sub;
+
+          if (available) {
+            availabilityMsg.textContent = '✅ ' + sub + '.vercel.app is available!';
+            availabilityMsg.className = 'availability-msg available';
+          } else {
+            availabilityMsg.textContent = '❌ ' + sub + '.vercel.app is taken. Try another name.';
+            availabilityMsg.className = 'availability-msg unavailable';
+          }
+
+          state.checkingSubdomain = false;
+          checkSubdomainBtn.disabled = false;
+
+        }, 800 + Math.random() * 600);
+      }
+
+      // ================================================================
+      // LOGGING
+      // ================================================================
       function addLog(message, type) {
         const time = new Date().toLocaleTimeString();
-        const entry = { time, message, type: type || 'info' };
-        state.logs.push(entry);
+        state.logs.push({ time, message, type: type || 'info' });
         renderLogs();
       }
 
       function renderLogs() {
-        if (!logContainer) return;
         let html = '';
         state.logs.slice(-20).forEach(function(entry) {
           const cls = entry.type || 'info';
@@ -718,25 +755,19 @@
         logContainer.scrollTop = logContainer.scrollHeight;
       }
 
-      // ----- DEPLOYMENT -----
+      // ================================================================
+      // DEPLOYMENT
+      // ================================================================
       function deploy() {
-        if (state.deploying || state.deployed) return;
+        if (state.deploying || state.deployed) {
+          showToast('Already deployed or deploying.', 'warning');
+          return;
+        }
 
-        // Validate
-        try {
-          // Check if we have site data from previous steps
-          const saved = localStorage.getItem('swayam_step3_state');
-          if (!saved) {
-            showToast('No website data found. Please go back to Step 3.', 'error');
-            return;
-          }
-          const data = JSON.parse(saved);
-          if (!data.siteTitle || data.siteTitle.trim() === '') {
-            showToast('Please set a site title in Step 3 before deploying.', 'error');
-            return;
-          }
-        } catch (err) {
-          showToast('Error loading website data: ' + err.message, 'error');
+        // Validate subdomain
+        if (!state.subdomainAvailable) {
+          showToast('Please choose an available subdomain.', 'error');
+          subdomainInput.focus();
           return;
         }
 
@@ -770,7 +801,6 @@
           statusSub.textContent = step.label + '...';
           stepIndex++;
 
-          // Random delay between 400-1200ms to simulate real work
           const delay = 400 + Math.random() * 800;
           setTimeout(nextStep, delay);
         }
@@ -778,7 +808,7 @@
         function finishDeploy() {
           state.deploying = false;
           state.deployed = true;
-          state.siteUrl = 'https://' + (state.siteName || 'mybrand') + '.vercel.app';
+          state.siteUrl = 'https://' + state.subdomain + '.vercel.app';
           deployCard.classList.remove('deploying');
           deployBtn.disabled = false;
           deployBtn.innerHTML = '<i class="fas fa-check"></i> Deployed!';
@@ -791,57 +821,25 @@
           addLog('🌐 URL: ' + state.siteUrl, 'info');
           showToast('🎉 Your website is live!', 'success');
 
-          // Celebrate!
-          launchCelebration();
-
           // Enable preview button
           previewBtn.disabled = false;
           previewBtn.style.opacity = '1';
           previewBtn.style.pointerEvents = 'auto';
 
           // Save deployment state
-          saveState();
+          saveDeploymentState();
         }
 
         // Start
         setTimeout(nextStep, 300);
       }
 
-      // ----- CELEBRATION / CONFETTI -----
-      function launchCelebration() {
-        const colors = ['#b8860b', '#d4a017', '#f59e0b', '#6d28d9', '#22c55e', '#ef4444', '#3b82f6', '#ec4899'];
-        const container = celebrationContainer;
-        container.innerHTML = '';
-        for (let i = 0; i < 120; i++) {
-          const piece = document.createElement('div');
-          piece.className = 'confetti-piece';
-          const color = colors[Math.floor(Math.random() * colors.length)];
-          const size = 4 + Math.random() * 12;
-          const left = Math.random() * 100;
-          const duration = 2 + Math.random() * 3;
-          const delay = Math.random() * 2;
-          const shape = Math.random() > 0.5 ? '50%' : '0%';
-          piece.style.cssText = `
-            left: ${left}%;
-            width: ${size}px;
-            height: ${size}px;
-            background: ${color};
-            border-radius: ${shape};
-            animation-duration: ${duration}s;
-            animation-delay: ${delay}s;
-          `;
-          container.appendChild(piece);
-        }
-        // Clean up after animation
-        setTimeout(function() {
-          container.innerHTML = '';
-        }, 6000);
-      }
-
-      // ----- PREVIEW -----
+      // ================================================================
+      // PREVIEW
+      // ================================================================
       function previewSite() {
         if (!state.deployed) {
-          showToast('Please deploy your site first.', 'error');
+          showToast('Please deploy your site first.', 'warning');
           return;
         }
         if (state.siteUrl) {
@@ -851,30 +849,34 @@
         }
       }
 
-      // ----- DOWNLOAD CODE -----
+      // ================================================================
+      // DOWNLOAD CODE
+      // ================================================================
       function downloadCode() {
         try {
-          // Generate a mock zip or HTML bundle
-          const saved = localStorage.getItem('swayam_step3_state');
-          if (!saved) {
+          const contentRaw = localStorage.getItem('swayam_step3_content');
+          if (!contentRaw) {
             showToast('No website data found.', 'error');
             return;
           }
-          const data = JSON.parse(saved);
+          const data = JSON.parse(contentRaw);
           const html = `<!DOCTYPE html>
         <html>
-        <head><title>${data.siteTitle || 'My Website'}</title>
+        <head><title>${data.siteName || 'My Website'}</title>
         <style>body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }</style>
         </head>
         <body>
-        <h1>${data.siteTitle || 'My Website'}</h1>
+        <h1>${data.siteName || 'My Website'}</h1>
         <p>${data.tagline || 'Welcome'}</p>
+        <h2>About</h2>
+        <p>${data.about || ''}</p>
         <h2>Services</h2>
         <ul>
           <li>${data.service1 || 'Service 1'}: ${data.service1Desc || ''}</li>
           <li>${data.service2 || 'Service 2'}: ${data.service2Desc || ''}</li>
           <li>${data.service3 || 'Service 3'}: ${data.service3Desc || ''}</li>
         </ul>
+        <p>Contact: ${data.contactEmail || ''} | ${data.contactPhone || ''}</p>
         <p>Built with Swayam — Free AI Website Builder</p>
         </body>
         </html>`;
@@ -894,90 +896,32 @@
         }
       }
 
-      // ----- DOMAIN SEARCH -----
-      function searchDomain() {
-        const query = domainInput.value.trim();
-        if (!query) {
-          showToast('Please enter a domain name.', 'error');
-          return;
-        }
-        if (!query.includes('.')) {
-          showToast('Please include a TLD like .com, .in, or .co', 'error');
-          return;
-        }
-
-        domainSearchBtn.disabled = true;
-        domainSearchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-
-        // Simulate API call
-        setTimeout(function() {
-          const base = query.split('.')[0] || 'mybrand';
-          const tlds = ['.com', '.in', '.co', '.org', '.io'];
-          let html = '';
-          tlds.forEach(function(tld) {
-            const full = base + tld;
-            const available = Math.random() > 0.3;
-            html += `
-              <div class="domain-result-item">
-                <span class="name">${full} ${available ? '✅' : '❌'}</span>
-                <span class="price">${available ? '₹3000/year' : 'Taken'}</span>
-                ${available ? `<button class="buy-btn" data-domain="${full}">Buy Now</button>` : `<span style="color:rgba(255,255,255,0.1);font-size:0.7rem;">Unavailable</span>`}
-              </div>
-            `;
-          });
-          domainResults.innerHTML = html;
-
-          // Attach buy events
-          document.querySelectorAll('.domain-results .buy-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-              const domain = this.dataset.domain;
-              if (state.domainPurchased && state.domain === domain) {
-                showToast('Already purchased: ' + domain, 'error');
-                return;
-              }
-              state.domain = domain;
-              state.domainPurchased = true;
-              this.classList.add('purchased');
-              this.textContent = '✓ Purchased';
-              showToast('🎉 ' + domain + ' purchased successfully!', 'success');
-              saveState();
-            });
-          });
-
-          domainSearchBtn.disabled = false;
-          domainSearchBtn.innerHTML = '<i class="fas fa-search"></i> Check';
-          showToast('Domain search complete.', 'success');
-        }, 1200);
-      }
-
-      // ----- STATE PERSISTENCE -----
-      function saveState() {
+      // ================================================================
+      // STATE PERSISTENCE
+      // ================================================================
+      function saveDeploymentState() {
         try {
           const data = {
             deployed: state.deployed,
             siteUrl: state.siteUrl,
-            siteName: state.siteName,
-            domain: state.domain,
-            domainPurchased: state.domainPurchased,
+            subdomain: state.subdomain,
             timestamp: Date.now()
           };
-          localStorage.setItem('swayam_step4_state', JSON.stringify(data));
+          localStorage.setItem('swayam_deployment_state', JSON.stringify(data));
         } catch (err) {
-          console.warn('Could not save state:', err);
+          console.warn('Could not save deployment state:', err);
         }
       }
 
-      function loadState() {
+      function loadDeploymentState() {
         try {
-          const raw = localStorage.getItem('swayam_step4_state');
+          const raw = localStorage.getItem('swayam_deployment_state');
           if (!raw) return false;
           const data = JSON.parse(raw);
           if (data.deployed && data.siteUrl) {
             state.deployed = data.deployed;
             state.siteUrl = data.siteUrl;
-            state.siteName = data.siteName || 'mybrand';
-            state.domain = data.domain || null;
-            state.domainPurchased = data.domainPurchased || false;
+            state.subdomain = data.subdomain || 'my-brand';
             // Update UI to reflect deployed state
             statusIcon.innerHTML = '🎉';
             statusTitle.textContent = 'Deployment Successful!';
@@ -990,48 +934,62 @@
             previewBtn.style.opacity = '1';
             previewBtn.style.pointerEvents = 'auto';
             addLog('✅ Site already deployed: ' + state.siteUrl, 'success');
-            // If domain purchased, update
-            if (state.domainPurchased && state.domain) {
-              // Find and mark domain button
-              document.querySelectorAll('.domain-results .buy-btn').forEach(function(btn) {
-                if (btn.dataset.domain === state.domain) {
-                  btn.classList.add('purchased');
-                  btn.textContent = '✓ Purchased';
-                }
-              });
-            }
             return true;
           }
           return false;
         } catch (err) {
-          console.warn('Could not load state:', err);
+          console.warn('Could not load deployment state:', err);
           return false;
         }
       }
 
-      // ----- NAVIGATION -----
-      backBtn.addEventListener('click', function() {
+      // ================================================================
+      // NAVIGATION
+      // ================================================================
+      function goToStep3() {
         try {
-          saveState();
           window.location.href = 'step-3.html';
         } catch (err) {
           showToast('Error navigating back: ' + err.message, 'error');
         }
-      });
+      }
 
-      // ----- EVENT BINDING -----
+      function goToDomainPage() {
+        window.location.href = '../domain.html';
+      }
+
+      // ================================================================
+      // EVENT BINDING
+      // ================================================================
       deployBtn.addEventListener('click', deploy);
       previewBtn.addEventListener('click', previewSite);
       downloadBtn.addEventListener('click', downloadCode);
-      domainSearchBtn.addEventListener('click', searchDomain);
-      domainInput.addEventListener('keydown', function(e) {
+      backBtn.addEventListener('click', goToStep3);
+      buyDomainBtn.addEventListener('click', goToDomainPage);
+
+      checkSubdomainBtn.addEventListener('click', function() {
+        checkSubdomain();
+      });
+
+      subdomainInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
           e.preventDefault();
-          searchDomain();
+          checkSubdomain();
         }
       });
 
-      // ----- KEYBOARD SHORTCUTS -----
+      subdomainInput.addEventListener('input', function() {
+        // Reset availability message when typing
+        if (availabilityMsg.textContent.includes('available') || availabilityMsg.textContent.includes('taken')) {
+          availabilityMsg.textContent = 'Enter a subdomain name to check availability.';
+          availabilityMsg.className = 'availability-msg';
+          state.subdomainAvailable = false;
+        }
+      });
+
+      // ================================================================
+      // KEYBOARD SHORTCUTS
+      // ================================================================
       document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
           e.preventDefault();
@@ -1042,46 +1000,26 @@
         }
       });
 
-      // ----- BEFOREUNLOAD -----
-      window.addEventListener('beforeunload', function() {
-        saveState();
-      });
-
-      // ----- INIT -----
+      // ================================================================
+      // INIT
+      // ================================================================
       function init() {
         try {
-          // Load state
-          const loaded = loadState();
+          // Load site data from previous steps
+          loadSiteData();
 
-          // If not deployed, set default state
-          if (!loaded) {
+          // Check if already deployed
+          const deployed = loadDeploymentState();
+          if (!deployed) {
             addLog('Ready to deploy your website.', 'info');
-            // Check if we have site data from step 3
-            const saved3 = localStorage.getItem('swayam_step3_state');
-            if (saved3) {
-              try {
-                const data = JSON.parse(saved3);
-                if (data.siteTitle) {
-                  state.siteName = data.siteTitle.toLowerCase().replace(/[^a-z0-9]/g, '-') || 'mybrand';
-                  addLog('Site name: ' + state.siteName, 'info');
-                }
-              } catch (e) { /* ignore */ }
-            }
           }
 
-          // Sync domain input with state
-          if (state.domain) {
-            domainInput.value = state.domain;
-          }
-
-          // Enable preview only if deployed
-          if (!state.deployed) {
-            previewBtn.disabled = true;
-            previewBtn.style.opacity = '0.3';
-            previewBtn.style.pointerEvents = 'none';
-          }
+          // Restore subdomain from input
+          state.subdomain = subdomainInput.value.trim() || 'my-brand';
 
           console.log('Step 4 initialized successfully.');
+          showToast('🚀 Ready to deploy! Choose your subdomain and click Deploy.', 'success');
+
         } catch (err) {
           console.error('Fatal init error:', err);
           showToast('Failed to initialize. Please refresh.', 'error');
@@ -1091,13 +1029,13 @@
       // ----- ERROR BOUNDARY -----
       window.addEventListener('error', function(e) {
         console.error('Unhandled error:', e.error || e.message);
-        showToast('An unexpected error occurred. Please try again.', 'error');
+        showToast('An unexpected error occurred. Please refresh.', 'error');
         return true;
       });
 
       window.addEventListener('unhandledrejection', function(e) {
         console.error('Unhandled rejection:', e.reason);
-        showToast('An unexpected error occurred. Please try again.', 'error');
+        showToast('An unexpected error occurred. Please refresh.', 'error');
         return true;
       });
 
