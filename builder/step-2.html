@@ -11,11 +11,7 @@
     /* ============================================================
        RESET & BASE
        ============================================================ */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #0a0a1a;
@@ -31,12 +27,7 @@
     ::-webkit-scrollbar-track { background: #141425; }
     ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
 
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-      width: 100%;
-    }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
     /* ============================================================
        HEADER
@@ -75,9 +66,6 @@
     }
     .step-indicator .dot.active { background: #b8860b; box-shadow: 0 0 12px rgba(184, 134, 11, 0.3); }
 
-    /* ============================================================
-       NAVIGATION BUTTONS
-       ============================================================ */
     .nav-actions {
       display: flex;
       gap: 12px;
@@ -502,41 +490,34 @@
     }
 
     /* ============================================================
-       ERROR / NOTIFICATION
+       TOAST
        ============================================================ */
     .toast {
       position: fixed;
       bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      padding: 14px 28px;
-      border-radius: 16px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
       background: #1a1a2e;
       border: 1px solid rgba(255, 255, 255, 0.04);
       color: #f0ece6;
-      font-size: 0.9rem;
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
       z-index: 9999;
       opacity: 0;
-      transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
       pointer-events: none;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       backdrop-filter: blur(12px);
+      max-width: 90vw;
     }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-      pointer-events: auto;
-    }
-    .toast.error {
-      border-color: rgba(239, 68, 68, 0.2);
-    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
     .toast.error i { color: #ef4444; }
-    .toast.success {
-      border-color: rgba(34, 197, 94, 0.2);
-    }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
     .toast.success i { color: #22c55e; }
 
     /* ============================================================
@@ -550,75 +531,38 @@
       border-top: 1px solid rgba(255, 255, 255, 0.01);
       margin-top: auto;
     }
-    .footer a {
-      color: rgba(255, 255, 255, 0.05);
-      text-decoration: none;
-    }
+    .footer a { color: rgba(255, 255, 255, 0.05); text-decoration: none; }
 
     /* ============================================================
        RESPONSIVE
        ============================================================ */
     @media (max-width: 992px) {
-      .builder-grid {
-        grid-template-columns: 1fr;
-      }
-      .customization-panel {
-        position: relative;
-        top: 0;
-      }
-      .theme-grid {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-      }
+      .builder-grid { grid-template-columns: 1fr; }
+      .customization-panel { position: relative; top: 0; }
+      .theme-grid { grid-template-columns: 1fr 1fr 1fr 1fr; }
     }
     @media (max-width: 768px) {
-      .theme-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .page-toggles {
-        grid-template-columns: 1fr 1fr;
-      }
-      .builder-title {
-        font-size: 1.6rem;
-      }
-      .header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-      }
-      .step-indicator {
-        justify-content: center;
-      }
-      .nav-actions {
-        justify-content: center;
-      }
+      .theme-grid { grid-template-columns: 1fr 1fr; }
+      .page-toggles { grid-template-columns: 1fr 1fr; }
+      .builder-title { font-size: 1.6rem; }
+      .header { flex-direction: column; align-items: stretch; gap: 8px; }
+      .step-indicator { justify-content: center; }
+      .nav-actions { justify-content: center; }
     }
     @media (max-width: 480px) {
-      .theme-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .theme-card .preview {
-        height: 70px;
-      }
-      .theme-card .name {
-        font-size: 0.7rem;
-      }
-      .theme-card .desc {
-        font-size: 0.55rem;
-      }
-      .page-toggles {
-        grid-template-columns: 1fr 1fr;
-      }
-      .color-picker button {
-        width: 28px;
-        height: 28px;
-      }
+      .theme-grid { grid-template-columns: 1fr 1fr; }
+      .theme-card .preview { height: 70px; }
+      .theme-card .name { font-size: 0.7rem; }
+      .theme-card .desc { font-size: 0.55rem; }
+      .page-toggles { grid-template-columns: 1fr 1fr; }
+      .color-picker button { width: 28px; height: 28px; }
     }
   </style>
 </head>
 <body>
 
   <!-- ============================================================
-       TOAST NOTIFICATION
+       TOAST
        ============================================================ -->
   <div class="toast" id="toast">
     <i class="fas fa-info-circle"></i>
@@ -770,7 +714,9 @@
     (function() {
       'use strict';
 
-      // ----- THEME DATA -----
+      // ================================================================
+      // THEME DATA
+      // ================================================================
       const themes = [{
         id: 'veda',
         name: 'Veda',
@@ -778,7 +724,8 @@
         icon: '🕉',
         colors: ['#b8860b', '#8b6508', '#f0ece6'],
         primary: '#b8860b',
-        defaultFont: 'playfair'
+        defaultFont: 'playfair',
+        previewBg: 'linear-gradient(135deg, #faf0e6, #e8ddd0)',
       }, {
         id: 'karma',
         name: 'Karma',
@@ -786,7 +733,8 @@
         icon: '🚀',
         colors: ['#6d28d9', '#1a1a2e', '#e8e8f0'],
         primary: '#6d28d9',
-        defaultFont: 'orbitron'
+        defaultFont: 'orbitron',
+        previewBg: 'linear-gradient(135deg, #0a0a12, #1a1a2e)',
       }, {
         id: 'sattva',
         name: 'Sattva',
@@ -794,7 +742,8 @@
         icon: '🛍️',
         colors: ['#2e7d32', '#1b5e20', '#f8f6f2'],
         primary: '#2e7d32',
-        defaultFont: 'inter'
+        defaultFont: 'inter',
+        previewBg: 'linear-gradient(135deg, #f8f6f2, #e8f5e9)',
       }, {
         id: 'dharma',
         name: 'Dharma',
@@ -802,19 +751,24 @@
         icon: '📊',
         colors: ['#3b82f6', '#1e293b', '#f8fafc'],
         primary: '#3b82f6',
-        defaultFont: 'inter'
+        defaultFont: 'inter',
+        previewBg: 'linear-gradient(135deg, #f8fafc, #dbeafe)',
       }];
 
-      // ----- STATE -----
+      // ================================================================
+      // STATE
+      // ================================================================
       let state = {
-        selectedTheme: null, // theme id
+        selectedTheme: null,
         primaryColor: '#b8860b',
         font: 'inter',
         pages: ['home', 'about', 'services', 'contact'],
         initialized: false
       };
 
-      // ----- DOM REFS -----
+      // ================================================================
+      // DOM REFS
+      // ================================================================
       const themeGrid = document.getElementById('themeGrid');
       const nextBtn = document.getElementById('nextBtn');
       const backBtn = document.getElementById('backBtn');
@@ -831,18 +785,35 @@
       const fontSelect = document.getElementById('fontSelect');
       const pageToggles = document.getElementById('pageToggles');
 
-      // ============================================================
-      // 1. RENDER THEME CARDS
-      // ============================================================
+      // ================================================================
+      // TOAST
+      // ================================================================
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        toastMessage.textContent = typeof message === 'string' ? message : String(message);
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() {
+          toast.classList.remove('show');
+        }, 3500);
+      }
+
+      // ================================================================
+      // RENDER THEME CARDS
+      // ================================================================
       function renderThemes() {
-        if (!themeGrid) return;
         let html = '';
         themes.forEach(function(theme) {
           const isSelected = state.selectedTheme === theme.id;
           html += `
             <div class="theme-card ${isSelected ? 'selected' : ''}" data-theme="${theme.id}">
               <div class="check"><i class="fas fa-check"></i></div>
-              <div class="preview">
+              <div class="preview" style="background:${theme.previewBg};">
                 <span>${theme.icon}</span>
                 <div class="overlay">Preview</div>
               </div>
@@ -861,15 +832,15 @@
           });
         });
 
-        // If no theme selected, auto-select first
+        // Auto-select first if none selected
         if (!state.selectedTheme && themes.length > 0) {
           selectTheme(themes[0].id);
         }
       }
 
-      // ============================================================
-      // 2. SELECT THEME
-      // ============================================================
+      // ================================================================
+      // SELECT THEME
+      // ================================================================
       function selectTheme(themeId) {
         const theme = themes.find(function(t) { return t.id === themeId; });
         if (!theme) {
@@ -877,57 +848,52 @@
           return;
         }
 
-        // Validate that theme exists and has required data
         try {
-          if (!theme.id || !theme.name) {
-            throw new Error('Invalid theme data structure.');
-          }
+          // Update state
+          state.selectedTheme = themeId;
+          state.primaryColor = theme.primary;
+          state.font = theme.defaultFont || 'inter';
+
+          // Update UI
+          document.querySelectorAll('.theme-card').forEach(function(c) {
+            c.classList.toggle('selected', c.dataset.theme === themeId);
+          });
+
+          // Update color picker
+          document.querySelectorAll('.color-picker button').forEach(function(btn) {
+            btn.classList.toggle('active', btn.dataset.color === theme.primary);
+          });
+
+          // Update font select
+          document.querySelectorAll('.font-select button').forEach(function(btn) {
+            btn.classList.toggle('active', btn.dataset.font === theme.defaultFont);
+          });
+
+          // Update preview
+          updatePreview(theme);
+
+          // Update selected theme name
+          selectedThemeName.textContent = theme.name;
+
+          // Update page count
+          updatePageCount();
+
+          // Enable next button
+          nextBtn.disabled = false;
+
+          // Save state
+          saveState();
+
+          showToast('Selected: ' + theme.name, 'success');
+
         } catch (err) {
-          showToast('Error loading theme: ' + err.message, 'error');
-          return;
+          showToast('Error selecting theme: ' + err.message, 'error');
         }
-
-        // Update state
-        state.selectedTheme = themeId;
-        state.primaryColor = theme.primary;
-        state.font = theme.defaultFont || 'inter';
-
-        // Update UI
-        document.querySelectorAll('.theme-card').forEach(function(c) {
-          c.classList.toggle('selected', c.dataset.theme === themeId);
-        });
-
-        // Update color picker
-        document.querySelectorAll('.color-picker button').forEach(function(btn) {
-          btn.classList.toggle('active', btn.dataset.color === theme.primary);
-        });
-
-        // Update font select
-        document.querySelectorAll('.font-select button').forEach(function(btn) {
-          btn.classList.toggle('active', btn.dataset.font === theme.defaultFont);
-        });
-
-        // Update preview
-        updatePreview(theme);
-
-        // Update selected theme name
-        selectedThemeName.textContent = theme.name;
-
-        // Update page count
-        updatePageCount();
-
-        // Enable next button
-        nextBtn.disabled = false;
-
-        // Save to localStorage
-        saveState();
-
-        showToast('Selected: ' + theme.name, 'success');
       }
 
-      // ============================================================
-      // 3. UPDATE PREVIEW
-      // ============================================================
+      // ================================================================
+      // UPDATE PREVIEW
+      // ================================================================
       function updatePreview(theme) {
         if (!theme) {
           const found = themes.find(function(t) { return t.id === state.selectedTheme; });
@@ -939,6 +905,9 @@
           previewIcon.textContent = theme.icon || '🕉';
           previewName.textContent = theme.name + ' Theme';
           previewName.style.color = state.primaryColor;
+          previewName.style.fontFamily = state.font === 'playfair' ? "'Playfair Display', serif" :
+            state.font === 'orbitron' ? "'Orbitron', sans-serif" :
+            "'Inter', sans-serif";
           previewDesc.textContent = 'Custom ' + theme.desc + ' website';
           previewDesc.style.color = 'rgba(255,255,255,0.3)';
 
@@ -951,116 +920,34 @@
             previewColors.appendChild(span);
           });
 
-          // Update mini preview background
-          miniPreview.style.background = 'rgba(255,255,255,0.01)';
-          miniPreview.style.borderColor = state.primaryColor + '33';
+          // Update mini preview border
+          miniPreview.style.borderColor = state.primaryColor + '44';
 
         } catch (err) {
           showToast('Error updating preview: ' + err.message, 'error');
         }
       }
 
-      // ============================================================
-      // 4. PAGE TOGGLES
-      // ============================================================
+      // ================================================================
+      // PAGE TOGGLES
+      // ================================================================
       function updatePageCount() {
         const checked = document.querySelectorAll('#pageToggles input[type="checkbox"]:checked');
+        const pageNames = Array.from(checked).map(function(el) { return el.value; });
         selectedPageCount.textContent = checked.length + ' pages';
-        // Update state
-        state.pages = Array.from(checked).map(function(el) { return el.value; });
+        state.pages = pageNames;
         saveState();
+        // Validate selection
+        validateSelection();
       }
 
-      // ============================================================
-      // 5. COLOR PICKER
-      // ============================================================
-      function setupColorPicker() {
-        const buttons = colorPicker.querySelectorAll('button');
-        buttons.forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            const color = this.dataset.color;
-            if (!color) {
-              showToast('Invalid color selection.', 'error');
-              return;
-            }
-            buttons.forEach(function(b) { b.classList.remove('active'); });
-            this.classList.add('active');
-            state.primaryColor = color;
-            // Update preview
-            const theme = themes.find(function(t) { return t.id === state.selectedTheme; });
-            if (theme) {
-              // Override primary color
-              const updatedTheme = { ...theme, primary: color };
-              updatePreview(updatedTheme);
-            }
-            // Update mini preview border
-            miniPreview.style.borderColor = color + '44';
-            saveState();
-            showToast('Color updated', 'success');
-          });
-        });
-      }
-
-      // ============================================================
-      // 6. FONT SELECTION
-      // ============================================================
-      function setupFontSelect() {
-        const buttons = fontSelect.querySelectorAll('button');
-        buttons.forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            const font = this.dataset.font;
-            if (!font) {
-              showToast('Invalid font selection.', 'error');
-              return;
-            }
-            buttons.forEach(function(b) { b.classList.remove('active'); });
-            this.classList.add('active');
-            state.font = font;
-            // Apply to preview
-            previewName.style.fontFamily = font === 'playfair' ? "'Playfair Display', serif" :
-              font === 'orbitron' ? "'Orbitron', sans-serif" :
-              "'Inter', sans-serif";
-            saveState();
-            showToast('Font updated: ' + font, 'success');
-          });
-        });
-      }
-
-      // ============================================================
-      // 7. PAGE TOGGLES SETUP
-      // ============================================================
-      function setupPageToggles() {
-        const toggles = pageToggles.querySelectorAll('.page-toggle');
-        toggles.forEach(function(toggle) {
-          const checkbox = toggle.querySelector('input[type="checkbox"]');
-          if (!checkbox) return;
-          checkbox.addEventListener('change', function() {
-            toggle.classList.toggle('active', this.checked);
-            updatePageCount();
-            // Re-validate
-            validateSelection();
-          });
-          // Click on the label toggles checkbox
-          toggle.addEventListener('click', function(e) {
-            if (e.target.tagName !== 'INPUT') {
-              const cb = this.querySelector('input[type="checkbox"]');
-              if (cb) {
-                cb.checked = !cb.checked;
-                cb.dispatchEvent(new Event('change'));
-              }
-            }
-          });
-        });
-        updatePageCount();
-      }
-
-      // ============================================================
-      // 8. VALIDATION
-      // ============================================================
+      // ================================================================
+      // VALIDATION
+      // ================================================================
       function validateSelection() {
         const checked = document.querySelectorAll('#pageToggles input[type="checkbox"]:checked');
         if (checked.length === 0) {
-          showToast('Please select at least one page to include.', 'error');
+          showToast('Please select at least one page.', 'error');
           nextBtn.disabled = true;
           return false;
         }
@@ -1073,37 +960,9 @@
         return true;
       }
 
-      // ============================================================
-      // 9. TOAST SYSTEM
-      // ============================================================
-      let toastTimeout = null;
-
-      function showToast(message, type) {
-        if (!message) return;
-        try {
-          if (typeof message !== 'string') {
-            message = String(message);
-          }
-          toastMessage.textContent = message;
-          toast.className = 'toast';
-          if (type === 'error') toast.classList.add('error');
-          if (type === 'success') toast.classList.add('success');
-          toast.classList.add('show');
-
-          clearTimeout(toastTimeout);
-          toastTimeout = setTimeout(function() {
-            toast.classList.remove('show');
-          }, 3500);
-        } catch (err) {
-          // Fallback: console log
-          console.error('Toast error:', err);
-          console.log('Message:', message);
-        }
-      }
-
-      // ============================================================
-      // 10. STATE PERSISTENCE (localStorage)
-      // ============================================================
+      // ================================================================
+      // STATE PERSISTENCE
+      // ================================================================
       function saveState() {
         try {
           const data = {
@@ -1124,17 +983,9 @@
           const raw = localStorage.getItem('swayam_builder_state');
           if (!raw) return false;
           const data = JSON.parse(raw);
-          // Validate data structure
-          if (!data.selectedTheme || !data.primaryColor || !data.font) {
-            console.warn('Invalid state data, ignoring.');
-            return false;
-          }
-          // Check if theme still exists
+          if (!data.selectedTheme || !data.primaryColor || !data.font) return false;
           const themeExists = themes.some(function(t) { return t.id === data.selectedTheme; });
-          if (!themeExists) {
-            console.warn('Saved theme no longer exists, ignoring.');
-            return false;
-          }
+          if (!themeExists) return false;
           state.selectedTheme = data.selectedTheme;
           state.primaryColor = data.primaryColor;
           state.font = data.font;
@@ -1151,7 +1002,6 @@
       function restoreState() {
         const loaded = loadState();
         if (loaded && state.selectedTheme) {
-          // Restore theme selection
           const theme = themes.find(function(t) { return t.id === state.selectedTheme; });
           if (theme) {
             selectTheme(state.selectedTheme);
@@ -1186,12 +1036,11 @@
         return false;
       }
 
-      // ============================================================
-      // 11. NAVIGATION
-      // ============================================================
+      // ================================================================
+      // NAVIGATION
+      // ================================================================
       function goToStep1() {
         try {
-          // Save state before leaving
           saveState();
           window.location.href = 'step-1.html';
         } catch (err) {
@@ -1201,108 +1050,132 @@
 
       function goToStep3() {
         try {
-          // Validate before proceeding
-          if (!validateSelection()) {
-            return;
-          }
-          // Save final state
+          if (!validateSelection()) return;
           saveState();
-          // In production, would navigate to step-3.html
-          // For demo, show success
-          showToast('🎉 Theme saved! Proceeding to Step 3...', 'success');
-          setTimeout(function() {
-            // Simulate navigation
-            // window.location.href = 'step-3.html';
-            alert('Step 3: Preview & Generate would load here.\n\nSelected Theme: ' + state.selectedTheme +
-              '\nPrimary Color: ' + state.primaryColor +
-              '\nFont: ' + state.font +
-              '\nPages: ' + state.pages.join(', '));
-          }, 800);
+          // Navigate to step 3
+          window.location.href = 'step-3.html';
         } catch (err) {
           showToast('Error proceeding: ' + err.message, 'error');
         }
       }
 
-      // ============================================================
-      // 12. INITIALIZATION
-      // ============================================================
+      // ================================================================
+      // EVENT BINDING
+      // ================================================================
+
+      // Color picker
+      document.querySelectorAll('.color-picker button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const color = this.dataset.color;
+          if (!color) return;
+          document.querySelectorAll('.color-picker button').forEach(function(b) {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+          state.primaryColor = color;
+          const theme = themes.find(function(t) { return t.id === state.selectedTheme; });
+          if (theme) {
+            const updatedTheme = { ...theme, primary: color };
+            updatePreview(updatedTheme);
+          }
+          miniPreview.style.borderColor = color + '44';
+          saveState();
+          showToast('Color updated', 'success');
+        });
+      });
+
+      // Font select
+      document.querySelectorAll('.font-select button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const font = this.dataset.font;
+          if (!font) return;
+          document.querySelectorAll('.font-select button').forEach(function(b) {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+          state.font = font;
+          const theme = themes.find(function(t) { return t.id === state.selectedTheme; });
+          if (theme) {
+            updatePreview(theme);
+          }
+          saveState();
+          showToast('Font updated: ' + font, 'success');
+        });
+      });
+
+      // Page toggles
+      document.querySelectorAll('#pageToggles .page-toggle').forEach(function(toggle) {
+        const checkbox = toggle.querySelector('input[type="checkbox"]');
+        if (!checkbox) return;
+        checkbox.addEventListener('change', function() {
+          toggle.classList.toggle('active', this.checked);
+          updatePageCount();
+          validateSelection();
+        });
+        // Click on label toggles checkbox
+        toggle.addEventListener('click', function(e) {
+          if (e.target.tagName !== 'INPUT') {
+            const cb = this.querySelector('input[type="checkbox"]');
+            if (cb) {
+              cb.checked = !cb.checked;
+              cb.dispatchEvent(new Event('change'));
+            }
+          }
+        });
+      });
+
+      // Back and Next
+      backBtn.addEventListener('click', goToStep1);
+      nextBtn.addEventListener('click', goToStep3);
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          goToStep3();
+        }
+        if (e.key === 'Escape') {
+          toast.classList.remove('show');
+        }
+      });
+
+      // ================================================================
+      // INIT
+      // ================================================================
       function init() {
         try {
-          // Render themes
           renderThemes();
-
-          // Setup controls
-          setupColorPicker();
-          setupFontSelect();
-          setupPageToggles();
-
-          // Restore state or select default
           const restored = restoreState();
-
-          // If no theme selected yet, select first
-          if (!state.selectedTheme && themes.length > 0) {
-            selectTheme(themes[0].id);
+          if (!restored) {
+            // Select first theme if nothing restored
+            if (themes.length > 0) {
+              selectTheme(themes[0].id);
+            }
           }
-
-          // Setup navigation
-          backBtn.addEventListener('click', goToStep1);
-          nextBtn.addEventListener('click', goToStep3);
-
-          // Keyboard shortcuts
-          document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-              e.preventDefault();
-              goToStep3();
-            }
-            if (e.key === 'Escape') {
-              // Close toast if open
-              toast.classList.remove('show');
-            }
-          });
-
-          // Handle page visibility change to save state
-          document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-              saveState();
-            }
-          });
-
-          // Handle beforeunload
-          window.addEventListener('beforeunload', function() {
-            saveState();
-          });
-
           // Initial validation
           validateSelection();
-
           state.initialized = true;
-          console.log('Swayam Step 2 initialized successfully.');
-
+          console.log('Step 2 initialized successfully.');
         } catch (err) {
-          console.error('Fatal initialization error:', err);
-          showToast('Failed to initialize. Please refresh the page.', 'error');
+          console.error('Fatal init error:', err);
+          showToast('Failed to initialize. Please refresh.', 'error');
         }
       }
 
-      // ============================================================
-      // 13. ERROR BOUNDARY (global)
-      // ============================================================
+      // Error boundary
       window.addEventListener('error', function(e) {
         console.error('Unhandled error:', e.error || e.message);
-        showToast('An unexpected error occurred. Please try again.', 'error');
+        showToast('An unexpected error occurred. Please refresh.', 'error');
         return true;
       });
 
       window.addEventListener('unhandledrejection', function(e) {
         console.error('Unhandled promise rejection:', e.reason);
-        showToast('An unexpected error occurred. Please try again.', 'error');
+        showToast('An unexpected error occurred. Please refresh.', 'error');
         return true;
       });
 
-      // ============================================================
-      // 14. START
-      // ============================================================
-      // Wait for DOM ready
+      // Start
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
       } else {
