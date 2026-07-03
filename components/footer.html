@@ -1,0 +1,454 @@
+<!-- ================================================================
+     FOOTER COMPONENT — Swayam AI Website Builder
+     Reusable footer with sitemap, social links, newsletter, legal
+     ================================================================ -->
+<footer class="swayam-footer" id="swayamFooter" role="contentinfo">
+  <div class="footer-container">
+    <!-- Main Footer Grid -->
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <span class="footer-logo-icon">🕉</span>
+          <span class="footer-logo-text">Swayam<span class="footer-logo-sub">AI</span></span>
+        </a>
+        <p class="footer-description">
+          Build AI-optimized websites in minutes. Free hosting, free subdomain.
+          Powered by <a href="https://kalki-intelligence.in" target="_blank" class="footer-link-highlight">Kalki Intelligence</a>.
+        </p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="YouTube" class="social-link"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="GitHub" class="social-link"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+
+      <!-- Product -->
+      <div class="footer-column">
+        <h4 class="footer-heading">Product</h4>
+        <ul class="footer-links">
+          <li><a href="/builder/step-1">AI Website Builder</a></li>
+          <li><a href="/themes">Themes</a></li>
+          <li><a href="/domain">Domains</a></li>
+          <li><a href="/dashboard/billing">Pricing</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div class="footer-column">
+        <h4 class="footer-heading">Company</h4>
+        <ul class="footer-links">
+          <li><a href="/pages/about">About</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+          <li><a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></li>
+          <li><a href="/pages/privacy">Privacy Policy</a></li>
+          <li><a href="/pages/terms">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="footer-column">
+        <h4 class="footer-heading">Support</h4>
+        <ul class="footer-links">
+          <li><a href="/dashboard/support">Help Center</a></li>
+          <li><a href="/dashboard/support">Live Chat</a></li>
+          <li><a href="/pages/contact">Email Us</a></li>
+          <li><a href="/dashboard/support">FAQ</a></li>
+          <li><a href="/dashboard/support">Knowledge Base</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-newsletter">
+        <h4 class="footer-heading">Stay in the Loop</h4>
+        <p class="footer-newsletter-text">
+          Subscribe to get updates, new themes, and exclusive offers.
+        </p>
+        <form class="footer-newsletter-form" id="footerNewsletterForm">
+          <div class="footer-newsletter-input-group">
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </form>
+        <p class="footer-newsletter-note">
+          <i class="fas fa-lock" style="font-size:0.6rem;"></i> No spam. Unsubscribe anytime.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <p>&copy; 2026 Swayam — An AI Website Builder by <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+      </div>
+      <div class="footer-bottom-right">
+        <a href="/pages/privacy">Privacy</a>
+        <span class="footer-divider">•</span>
+        <a href="/pages/terms">Terms</a>
+        <span class="footer-divider">•</span>
+        <a href="/pages/contact">Contact</a>
+        <span class="footer-divider">•</span>
+        <span class="footer-version">v2.0.0</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ================================================================
+     FOOTER STYLES
+     ================================================================ */
+  .swayam-footer {
+    background: rgba(10, 10, 26, 0.98);
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    padding: 48px 0 20px;
+    margin-top: 40px;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  body.dark .swayam-footer {
+    background: rgba(10, 10, 20, 0.99);
+    border-top-color: rgba(255, 255, 255, 0.02);
+  }
+
+  .footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  }
+
+  /* ----- BRAND ----- */
+  .footer-brand .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 12px;
+  }
+
+  .footer-brand .footer-logo-icon {
+    font-size: 1.6rem;
+    color: #b8860b;
+  }
+
+  .footer-brand .footer-logo-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #f0ece6;
+  }
+
+  .footer-brand .footer-logo-sub {
+    font-weight: 300;
+    opacity: 0.3;
+  }
+
+  .footer-brand .footer-description {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.2);
+    line-height: 1.7;
+    max-width: 300px;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand .footer-link-highlight {
+    color: #b8860b;
+    text-decoration: none;
+  }
+
+  .footer-brand .footer-link-highlight:hover {
+    text-decoration: underline;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 8px;
+  }
+
+  .footer-social .social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.85rem;
+  }
+
+  .footer-social .social-link:hover {
+    background: rgba(184, 134, 11, 0.04);
+    border-color: rgba(184, 134, 11, 0.08);
+    color: #b8860b;
+    transform: translateY(-2px);
+  }
+
+  /* ----- COLUMNS ----- */
+  .footer-column .footer-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.15);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .footer-column .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-column .footer-links li {
+    margin-bottom: 6px;
+  }
+
+  .footer-column .footer-links a {
+    color: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+  }
+
+  .footer-column .footer-links a:hover {
+    color: #fff;
+  }
+
+  /* ----- NEWSLETTER ----- */
+  .footer-newsletter .footer-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.15);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .footer-newsletter .footer-newsletter-text {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.15);
+    margin-bottom: 12px;
+  }
+
+  .footer-newsletter .footer-newsletter-input-group {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 40px;
+    padding: 4px 4px 4px 16px;
+    transition: 0.3s;
+  }
+
+  .footer-newsletter .footer-newsletter-input-group:focus-within {
+    border-color: rgba(184, 134, 11, 0.15);
+    box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.04);
+  }
+
+  .footer-newsletter .footer-newsletter-input-group input {
+    flex: 1;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    color: #f0ece6;
+    font-size: 0.85rem;
+    font-family: inherit;
+    outline: none;
+  }
+
+  .footer-newsletter .footer-newsletter-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.08);
+  }
+
+  .footer-newsletter .footer-newsletter-input-group button {
+    padding: 8px 20px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #b8860b, #d4a017);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-newsletter .footer-newsletter-input-group button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+  }
+
+  .footer-newsletter .footer-newsletter-note {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.04);
+    margin-top: 8px;
+  }
+
+  /* ----- BOTTOM BAR ----- */
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-bottom-left p {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.06);
+  }
+
+  .footer-bottom-left a {
+    color: rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+  }
+
+  .footer-bottom-left a:hover {
+    color: #b8860b;
+  }
+
+  .footer-bottom-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.7rem;
+  }
+
+  .footer-bottom-right a {
+    color: rgba(255, 255, 255, 0.04);
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .footer-bottom-right a:hover {
+    color: #b8860b;
+  }
+
+  .footer-divider {
+    color: rgba(255, 255, 255, 0.02);
+  }
+
+  .footer-version {
+    color: rgba(255, 255, 255, 0.02);
+    font-size: 0.6rem;
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 30px;
+    }
+    .footer-newsletter {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .footer-newsletter {
+      grid-column: span 2;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+    .footer-brand .footer-description {
+      max-width: 100%;
+    }
+    .footer-social {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .footer-newsletter {
+      grid-column: span 1;
+    }
+    .footer-bottom-right {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-container {
+      padding: 0 16px;
+    }
+    .swayam-footer {
+      padding: 32px 0 16px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    'use strict';
+
+    // ----- NEWSLETTER FORM -----
+    const form = document.getElementById('footerNewsletterForm');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = this.querySelector('input[type="email"]');
+        const email = input.value.trim();
+        if (email) {
+          // Show success
+          const originalText = input.placeholder;
+          input.placeholder = '✅ Subscribed!';
+          input.style.color = '#22c55e';
+          input.disabled = true;
+          this.querySelector('button').textContent = '✓';
+
+          setTimeout(function() {
+            input.placeholder = originalText;
+            input.style.color = '';
+            input.disabled = false;
+            input.value = '';
+            form.querySelector('button').textContent = '<i class="fas fa-paper-plane"></i>';
+          }, 3000);
+
+          // Show toast
+          if (window.showHeaderToast) {
+            window.showHeaderToast('📬 Thanks for subscribing!', 'success');
+          } else {
+            alert('Thanks for subscribing!');
+          }
+        }
+      });
+    }
+
+    // ----- DYNAMIC YEAR -----
+    const yearSpan = document.querySelector('.footer-bottom-left p');
+    if (yearSpan) {
+      const year = new Date().getFullYear();
+      yearSpan.textContent = yearSpan.textContent.replace('2026', year);
+    }
+
+    console.log('Swayam Footer component initialized.');
+  })();
+</script>
