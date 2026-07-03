@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Billing — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Base – abbreviated */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.01) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.01) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.2); border-radius: 10px; }
+
+    .sidebar { width: 260px; background: rgba(255,255,255,0.01); border-right: 1px solid rgba(255,255,255,0.02); padding: 24px 16px; display: flex; flex-direction: column; flex-shrink: 0; height: 100vh; position: sticky; top: 0; overflow-y: auto; }
+    .sidebar .logo { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 700; color: #f0ece6; text-decoration: none; margin-bottom: 30px; padding: 0 8px; }
+    .sidebar .logo i { color: #b8860b; }
+    .sidebar .logo span { font-weight: 300; opacity: 0.3; }
+    .sidebar .nav-section { margin-bottom: 8px; }
+    .sidebar .nav-section .label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.06); padding: 8px 12px 4px; }
+    .sidebar .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 12px; color: rgba(255,255,255,0.2); text-decoration: none; transition: 0.3s; font-size: 0.85rem; font-weight: 500; cursor: pointer; position: relative; }
+    .sidebar .nav-item:hover { background: rgba(255,255,255,0.02); color: rgba(255,255,255,0.6); }
+    .sidebar .nav-item.active { background: rgba(184,134,11,0.04); color: #b8860b; }
+    .sidebar .nav-item.active::before { content: ''; position: absolute; left: 0; top: 20%; height: 60%; width: 3px; background: #b8860b; border-radius: 0 4px 4px 0; }
+    .sidebar .nav-item .icon { width: 20px; text-align: center; font-size: 1rem; }
+    .sidebar .nav-item .badge { margin-left: auto; padding: 0 8px; border-radius: 20px; background: rgba(184,134,11,0.08); color: #b8860b; font-size: 0.6rem; font-weight: 600; }
+    .sidebar .user-section { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.02); }
+    .sidebar .user-section .user-info { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 12px; }
+    .sidebar .user-section .user-info .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #b8860b, #d4a017); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: #fff; }
+    .sidebar .user-section .user-info .name { font-size: 0.85rem; font-weight: 600; color: #f0ece6; }
+    .sidebar .user-section .user-info .email { font-size: 0.65rem; color: rgba(255,255,255,0.15); }
+
+    .main-content { flex: 1; padding: 24px 32px 32px; overflow-y: auto; height: 100vh; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .topbar .greeting h1 { font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, #ffffff, #b8860b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .topbar .greeting p { font-size: 0.85rem; color: rgba(255,255,255,0.2); }
+
+    .billing-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+    .card { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.02); border-radius: 16px; padding: 20px; }
+    .card h3 { font-size: 1rem; font-weight: 600; color: rgba(255,255,255,0.4); margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px; }
+
+    .plan-box { background: rgba(184,134,11,0.02); border: 1px solid rgba(184,134,11,0.04); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .plan-box .name { font-weight: 600; font-size: 1.1rem; }
+    .plan-box .price { font-size: 1.8rem; font-weight: 700; color: #b8860b; }
+    .plan-box .price span { font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.2); }
+    .plan-box .desc { color: rgba(255,255,255,0.2); font-size: 0.85rem; }
+    .plan-box .btn-upgrade { padding: 6px 20px; border-radius: 30px; background: #b8860b; color: #fff; border: none; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: 0.3s; font-family: inherit; }
+    .plan-box .btn-upgrade:hover { transform: scale(1.02); }
+
+    .history-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .history-table th { text-align: left; padding: 8px 0; color: rgba(255,255,255,0.1); font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.02); }
+    .history-table td { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.01); color: rgba(255,255,255,0.3); }
+    .history-table td:last-child { text-align: right; }
+    .history-table .status-paid { color: #22c55e; }
+    .history-table .status-pending { color: #fbbf24; }
+
+    .toast { position: fixed; bottom: 30px; right: 30px; padding: 12px 24px; border-radius: 14px; background: #1a1a2e; border: 1px solid rgba(255,255,255,0.04); color: #f0ece6; font-size: 0.85rem; box-shadow: 0 12px 48px rgba(0,0,0,0.4); z-index: 9999; opacity: 0; transform: translateY(20px) scale(0.95); transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94); pointer-events: none; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); max-width: 90vw; }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+
+    @media (max-width: 992px) { .billing-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) {
+      .sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; padding: 12px 16px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.02); }
+      .sidebar .logo { margin-bottom: 0; font-size: 1.1rem; }
+      .sidebar .logo span { display: inline; }
+      .sidebar .nav-section { display: flex; gap: 4px; margin-bottom: 0; }
+      .sidebar .nav-section .label { display: none; }
+      .sidebar .nav-item { padding: 6px 10px; font-size: 0.7rem; }
+      .sidebar .nav-item .label-text { display: inline; }
+      .sidebar .nav-item .badge { display: inline; }
+      .sidebar .user-section { display: none; }
+      .main-content { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"><i class="fas fa-info-circle"></i><span id="toastMessage">Message</span></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <a href="../index.html" class="logo"><i class="fas fa-om"></i> Swayam<span>AI</span></a>
+    <div class="nav-section">
+      <div class="label">Main</div>
+      <a href="index.html" class="nav-item"><span class="icon"><i class="fas fa-th-large"></i></span><span class="label-text">Dashboard</span></a>
+      <a href="sites.html" class="nav-item"><span class="icon"><i class="fas fa-globe"></i></span><span class="label-text">Sites</span><span class="badge success">4</span></a>
+      <a href="analytics.html" class="nav-item"><span class="icon"><i class="fas fa-chart-line"></i></span><span class="label-text">Analytics</span></a>
+    </div>
+    <div class="nav-section">
+      <div class="label">Management</div>
+      <a href="../builder/step-1.html" class="nav-item"><span class="icon"><i class="fas fa-plus-circle"></i></span><span class="label-text">New Website</span></a>
+      <a href="domain.html" class="nav-item"><span class="icon"><i class="fas fa-globe-asia"></i></span><span class="label-text">Domains</span><span class="badge">1</span></a>
+      <a href="billing.html" class="nav-item active"><span class="icon"><i class="fas fa-credit-card"></i></span><span class="label-text">Billing</span></a>
+    </div>
+    <div class="nav-section">
+      <div class="label">Support</div>
+      <a href="support.html" class="nav-item"><span class="icon"><i class="fas fa-headset"></i></span><span class="label-text">Support</span></a>
+      <a href="../pages/about.html" class="nav-item"><span class="icon"><i class="fas fa-info-circle"></i></span><span class="label-text">About</span></a>
+    </div>
+    <div class="user-section">
+      <div class="user-info"><div class="avatar">AK</div><div><div class="name">Arjun Kumar</div><div class="email">arjun@example.com</div></div></div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main-content">
+    <div class="topbar">
+      <div class="greeting">
+        <h1><i class="fas fa-credit-card" style="color:#b8860b; margin-right:10px;"></i> Billing</h1>
+        <p>Manage your subscription and payment details.</p>
+      </div>
+    </div>
+
+    <div class="billing-grid">
+      <!-- Left: Current Plan & History -->
+      <div>
+        <div class="card">
+          <h3><i class="fas fa-crown" style="color:#b8860b; margin-right:6px;"></i> Current Plan</h3>
+          <div class="plan-box">
+            <div class="name">Swayam Pro</div>
+            <div class="price">₹4,999 <span>/ month</span></div>
+            <div class="desc">Next.js site • International SEO • GEO • AEO</div>
+            <div style="margin-top:10px; display:flex; gap:10px;">
+              <button class="btn-upgrade">Change Plan</button>
+              <button class="btn-upgrade" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2);">Cancel</button>
+            </div>
+          </div>
+          <div style="font-size:0.8rem; color:rgba(255,255,255,0.1); margin-top:8px;">Next billing date: <strong style="color:rgba(255,255,255,0.3);">August 1, 2026</strong></div>
+        </div>
+
+        <div class="card" style="margin-top:20px;">
+          <h3><i class="fas fa-history" style="color:#b8860b; margin-right:6px;"></i> Payment History</h3>
+          <table class="history-table">
+            <thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Jul 1, 2026</td><td>Swayam Pro (Monthly)</td><td>₹4,999</td><td class="status-paid">Paid</td></tr>
+              <tr><td>Jun 1, 2026</td><td>Swayam Pro (Monthly)</td><td>₹4,999</td><td class="status-paid">Paid</td></tr>
+              <tr><td>May 1, 2026</td><td>Domain: mybrand.com</td><td>₹3,000</td><td class="status-paid">Paid</td></tr>
+              <tr><td>Apr 1, 2026</td><td>Swayam Pro (Monthly)</td><td>₹4,999</td><td class="status-pending">Pending</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Right: Payment Method & Invoice -->
+      <div>
+        <div class="card">
+          <h3><i class="fas fa-credit-card" style="color:#b8860b; margin-right:6px;"></i> Payment Method</h3>
+          <div style="padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.01);">
+            <div style="display:flex; justify-content:space-between;">
+              <span style="color:rgba(255,255,255,0.3);">Visa ending in 4242</span>
+              <span style="color:rgba(255,255,255,0.1); font-size:0.8rem;">Expires 12/28</span>
+            </div>
+            <div style="margin-top:8px;">
+              <button class="btn-upgrade" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2); padding:4px 14px; font-size:0.7rem;">Update</button>
+              <button class="btn-upgrade" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2); padding:4px 14px; font-size:0.7rem;">Add New</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:20px;">
+          <h3><i class="fas fa-file-invoice" style="color:#b8860b; margin-right:6px;"></i> Recent Invoice</h3>
+          <div style="padding:8px 0; display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.01);">
+            <span style="color:rgba(255,255,255,0.3);">INV-2026-07-001</span>
+            <span style="color:rgba(255,255,255,0.1); font-size:0.8rem;">₹4,999</span>
+            <button class="btn-upgrade" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2); padding:2px 12px; font-size:0.65rem;">Download PDF</button>
+          </div>
+          <div style="padding:8px 0; display:flex; justify-content:space-between;">
+            <span style="color:rgba(255,255,255,0.3);">INV-2026-06-002</span>
+            <span style="color:rgba(255,255,255,0.1); font-size:0.8rem;">₹4,999</span>
+            <button class="btn-upgrade" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2); padding:2px 12px; font-size:0.65rem;">Download PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function() {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      let toastTimeout = null;
+
+      function showToast(msg, type) {
+        toastMessage.textContent = msg;
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() { toast.classList.remove('show'); }, 3500);
+      }
+
+      // Upgrade/Cancel buttons
+      document.querySelectorAll('.btn-upgrade').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (this.textContent.includes('Change Plan')) {
+            showToast('Opening plan selection...', 'success');
+          } else if (this.textContent.includes('Cancel')) {
+            if (confirm('Cancel your subscription? You will lose access to Pro features.')) {
+              showToast('Subscription cancelled.', 'warning');
+            }
+          } else if (this.textContent.includes('Download PDF')) {
+            showToast('Downloading invoice...', 'success');
+          } else if (this.textContent.includes('Update') || this.textContent.includes('Add New')) {
+            showToast('Payment method updated.', 'success');
+          }
+        });
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { toast.classList.remove('show'); }
+      });
+
+      console.log('Billing page initialized.');
+    })();
+  </script>
+
+</body>
+</html>
