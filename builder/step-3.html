@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Step 3: Preview & Edit — Swayam AI Website Builder</title>
+  <title>Step 3: Customize Content — Swayam AI Website Builder</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
@@ -101,6 +101,7 @@
       box-shadow: 0 2px 12px rgba(184, 134, 11, 0.15);
     }
     .btn-next:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(184, 134, 11, 0.2); }
+    .btn-next:disabled { opacity: 0.3; pointer-events: none; transform: none; }
 
     /* ============================================================
        MAIN LAYOUT
@@ -137,66 +138,182 @@
       color: rgba(255, 255, 255, 0.3);
       margin-top: 2px;
     }
+    .builder-sub .ai-badge {
+      display: inline-block;
+      padding: 2px 12px;
+      border-radius: 20px;
+      background: rgba(184, 134, 11, 0.04);
+      border: 1px solid rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+      font-size: 0.65rem;
+      font-weight: 500;
+      margin-left: 8px;
+    }
 
     /* ============================================================
        TWO-COLUMN LAYOUT
        ============================================================ */
     .builder-grid {
       display: grid;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns: 1fr 1fr;
       gap: 24px;
       align-items: start;
     }
 
     /* ============================================================
-       LEFT: LIVE PREVIEW
+       LEFT: EDITOR FORM
+       ============================================================ */
+    .editor-form {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      padding: 24px;
+      max-height: calc(100vh - 200px);
+      overflow-y: auto;
+    }
+    .editor-form::-webkit-scrollbar { width: 3px; }
+    .editor-form::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.2); border-radius: 10px; }
+
+    .editor-form .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .editor-form .form-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .editor-form .form-header .ai-autofill-btn {
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(184, 134, 11, 0.04);
+      border: 1px solid rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .editor-form .form-header .ai-autofill-btn:hover {
+      background: rgba(184, 134, 11, 0.08);
+    }
+    .editor-form .form-header .ai-autofill-btn:disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .editor-form .form-group {
+      margin-bottom: 14px;
+    }
+    .editor-form .form-group label {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.15);
+      margin-bottom: 3px;
+    }
+    .editor-form .form-group input,
+    .editor-form .form-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .editor-form .form-group input:focus,
+    .editor-form .form-group textarea:focus {
+      border-color: #b8860b;
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.06);
+    }
+    .editor-form .form-group textarea {
+      min-height: 50px;
+      resize: vertical;
+    }
+    .editor-form .form-group .char-counter {
+      text-align: right;
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.06);
+      margin-top: 2px;
+    }
+
+    .editor-form .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .editor-form .form-divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      margin: 12px 0;
+    }
+
+    .editor-form .service-group {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .editor-form .service-group .service-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .editor-form .service-group .service-header .label {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.1);
+    }
+
+    .editor-form .social-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .editor-form .social-grid input {
+      font-size: 0.75rem;
+      padding: 6px 10px;
+    }
+
+    /* ============================================================
+       RIGHT: LIVE PREVIEW
        ============================================================ */
     .preview-container {
       background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
       border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
       overflow: hidden;
-      position: relative;
-      min-height: 500px;
+      position: sticky;
+      top: 100px;
     }
     .preview-toolbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 16px;
-      background: rgba(255, 255, 255, 0.02);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.01);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
       flex-wrap: wrap;
       gap: 8px;
     }
-    .preview-toolbar .left {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .preview-toolbar .device-btns button {
-      padding: 4px 10px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      color: rgba(255, 255, 255, 0.2);
-      font-size: 0.65rem;
-      cursor: pointer;
-      transition: 0.3s;
-      font-family: inherit;
-    }
-    .preview-toolbar .device-btns button:hover {
-      background: rgba(255, 255, 255, 0.04);
-      color: #fff;
-    }
-    .preview-toolbar .device-btns button.active {
-      background: rgba(184, 134, 11, 0.06);
-      border-color: #b8860b;
-      color: #b8860b;
-    }
     .preview-toolbar .status {
       font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
       gap: 6px;
@@ -210,11 +327,11 @@
 
     .preview-frame {
       padding: 20px;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      overflow: auto;
       min-height: 400px;
       background: #f8f6f2;
       color: #1a1a2e;
+      transition: background 0.3s, color 0.3s;
+      overflow: auto;
     }
     .preview-frame.dark {
       background: #0a0a12;
@@ -225,25 +342,25 @@
       margin: 0 auto;
     }
     .preview-frame .mock-site .mock-hero {
-      padding: 30px 20px;
+      padding: 24px 20px;
       text-align: center;
       border-radius: 12px;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, rgba(184,134,11,0.08), rgba(184,134,11,0.02));
-      border: 1px solid rgba(184,134,11,0.04);
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(184, 134, 11, 0.06), rgba(184, 134, 11, 0.01));
+      border: 1px solid rgba(184, 134, 11, 0.03);
     }
     .preview-frame .mock-site .mock-hero h2 {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      margin-bottom: 4px;
       color: inherit;
+      margin-bottom: 4px;
     }
     .preview-frame .mock-site .mock-hero p {
-      color: rgba(26,26,46,0.5);
-      font-size: 0.9rem;
+      color: rgba(26, 26, 46, 0.5);
+      font-size: 0.95rem;
     }
     .preview-frame.dark .mock-site .mock-hero p {
-      color: rgba(255,255,255,0.4);
+      color: rgba(255, 255, 255, 0.3);
     }
     .preview-frame .mock-site .mock-grid {
       display: grid;
@@ -252,15 +369,15 @@
       margin-top: 12px;
     }
     .preview-frame .mock-site .mock-card {
-      background: rgba(255,255,255,0.6);
-      padding: 16px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 14px;
       border-radius: 12px;
       text-align: center;
-      border: 1px solid rgba(0,0,0,0.02);
+      border: 1px solid rgba(0, 0, 0, 0.02);
     }
     .preview-frame.dark .mock-site .mock-card {
-      background: rgba(255,255,255,0.02);
-      border-color: rgba(255,255,255,0.02);
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.02);
     }
     .preview-frame .mock-site .mock-card .icon {
       font-size: 1.6rem;
@@ -273,151 +390,22 @@
     }
     .preview-frame .mock-site .mock-card p {
       font-size: 0.7rem;
-      color: rgba(26,26,46,0.4);
+      color: rgba(26, 26, 46, 0.4);
     }
     .preview-frame.dark .mock-site .mock-card p {
-      color: rgba(255,255,255,0.3);
-    }
-
-    /* Inline editing */
-    .editable {
-      cursor: text;
-      position: relative;
-      transition: 0.2s;
-      padding: 2px 4px;
-      border-radius: 4px;
-      outline: none;
-      min-width: 20px;
-      display: inline-block;
-    }
-    .editable:hover {
-      background: rgba(184, 134, 11, 0.04);
-      box-shadow: 0 0 0 1px rgba(184, 134, 11, 0.08);
-    }
-    .editable:focus {
-      background: rgba(184, 134, 11, 0.06);
-      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.12);
-    }
-    .editable .edit-hint {
-      position: absolute;
-      top: -18px;
-      right: 0;
-      font-size: 0.5rem;
-      color: rgba(184, 134, 11, 0.3);
-      opacity: 0;
-      transition: 0.3s;
-      pointer-events: none;
-    }
-    .editable:hover .edit-hint { opacity: 1; }
-
-    /* ============================================================
-       RIGHT: EDITOR SIDEBAR
-       ============================================================ */
-    .editor-sidebar {
-      background: rgba(255, 255, 255, 0.01);
-      border-radius: 20px;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      position: sticky;
-      top: 90px;
-      max-height: calc(100vh - 120px);
-      overflow-y: auto;
-    }
-    .editor-sidebar::-webkit-scrollbar { width: 3px; }
-    .editor-sidebar::-webkit-scrollbar-track { background: transparent; }
-    .editor-sidebar::-webkit-scrollbar-thumb { background: rgba(184,134,11,0.2); border-radius: 10px; }
-
-    .editor-sidebar h3 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: rgba(255, 255, 255, 0.6);
-    }
-    .editor-sidebar .sub {
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.15);
-      margin-bottom: 16px;
-    }
-    .editor-group {
-      margin-bottom: 16px;
-    }
-    .editor-group label {
-      display: block;
-      font-size: 0.65rem;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.25);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 3px;
-    }
-    .editor-group input,
-    .editor-group textarea {
-      width: 100%;
-      padding: 8px 12px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      color: #f0ece6;
-      font-family: inherit;
-      font-size: 0.85rem;
-      outline: none;
-      transition: 0.3s;
-    }
-    .editor-group input:focus,
-    .editor-group textarea:focus {
-      border-color: #b8860b;
-      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.06);
-    }
-    .editor-group textarea {
-      height: 60px;
-      resize: vertical;
-    }
-    .editor-group .char-counter {
-      text-align: right;
-      font-size: 0.6rem;
-      color: rgba(255, 255, 255, 0.1);
-      margin-top: 2px;
-    }
-
-    .editor-divider {
-      border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-      margin: 12px 0;
-    }
-
-    .editor-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-    .editor-actions button {
-      flex: 1;
-      padding: 8px 12px;
-      border-radius: 30px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
       color: rgba(255, 255, 255, 0.3);
+    }
+    .preview-frame .mock-site .mock-footer {
+      margin-top: 16px;
+      padding: 12px;
+      text-align: center;
       font-size: 0.7rem;
-      cursor: pointer;
-      transition: 0.3s;
-      font-family: inherit;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
+      color: rgba(26, 26, 46, 0.2);
+      border-top: 1px solid rgba(0, 0, 0, 0.02);
     }
-    .editor-actions button:hover {
-      background: rgba(255, 255, 255, 0.04);
-      color: #fff;
-    }
-    .editor-actions button.primary {
-      background: rgba(184, 134, 11, 0.06);
-      border-color: #b8860b;
-      color: #b8860b;
-    }
-    .editor-actions button.primary:hover {
-      background: rgba(184, 134, 11, 0.1);
+    .preview-frame.dark .mock-site .mock-footer {
+      color: rgba(255, 255, 255, 0.1);
+      border-top-color: rgba(255, 255, 255, 0.02);
     }
 
     /* ============================================================
@@ -426,8 +414,7 @@
     .toast {
       position: fixed;
       bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
+      right: 30px;
       padding: 12px 24px;
       border-radius: 14px;
       background: #1a1a2e;
@@ -437,7 +424,8 @@
       box-shadow: 0 12px 48px rgba(0,0,0,0.4);
       z-index: 9999;
       opacity: 0;
-      transition: 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
       pointer-events: none;
       display: flex;
       align-items: center;
@@ -445,11 +433,13 @@
       backdrop-filter: blur(12px);
       max-width: 90vw;
     }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
     .toast.error { border-color: rgba(239,68,68,0.2); }
     .toast.error i { color: #ef4444; }
     .toast.success { border-color: rgba(34,197,94,0.2); }
     .toast.success i { color: #22c55e; }
+    .toast.warning { border-color: rgba(251,191,36,0.2); }
+    .toast.warning i { color: #fbbf24; }
 
     /* ============================================================
        FOOTER
@@ -467,41 +457,22 @@
        RESPONSIVE
        ============================================================ */
     @media (max-width: 992px) {
-      .builder-grid {
-        grid-template-columns: 1fr;
-      }
-      .editor-sidebar {
-        position: relative;
-        top: 0;
-        max-height: none;
-      }
+      .builder-grid { grid-template-columns: 1fr; }
+      .preview-container { position: relative; top: 0; }
+      .editor-form { max-height: none; }
     }
     @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 6px;
-      }
+      .header { flex-direction: column; align-items: stretch; gap: 6px; }
       .step-indicator { justify-content: center; }
       .nav-actions { justify-content: center; }
       .builder-title { font-size: 1.4rem; }
-      .preview-frame .mock-site .mock-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .preview-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 6px;
-      }
-      .preview-toolbar .left { justify-content: center; }
+      .preview-frame .mock-site .mock-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .social-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
-      .preview-frame .mock-site .mock-grid {
-        grid-template-columns: 1fr;
-      }
-      .preview-frame .mock-site .mock-hero h2 {
-        font-size: 1.2rem;
-      }
+      .preview-frame .mock-site .mock-grid { grid-template-columns: 1fr; }
+      .preview-frame .mock-site .mock-hero h2 { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -545,104 +516,136 @@
 
     <div class="builder-header">
       <div class="builder-label">Step 3</div>
-      <h1 class="builder-title">Preview & Edit Your Website</h1>
-      <p class="builder-sub">Click any text to edit it instantly. Changes appear live on the right.</p>
+      <h1 class="builder-title">Customize Your Website Content</h1>
+      <p class="builder-sub">
+        Edit all your site details below. The preview updates in real time.
+        <span class="ai-badge"><i class="fas fa-robot"></i> AI autofill available</span>
+      </p>
     </div>
 
     <div class="builder-grid">
 
       <!-- ==========================================================
-           LEFT: LIVE PREVIEW
+           LEFT: EDITOR
            ========================================================== -->
-      <div class="preview-container">
-        <div class="preview-toolbar">
-          <div class="left">
-            <div class="device-btns">
-              <button class="active" data-device="desktop"><i class="fas fa-desktop"></i></button>
-              <button data-device="tablet"><i class="fas fa-tablet-alt"></i></button>
-              <button data-device="mobile"><i class="fas fa-mobile-alt"></i></button>
-            </div>
-            <button id="themeToggleBtn" style="padding:4px 12px; border-radius:20px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2); font-size:0.65rem; cursor:pointer; font-family:inherit;">🌙 Dark</button>
+      <div class="editor-form" id="editorForm">
+        <div class="form-header">
+          <h3><i class="fas fa-edit" style="color:#b8860b; margin-right:6px;"></i> Content Editor</h3>
+          <button class="ai-autofill-btn" id="aiAutofillBtn">
+            <i class="fas fa-wand-magic-sparkles"></i> AI Autofill
+          </button>
+        </div>
+
+        <!-- Basic Info -->
+        <div class="form-group">
+          <label>Site Name <span style="color:#b8860b;">*</span></label>
+          <input type="text" id="siteName" value="My Brand" maxlength="60" />
+          <div class="char-counter" id="siteNameCounter">0/60</div>
+        </div>
+
+        <div class="form-group">
+          <label>Tagline</label>
+          <input type="text" id="tagline" value="A beautiful website for your business" maxlength="80" />
+          <div class="char-counter" id="taglineCounter">0/80</div>
+        </div>
+
+        <div class="form-group">
+          <label>About Us</label>
+          <textarea id="aboutText" placeholder="Tell your story...">We are a passionate team dedicated to delivering exceptional value to our clients.</textarea>
+        </div>
+
+        <hr class="form-divider" />
+
+        <!-- Services (3) -->
+        <label style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.1); margin-bottom:8px; display:block;">Services</label>
+        <div class="service-group">
+          <div class="service-header"><span class="label">Service 1</span></div>
+          <input type="text" id="service1" placeholder="Service title" value="Consulting" maxlength="40" />
+          <input type="text" id="service1Desc" placeholder="Description" value="Expert advice to grow your business" maxlength="60" style="margin-top:4px;" />
+        </div>
+        <div class="service-group">
+          <div class="service-header"><span class="label">Service 2</span></div>
+          <input type="text" id="service2" placeholder="Service title" value="Development" maxlength="40" />
+          <input type="text" id="service2Desc" placeholder="Description" value="Custom solutions tailored to your needs" maxlength="60" style="margin-top:4px;" />
+        </div>
+        <div class="service-group">
+          <div class="service-header"><span class="label">Service 3</span></div>
+          <input type="text" id="service3" placeholder="Service title" value="Support" maxlength="40" />
+          <input type="text" id="service3Desc" placeholder="Description" value="Ongoing support and maintenance" maxlength="60" style="margin-top:4px;" />
+        </div>
+
+        <hr class="form-divider" />
+
+        <!-- Contact -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Contact Email</label>
+            <input type="email" id="contactEmail" value="hello@example.com" />
           </div>
-          <div class="status">
-            <span class="dot"></span>
-            <span id="previewStatus">Live • Auto-save</span>
+          <div class="form-group">
+            <label>Contact Phone</label>
+            <input type="tel" id="contactPhone" value="+91-98765-43210" />
           </div>
         </div>
-        <div class="preview-frame" id="previewFrame">
-          <div class="mock-site" id="mockSite">
-            <div class="mock-hero">
-              <h2><span class="editable" contenteditable="false" data-field="siteTitle">Your Brand Name</span></h2>
-              <p><span class="editable" contenteditable="false" data-field="siteTagline">A beautiful website for your business</span></p>
-            </div>
-            <div class="mock-grid" id="mockGrid">
-              <div class="mock-card">
-                <div class="icon">🚀</div>
-                <h4><span class="editable" contenteditable="false" data-field="service1">Service One</span></h4>
-                <p><span class="editable" contenteditable="false" data-field="service1Desc">Short description</span></p>
-              </div>
-              <div class="mock-card">
-                <div class="icon">💡</div>
-                <h4><span class="editable" contenteditable="false" data-field="service2">Service Two</span></h4>
-                <p><span class="editable" contenteditable="false" data-field="service2Desc">Short description</span></p>
-              </div>
-              <div class="mock-card">
-                <div class="icon">📈</div>
-                <h4><span class="editable" contenteditable="false" data-field="service3">Service Three</span></h4>
-                <p><span class="editable" contenteditable="false" data-field="service3Desc">Short description</span></p>
-              </div>
-            </div>
-          </div>
+        <div class="form-group">
+          <label>Address</label>
+          <input type="text" id="contactAddress" value="Delhi NCR, India" />
+        </div>
+
+        <hr class="form-divider" />
+
+        <!-- Social Links -->
+        <label style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.1); margin-bottom:6px; display:block;">Social Links</label>
+        <div class="social-grid">
+          <input type="text" id="socialTwitter" placeholder="Twitter URL" value="https://twitter.com/yourbrand" />
+          <input type="text" id="socialLinkedin" placeholder="LinkedIn URL" value="https://linkedin.com/company/yourbrand" />
+          <input type="text" id="socialInstagram" placeholder="Instagram URL" value="https://instagram.com/yourbrand" />
+          <input type="text" id="socialYoutube" placeholder="YouTube URL" value="https://youtube.com/yourbrand" />
+        </div>
+
+        <div style="margin-top:12px; font-size:0.6rem; color:rgba(255,255,255,0.04); text-align:center;">
+          Changes auto-save as you type
         </div>
       </div>
 
       <!-- ==========================================================
-           RIGHT: EDITOR SIDEBAR
+           RIGHT: LIVE PREVIEW
            ========================================================== -->
-      <div class="editor-sidebar" id="editorSidebar">
-        <h3><i class="fas fa-edit" style="color:#b8860b; margin-right:6px;"></i> Editor</h3>
-        <p class="sub">Edit content directly or use the fields below.</p>
-
-        <div class="editor-group">
-          <label>Site Title</label>
-          <input type="text" id="editSiteTitle" value="Your Brand Name" maxlength="60" />
-          <div class="char-counter" id="titleCounter">0/60</div>
+      <div class="preview-container">
+        <div class="preview-toolbar">
+          <div class="status">
+            <span class="dot"></span>
+            <span id="previewStatus">Live preview</span>
+          </div>
+          <button id="themeToggleBtn" style="padding:4px 12px; border-radius:20px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:rgba(255,255,255,0.2); font-size:0.65rem; cursor:pointer; font-family:inherit;">🌙 Dark</button>
         </div>
-
-        <div class="editor-group">
-          <label>Tagline</label>
-          <input type="text" id="editTagline" value="A beautiful website for your business" maxlength="80" />
-          <div class="char-counter" id="taglineCounter">0/80</div>
-        </div>
-
-        <hr class="editor-divider" />
-
-        <div class="editor-group">
-          <label>Service 1</label>
-          <input type="text" id="editService1" value="Service One" maxlength="40" />
-          <input type="text" id="editService1Desc" value="Short description" placeholder="Description" style="margin-top:4px;" maxlength="60" />
-        </div>
-
-        <div class="editor-group">
-          <label>Service 2</label>
-          <input type="text" id="editService2" value="Service Two" maxlength="40" />
-          <input type="text" id="editService2Desc" value="Short description" placeholder="Description" style="margin-top:4px;" maxlength="60" />
-        </div>
-
-        <div class="editor-group">
-          <label>Service 3</label>
-          <input type="text" id="editService3" value="Service Three" maxlength="40" />
-          <input type="text" id="editService3Desc" value="Short description" placeholder="Description" style="margin-top:4px;" maxlength="60" />
-        </div>
-
-        <hr class="editor-divider" />
-
-        <div class="editor-actions">
-          <button id="resetBtn" class=""><i class="fas fa-undo"></i> Reset</button>
-          <button id="saveBtn" class="primary"><i class="fas fa-save"></i> Save Changes</button>
-        </div>
-        <div style="margin-top:8px; font-size:0.6rem; color:rgba(255,255,255,0.06); text-align:center;">
-          Changes auto-save every 5 seconds
+        <div class="preview-frame" id="previewFrame">
+          <div class="mock-site" id="mockSite">
+            <div class="mock-hero">
+              <h2 id="previewTitle">My Brand</h2>
+              <p id="previewTagline">A beautiful website for your business</p>
+            </div>
+            <div class="mock-grid" id="mockGrid">
+              <div class="mock-card">
+                <div class="icon">🚀</div>
+                <h4 id="previewService1">Consulting</h4>
+                <p id="previewService1Desc">Expert advice to grow your business</p>
+              </div>
+              <div class="mock-card">
+                <div class="icon">💡</div>
+                <h4 id="previewService2">Development</h4>
+                <p id="previewService2Desc">Custom solutions tailored to your needs</p>
+              </div>
+              <div class="mock-card">
+                <div class="icon">📈</div>
+                <h4 id="previewService3">Support</h4>
+                <p id="previewService3Desc">Ongoing support and maintenance</p>
+              </div>
+            </div>
+            <div class="mock-footer" id="previewFooter">
+              © 2026 My Brand • hello@example.com • +91-98765-43210
+            </div>
+          </div>
         </div>
       </div>
 
@@ -664,455 +667,442 @@
     (function() {
       'use strict';
 
-      // ----- STATE -----
+      // ================================================================
+      // STATE
+      // ================================================================
       const state = {
-        siteTitle: 'Your Brand Name',
+        siteName: 'My Brand',
         tagline: 'A beautiful website for your business',
-        service1: 'Service One',
-        service1Desc: 'Short description',
-        service2: 'Service Two',
-        service2Desc: 'Short description',
-        service3: 'Service Three',
-        service3Desc: 'Short description',
+        about: 'We are a passionate team dedicated to delivering exceptional value to our clients.',
+        service1: 'Consulting',
+        service1Desc: 'Expert advice to grow your business',
+        service2: 'Development',
+        service2Desc: 'Custom solutions tailored to your needs',
+        service3: 'Support',
+        service3Desc: 'Ongoing support and maintenance',
+        contactEmail: 'hello@example.com',
+        contactPhone: '+91-98765-43210',
+        contactAddress: 'Delhi NCR, India',
+        socialTwitter: 'https://twitter.com/yourbrand',
+        socialLinkedin: 'https://linkedin.com/company/yourbrand',
+        socialInstagram: 'https://instagram.com/yourbrand',
+        socialYoutube: 'https://youtube.com/yourbrand',
         darkMode: false,
-        device: 'desktop',
-        autoSaveTimer: null,
-        initialized: false
+        theme: null,
+        primaryColor: '#b8860b',
+        font: 'inter',
+        pages: [],
+        description: '',
       };
 
-      // ----- DOM REFS -----
+      // ================================================================
+      // DOM REFS
+      // ================================================================
+      const inputs = {
+        siteName: document.getElementById('siteName'),
+        tagline: document.getElementById('tagline'),
+        about: document.getElementById('aboutText'),
+        service1: document.getElementById('service1'),
+        service1Desc: document.getElementById('service1Desc'),
+        service2: document.getElementById('service2'),
+        service2Desc: document.getElementById('service2Desc'),
+        service3: document.getElementById('service3'),
+        service3Desc: document.getElementById('service3Desc'),
+        contactEmail: document.getElementById('contactEmail'),
+        contactPhone: document.getElementById('contactPhone'),
+        contactAddress: document.getElementById('contactAddress'),
+        socialTwitter: document.getElementById('socialTwitter'),
+        socialLinkedin: document.getElementById('socialLinkedin'),
+        socialInstagram: document.getElementById('socialInstagram'),
+        socialYoutube: document.getElementById('socialYoutube'),
+      };
+
+      const previews = {
+        title: document.getElementById('previewTitle'),
+        tagline: document.getElementById('previewTagline'),
+        service1: document.getElementById('previewService1'),
+        service1Desc: document.getElementById('previewService1Desc'),
+        service2: document.getElementById('previewService2'),
+        service2Desc: document.getElementById('previewService2Desc'),
+        service3: document.getElementById('previewService3'),
+        service3Desc: document.getElementById('previewService3Desc'),
+        footer: document.getElementById('previewFooter'),
+      };
+
+      const counters = {
+        siteName: document.getElementById('siteNameCounter'),
+        tagline: document.getElementById('taglineCounter'),
+      };
+
       const previewFrame = document.getElementById('previewFrame');
-      const mockSite = document.getElementById('mockSite');
-      const editSiteTitle = document.getElementById('editSiteTitle');
-      const editTagline = document.getElementById('editTagline');
-      const editService1 = document.getElementById('editService1');
-      const editService1Desc = document.getElementById('editService1Desc');
-      const editService2 = document.getElementById('editService2');
-      const editService2Desc = document.getElementById('editService2Desc');
-      const editService3 = document.getElementById('editService3');
-      const editService3Desc = document.getElementById('editService3Desc');
-      const titleCounter = document.getElementById('titleCounter');
-      const taglineCounter = document.getElementById('taglineCounter');
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const aiAutofillBtn = document.getElementById('aiAutofillBtn');
       const backBtn = document.getElementById('backBtn');
       const nextBtn = document.getElementById('nextBtn');
       const toast = document.getElementById('toast');
       const toastMessage = document.getElementById('toastMessage');
-      const themeToggleBtn = document.getElementById('themeToggleBtn');
-      const deviceBtns = document.querySelectorAll('.device-btns button');
-      const resetBtn = document.getElementById('resetBtn');
-      const saveBtn = document.getElementById('saveBtn');
       const previewStatus = document.getElementById('previewStatus');
 
-      // ----- TOAST -----
+      // ================================================================
+      // TOAST
+      // ================================================================
       let toastTimeout = null;
 
       function showToast(message, type) {
         if (!message) return;
-        try {
-          toastMessage.textContent = typeof message === 'string' ? message : String(message);
-          toast.className = 'toast';
-          if (type === 'error') toast.classList.add('error');
-          if (type === 'success') toast.classList.add('success');
-          toast.classList.add('show');
-          clearTimeout(toastTimeout);
-          toastTimeout = setTimeout(function() {
-            toast.classList.remove('show');
-          }, 3200);
-        } catch (err) {
-          console.warn('Toast error:', err);
-        }
+        toastMessage.textContent = typeof message === 'string' ? message : String(message);
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        if (type === 'warning') toast.classList.add('warning');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() { toast.classList.remove('show'); }, 3500);
       }
 
-      // ----- UPDATE PREVIEW -----
-      function updatePreview() {
-        try {
-          // Update all editable fields
-          const editableMap = {
-            'siteTitle': state.siteTitle,
-            'siteTagline': state.tagline,
-            'service1': state.service1,
-            'service1Desc': state.service1Desc,
-            'service2': state.service2,
-            'service2Desc': state.service2Desc,
-            'service3': state.service3,
-            'service3Desc': state.service3Desc
-          };
-
-          document.querySelectorAll('.editable[data-field]').forEach(function(el) {
-            const field = el.dataset.field;
-            if (field && editableMap.hasOwnProperty(field)) {
-              el.textContent = editableMap[field] || '';
-            }
-          });
-
-          // Sync input fields
-          editSiteTitle.value = state.siteTitle;
-          editTagline.value = state.tagline;
-          editService1.value = state.service1;
-          editService1Desc.value = state.service1Desc;
-          editService2.value = state.service2;
-          editService2Desc.value = state.service2Desc;
-          editService3.value = state.service3;
-          editService3Desc.value = state.service3Desc;
-
-          // Update char counters
-          titleCounter.textContent = state.siteTitle.length + '/60';
-          taglineCounter.textContent = state.tagline.length + '/80';
-
-          // Dark mode
-          previewFrame.classList.toggle('dark', state.darkMode);
-          themeToggleBtn.textContent = state.darkMode ? '☀️ Light' : '🌙 Dark';
-
-          // Device simulation
-          const frame = previewFrame;
-          if (state.device === 'mobile') {
-            frame.style.maxWidth = '360px';
-            frame.style.margin = '0 auto';
-            frame.style.padding = '16px';
-          } else if (state.device === 'tablet') {
-            frame.style.maxWidth = '768px';
-            frame.style.margin = '0 auto';
-            frame.style.padding = '18px';
-          } else {
-            frame.style.maxWidth = '100%';
-            frame.style.margin = '0';
-            frame.style.padding = '20px';
-          }
-
-          // Update status
-          previewStatus.textContent = 'Live • Auto-save';
-
-          // Save to localStorage
-          saveState();
-
-        } catch (err) {
-          console.error('Preview update error:', err);
-          showToast('Error updating preview: ' + err.message, 'error');
-        }
-      }
-
-      // ----- STATE PERSISTENCE -----
-      function saveState() {
-        try {
-          const data = {
-            ...state,
-            timestamp: Date.now()
-          };
-          localStorage.setItem('swayam_step3_state', JSON.stringify(data));
-        } catch (err) {
-          console.warn('Could not save state:', err);
-        }
-      }
-
+      // ================================================================
+      // LOAD STATE FROM LOCALSTORAGE
+      // ================================================================
       function loadState() {
         try {
-          const raw = localStorage.getItem('swayam_step3_state');
-          if (!raw) return false;
-          const data = JSON.parse(raw);
-          // Validate required fields
-          const required = ['siteTitle', 'tagline', 'service1', 'service1Desc', 'service2', 'service2Desc', 'service3', 'service3Desc'];
-          const valid = required.every(function(key) { return data.hasOwnProperty(key); });
-          if (!valid) {
-            console.warn('Invalid state data, ignoring.');
-            return false;
+          // Load from builder state (theme, color, font, pages)
+          const raw = localStorage.getItem('swayam_builder_state');
+          if (raw) {
+            const data = JSON.parse(raw);
+            if (data.selectedTheme) state.theme = data.selectedTheme;
+            if (data.primaryColor) state.primaryColor = data.primaryColor;
+            if (data.font) state.font = data.font;
+            if (data.pages) state.pages = data.pages;
           }
-          // Copy over
-          Object.keys(data).forEach(function(key) {
-            if (state.hasOwnProperty(key)) {
-              state[key] = data[key];
+
+          // Load description from step 1
+          const descRaw = localStorage.getItem('swayam_builder_description');
+          if (descRaw) {
+            const descData = JSON.parse(descRaw);
+            if (descData.description) state.description = descData.description;
+          }
+
+          // Load content from step 3 if exists (for resume)
+          const contentRaw = localStorage.getItem('swayam_step3_content');
+          if (contentRaw) {
+            const content = JSON.parse(contentRaw);
+            Object.keys(content).forEach(function(key) {
+              if (state.hasOwnProperty(key)) {
+                state[key] = content[key];
+              }
+            });
+          }
+
+          // Populate inputs
+          Object.keys(inputs).forEach(function(key) {
+            if (inputs[key] && state[key] !== undefined) {
+              inputs[key].value = state[key];
             }
           });
-          return true;
-        } catch (err) {
-          console.warn('Could not load state:', err);
-          return false;
-        }
-      }
 
-      // ----- AUTO-SAVE -----
-      function startAutoSave() {
-        if (state.autoSaveTimer) clearInterval(state.autoSaveTimer);
-        state.autoSaveTimer = setInterval(function() {
-          // Sync state from inputs
-          syncStateFromInputs();
+          // Update counters
+          updateCounters();
+
           // Update preview
           updatePreview();
-          // Show subtle indicator
-          previewStatus.textContent = 'Auto-saved ✓';
-          setTimeout(function() {
-            previewStatus.textContent = 'Live • Auto-save';
-          }, 800);
-        }, 5000);
-      }
 
-      // ----- SYNC STATE FROM INPUTS -----
-      function syncStateFromInputs() {
-        try {
-          state.siteTitle = editSiteTitle.value.trim() || 'Your Brand Name';
-          state.tagline = editTagline.value.trim() || 'A beautiful website for your business';
-          state.service1 = editService1.value.trim() || 'Service One';
-          state.service1Desc = editService1Desc.value.trim() || 'Short description';
-          state.service2 = editService2.value.trim() || 'Service Two';
-          state.service2Desc = editService2Desc.value.trim() || 'Short description';
-          state.service3 = editService3.value.trim() || 'Service Three';
-          state.service3Desc = editService3Desc.value.trim() || 'Short description';
+          // Apply theme colors
+          applyThemeStyles();
+
         } catch (err) {
-          console.warn('Sync error:', err);
+          console.warn('Error loading state:', err);
+          showToast('Could not load saved data. Starting fresh.', 'warning');
         }
       }
 
-      // ----- INLINE EDITING (contenteditable) -----
-      function setupInlineEditing() {
-        document.querySelectorAll('.editable').forEach(function(el) {
-          // Add edit hint
-          const hint = document.createElement('span');
-          hint.className = 'edit-hint';
-          hint.textContent = '✎ edit';
-          el.appendChild(hint);
-
-          el.addEventListener('click', function() {
-            if (this.contentEditable === 'false') {
-              this.contentEditable = 'true';
-              this.focus();
-              // Select all text
-              const range = document.createRange();
-              range.selectNodeContents(this);
-              const sel = window.getSelection();
-              sel.removeAllRanges();
-              sel.addRange(range);
+      // ================================================================
+      // SAVE STATE
+      // ================================================================
+      function saveState() {
+        try {
+          // Read from inputs
+          Object.keys(inputs).forEach(function(key) {
+            if (inputs[key]) {
+              state[key] = inputs[key].value;
             }
           });
 
-          el.addEventListener('blur', function() {
-            this.contentEditable = 'false';
-            const field = this.dataset.field;
-            const newVal = this.textContent.trim();
-            if (field && state.hasOwnProperty(field)) {
-              state[field] = newVal || state[field];
-              // Update corresponding input field
-              const inputMap = {
-                'siteTitle': editSiteTitle,
-                'siteTagline': editTagline,
-                'service1': editService1,
-                'service1Desc': editService1Desc,
-                'service2': editService2,
-                'service2Desc': editService2Desc,
-                'service3': editService3,
-                'service3Desc': editService3Desc
-              };
-              if (inputMap[field]) {
-                inputMap[field].value = state[field];
+          // Save to localStorage
+          const content = {};
+          Object.keys(state).forEach(function(key) {
+            if (typeof state[key] !== 'function' && key !== 'description') {
+              content[key] = state[key];
+            }
+          });
+          localStorage.setItem('swayam_step3_content', JSON.stringify(content));
+
+          // Update builder state with any changes
+          const builderState = {
+            selectedTheme: state.theme,
+            primaryColor: state.primaryColor,
+            font: state.font,
+            pages: state.pages,
+            description: state.description,
+          };
+          localStorage.setItem('swayam_builder_state', JSON.stringify(builderState));
+
+          // Update preview status
+          previewStatus.textContent = 'Auto-saved';
+
+          setTimeout(function() {
+            previewStatus.textContent = 'Live preview';
+          }, 2000);
+
+        } catch (err) {
+          console.warn('Error saving state:', err);
+          showToast('Could not save changes.', 'error');
+        }
+      }
+
+      // ================================================================
+      // UPDATE PREVIEW
+      // ================================================================
+      function updatePreview() {
+        try {
+          const data = {
+            siteName: inputs.siteName.value || 'My Brand',
+            tagline: inputs.tagline.value || '',
+            service1: inputs.service1.value || 'Service 1',
+            service1Desc: inputs.service1Desc.value || '',
+            service2: inputs.service2.value || 'Service 2',
+            service2Desc: inputs.service2Desc.value || '',
+            service3: inputs.service3.value || 'Service 3',
+            service3Desc: inputs.service3Desc.value || '',
+            contactEmail: inputs.contactEmail.value || '',
+            contactPhone: inputs.contactPhone.value || '',
+          };
+
+          previews.title.textContent = data.siteName;
+          previews.tagline.textContent = data.tagline;
+          previews.service1.textContent = data.service1;
+          previews.service1Desc.textContent = data.service1Desc;
+          previews.service2.textContent = data.service2;
+          previews.service2Desc.textContent = data.service2Desc;
+          previews.service3.textContent = data.service3;
+          previews.service3Desc.textContent = data.service3Desc;
+          previews.footer.textContent = '© 2026 ' + data.siteName + ' • ' + data.contactEmail + ' • ' + data.contactPhone;
+
+          // Apply font to preview title
+          const fontFamily = state.font === 'playfair' ? "'Playfair Display', serif" :
+                            state.font === 'orbitron' ? "'Orbitron', sans-serif" :
+                            "'Inter', sans-serif";
+          previews.title.style.fontFamily = fontFamily;
+
+          // Apply primary color to title
+          previews.title.style.color = state.primaryColor || '#b8860b';
+
+        } catch (err) {
+          console.warn('Preview update error:', err);
+        }
+      }
+
+      // ================================================================
+      // COUNTERS
+      // ================================================================
+      function updateCounters() {
+        counters.siteName.textContent = inputs.siteName.value.length + '/60';
+        counters.tagline.textContent = inputs.tagline.value.length + '/80';
+      }
+
+      // ================================================================
+      // THEME STYLES (dark mode + colors)
+      // ================================================================
+      function applyThemeStyles() {
+        previewFrame.classList.toggle('dark', state.darkMode);
+        themeToggleBtn.textContent = state.darkMode ? '☀️ Light' : '🌙 Dark';
+        // Apply primary color to hero border
+        const hero = previewFrame.querySelector('.mock-hero');
+        if (hero) {
+          hero.style.borderColor = state.primaryColor + '33';
+        }
+      }
+
+      // ================================================================
+      // AI AUTOFILL (Simulated with smart generation)
+      // ================================================================
+      function aiAutofill() {
+        const desc = state.description || inputs.about.value || '';
+        if (!desc || desc.length < 10) {
+          showToast('Please provide a business description in Step 1 or in the About field.', 'warning');
+          return;
+        }
+
+        aiAutofillBtn.disabled = true;
+        aiAutofillBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+        showToast('AI is generating content...', 'success');
+
+        // Simulate AI processing with a delay
+        setTimeout(function() {
+          try {
+            // Smart content generation from description
+            const words = desc.split(' ');
+            const name = words.slice(0, 3).join(' ') || 'My Brand';
+            const tagline = words.slice(3, 7).join(' ') || 'We deliver excellence.';
+            const service1 = words.slice(0, 2).join(' ') || 'Core Service';
+            const service1Desc = words.slice(2, 6).join(' ') || 'We provide top-notch solutions.';
+            const service2 = words.slice(3, 5).join(' ') || 'Premium Offer';
+            const service2Desc = words.slice(5, 9).join(' ') || 'Tailored to your needs.';
+            const service3 = words.slice(6, 8).join(' ') || 'Support';
+            const service3Desc = words.slice(8, 12).join(' ') || 'We are here for you.';
+            const about = 'We are ' + name + '. ' + desc;
+
+            // Fill inputs
+            inputs.siteName.value = name.slice(0, 60);
+            inputs.tagline.value = tagline.slice(0, 80);
+            inputs.about.value = about.slice(0, 500);
+            inputs.service1.value = service1.slice(0, 40);
+            inputs.service1Desc.value = service1Desc.slice(0, 60);
+            inputs.service2.value = service2.slice(0, 40);
+            inputs.service2Desc.value = service2Desc.slice(0, 60);
+            inputs.service3.value = service3.slice(0, 40);
+            inputs.service3Desc.value = service3Desc.slice(0, 60);
+            inputs.contactEmail.value = 'hello@' + name.toLowerCase().replace(/\s/g, '') + '.com';
+            inputs.contactPhone.value = '+91-98765-43210';
+            inputs.contactAddress.value = 'Delhi NCR, India';
+
+            // Update state
+            Object.keys(inputs).forEach(function(key) {
+              if (inputs[key]) {
+                state[key] = inputs[key].value;
               }
-              updatePreview();
-              showToast('Updated: ' + field, 'success');
-            }
-          });
+            });
 
-          el.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-              this.blur();
-            }
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              this.blur();
-            }
-          });
-        });
-      }
-
-      // ----- EVENT BINDING FOR INPUTS -----
-      function bindInputs() {
-        const inputs = [
-          { el: editSiteTitle, field: 'siteTitle' },
-          { el: editTagline, field: 'tagline' },
-          { el: editService1, field: 'service1' },
-          { el: editService1Desc, field: 'service1Desc' },
-          { el: editService2, field: 'service2' },
-          { el: editService2Desc, field: 'service2Desc' },
-          { el: editService3, field: 'service3' },
-          { el: editService3Desc, field: 'service3Desc' }
-        ];
-
-        inputs.forEach(function(item) {
-          if (!item.el) return;
-          item.el.addEventListener('input', function() {
-            const val = this.value.trim();
-            state[item.field] = val || state[item.field];
-            // Update char counters for title/tagline
-            if (item.field === 'siteTitle') {
-              titleCounter.textContent = val.length + '/60';
-            } else if (item.field === 'tagline') {
-              taglineCounter.textContent = val.length + '/80';
-            }
-            // Update preview live
+            updateCounters();
             updatePreview();
-          });
-          // Max length enforcement
-          item.el.addEventListener('keydown', function(e) {
-            const max = this.maxLength;
-            if (max && this.value.length >= max && e.key !== 'Backspace' && e.key !== 'Delete' && !e.ctrlKey && !e.metaKey) {
-              e.preventDefault();
-              showToast('Character limit reached (' + max + ')', 'error');
-            }
-          });
-        });
+            saveState();
+
+            showToast('✅ AI content generated successfully!', 'success');
+          } catch (err) {
+            showToast('AI generation failed: ' + err.message, 'error');
+          } finally {
+            aiAutofillBtn.disabled = false;
+            aiAutofillBtn.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> AI Autofill';
+          }
+        }, 1200);
       }
 
-      // ----- DARK MODE TOGGLE -----
-      themeToggleBtn.addEventListener('click', function() {
-        state.darkMode = !state.darkMode;
-        updatePreview();
-        saveState();
-        showToast(state.darkMode ? 'Dark mode enabled' : 'Light mode enabled', 'success');
-      });
-
-      // ----- DEVICE TOGGLE -----
-      deviceBtns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          deviceBtns.forEach(function(b) { b.classList.remove('active'); });
-          this.classList.add('active');
-          state.device = this.dataset.device;
-          updatePreview();
-          showToast('Device: ' + state.device, 'success');
-        });
-      });
-
-      // ----- RESET -----
-      resetBtn.addEventListener('click', function() {
-        if (confirm('Reset all content to default values?')) {
-          state.siteTitle = 'Your Brand Name';
-          state.tagline = 'A beautiful website for your business';
-          state.service1 = 'Service One';
-          state.service1Desc = 'Short description';
-          state.service2 = 'Service Two';
-          state.service2Desc = 'Short description';
-          state.service3 = 'Service Three';
-          state.service3Desc = 'Short description';
-          updatePreview();
-          showToast('Content reset to defaults', 'success');
-        }
-      });
-
-      // ----- SAVE (manual) -----
-      saveBtn.addEventListener('click', function() {
-        syncStateFromInputs();
-        updatePreview();
-        saveState();
-        showToast('Changes saved successfully!', 'success');
-      });
-
-      // ----- NAVIGATION -----
-      backBtn.addEventListener('click', function() {
+      // ================================================================
+      // NAVIGATION
+      // ================================================================
+      function goToStep2() {
         try {
           saveState();
           window.location.href = 'step-2.html';
         } catch (err) {
           showToast('Error navigating back: ' + err.message, 'error');
         }
-      });
+      }
 
-      nextBtn.addEventListener('click', function() {
+      function goToStep4() {
         try {
-          syncStateFromInputs();
-          updatePreview();
           saveState();
-          // In production, go to step-4.html
-          showToast('🎉 Your website is ready for deployment!', 'success');
-          setTimeout(function() {
-            alert('Step 4: Deployment would load here.\n\nSite: ' + state.siteTitle +
-              '\nTagline: ' + state.tagline +
-              '\nServices: ' + state.service1 + ', ' + state.service2 + ', ' + state.service3);
-          }, 600);
+          // Validate required fields
+          const name = inputs.siteName.value.trim();
+          if (!name || name.length < 2) {
+            showToast('Please enter a valid site name (at least 2 characters).', 'error');
+            inputs.siteName.focus();
+            return;
+          }
+          window.location.href = 'step-4.html';
         } catch (err) {
           showToast('Error proceeding: ' + err.message, 'error');
         }
+      }
+
+      // ================================================================
+      // EVENT BINDING
+      // ================================================================
+
+      // All inputs: update preview and save
+      Object.keys(inputs).forEach(function(key) {
+        const el = inputs[key];
+        if (!el) return;
+        el.addEventListener('input', function() {
+          updateCounters();
+          updatePreview();
+          saveState();
+        });
+        el.addEventListener('change', function() {
+          saveState();
+        });
       });
 
-      // ----- KEYBOARD SHORTCUTS -----
+      // Theme toggle
+      themeToggleBtn.addEventListener('click', function() {
+        state.darkMode = !state.darkMode;
+        applyThemeStyles();
+        saveState();
+        showToast(state.darkMode ? 'Dark mode enabled' : 'Light mode enabled', 'success');
+      });
+
+      // AI Autofill
+      aiAutofillBtn.addEventListener('click', aiAutofill);
+
+      // Back and Next
+      backBtn.addEventListener('click', goToStep2);
+      nextBtn.addEventListener('click', goToStep4);
+
+      // Keyboard shortcuts
       document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { toast.classList.remove('show'); }
         if ((e.ctrlKey || e.metaKey) && e.key === 's') {
           e.preventDefault();
-          syncStateFromInputs();
-          updatePreview();
           saveState();
           showToast('Saved (Ctrl+S)', 'success');
         }
-        if (e.key === 'Escape') {
-          toast.classList.remove('show');
+        if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+          e.preventDefault();
+          aiAutofill();
         }
       });
 
-      // ----- BEFOREUNLOAD -----
-      window.addEventListener('beforeunload', function() {
-        syncStateFromInputs();
+      // ================================================================
+      // AUTO-SAVE every 5 seconds
+      // ================================================================
+      setInterval(function() {
         saveState();
+      }, 5000);
+
+      // ================================================================
+      // ERROR BOUNDARY
+      // ================================================================
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
       });
 
-      // ----- VISIBILITY CHANGE -----
-      document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-          syncStateFromInputs();
-          saveState();
-        }
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled rejection:', e.reason);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
       });
 
-      // ----- INIT -----
+      // ================================================================
+      // INIT
+      // ================================================================
       function init() {
         try {
-          // Load state
-          const loaded = loadState();
-          if (!loaded) {
-            // Set default state
-            state.siteTitle = 'Your Brand Name';
-            state.tagline = 'A beautiful website for your business';
-            state.service1 = 'Service One';
-            state.service1Desc = 'Short description';
-            state.service2 = 'Service Two';
-            state.service2Desc = 'Short description';
-            state.service3 = 'Service Three';
-            state.service3Desc = 'Short description';
-          }
-
-          // Setup inline editing
-          setupInlineEditing();
-
-          // Bind inputs
-          bindInputs();
-
-          // Update preview
+          loadState();
+          // Initial preview update
           updatePreview();
-
-          // Start auto-save
-          startAutoSave();
-
-          state.initialized = true;
-          console.log('Step 3 initialized successfully.');
-
-          // Show welcome toast
+          applyThemeStyles();
+          // Show welcome
           setTimeout(function() {
-            showToast('✏️ Click any text to edit it directly!', 'success');
-          }, 600);
-
+            showToast('✏️ Edit your content; preview updates live.', 'success');
+          }, 400);
+          console.log('Step 3 initialized successfully.');
         } catch (err) {
           console.error('Fatal init error:', err);
           showToast('Failed to initialize. Please refresh.', 'error');
         }
       }
 
-      // ----- ERROR BOUNDARY -----
-      window.addEventListener('error', function(e) {
-        console.error('Unhandled error:', e.error || e.message);
-        showToast('An unexpected error occurred. Please try again.', 'error');
-        return true;
-      });
-
-      window.addEventListener('unhandledrejection', function(e) {
-        console.error('Unhandled rejection:', e.reason);
-        showToast('An unexpected error occurred. Please try again.', 'error');
-        return true;
-      });
-
-      // Start
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
       } else {
