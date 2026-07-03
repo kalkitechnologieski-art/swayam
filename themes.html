@@ -3,94 +3,498 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Themes — Swayam</title>
+  <title>Themes — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* Same base styles as previous pages, plus theme gallery */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter',sans-serif; background:#0a0a1a; color:#f0ece6; }
-    .container { max-width:1280px; margin:0 auto; padding:0 24px; }
-    /* header same as before (omitted for brevity, but include) */
-    .header { background:rgba(10,10,26,0.92); backdrop-filter:blur(18px); border-bottom:1px solid rgba(184,134,11,0.15); position:sticky; top:0; z-index:1000; padding:14px 0; }
-    .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
-    .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
-    .logo-icon { width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #b8860b, #8b6508); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; color:#fff; }
-    .logo-text { font-size:1.6rem; font-weight:700; background:linear-gradient(135deg,#f0ece6, #b8860b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .logo-text span { font-weight:300; -webkit-text-fill-color:rgba(255,255,255,0.4); }
-    .nav-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.9rem; font-weight:500; margin-left:28px; }
-    .nav-links a:hover { color:#fff; }
-    .nav-links a.active { color:#b8860b; }
-    .header-cta { padding:8px 24px; border-radius:40px; background:linear-gradient(135deg,#b8860b,#d4a017); color:#fff !important; font-weight:600; margin-left:20px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.02) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
 
-    .themes-header { padding:40px 0 20px; text-align:center; }
-    .themes-header h1 { font-size:2.8rem; }
-    .filter-bar { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:20px 0 30px; }
-    .filter-btn { padding:6px 20px; border-radius:40px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.6); cursor:pointer; transition:0.3s; font-family:inherit; }
-    .filter-btn:hover { background:rgba(184,134,11,0.1); border-color:#b8860b; color:#fff; }
-    .filter-btn.active { background:rgba(184,134,11,0.15); border-color:#b8860b; color:#b8860b; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    .theme-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:24px; padding-bottom:40px; }
-    .theme-card { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); border-radius:16px; overflow:hidden; transition:0.3s; cursor:pointer; }
-    .theme-card:hover { transform:translateY(-6px); border-color:rgba(184,134,11,0.2); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
-    .theme-card .preview { height:140px; background:linear-gradient(135deg,#1a1a2e,#2d2d44); }
-    .theme-card .info { padding:14px; }
-    .theme-card .info h4 { color:#fff; font-size:1rem; }
-    .theme-card .info p { font-size:0.8rem; color:rgba(255,255,255,0.3); }
+    /* Header */
+    .header {
+      background: rgba(10, 10, 26, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(184, 134, 11, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i { color: #b8860b; }
+    .logo span { font-weight: 300; opacity: 0.3; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #b8860b; }
+    .header-cta {
+      padding: 8px 24px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff !important;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .header-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25); }
 
-    /* footer same as before */
+    /* Hero */
+    .hero { padding: 40px 0 24px; text-align: center; }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p { color: rgba(255, 255, 255, 0.15); margin-top: 4px; }
+
+    /* Filter */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 20px 0 32px;
+    }
+    .filter-btn {
+      padding: 6px 20px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .filter-btn:hover { background: rgba(255, 255, 255, 0.04); color: #fff; }
+    .filter-btn.active { background: rgba(184, 134, 11, 0.04); border-color: #b8860b; color: #b8860b; }
+
+    /* Theme Grid */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      padding-bottom: 40px;
+    }
+    .theme-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+    }
+    .theme-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(184, 134, 11, 0.08);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+    }
+    .theme-card .preview {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: rgba(255, 255, 255, 0.02);
+      position: relative;
+    }
+    .theme-card .preview .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+    }
+    .theme-card:hover .preview .overlay { opacity: 1; }
+    .theme-card .info {
+      padding: 16px 20px 20px;
+    }
+    .theme-card .info .name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #f0ece6;
+    }
+    .theme-card .info .desc {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.15);
+      margin: 4px 0 8px;
+    }
+    .theme-card .info .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .theme-card .info .tags span {
+      font-size: 0.6rem;
+      padding: 2px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.1);
+    }
+    .theme-card .info .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .theme-card .info .actions .btn {
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      border: none;
+    }
+    .theme-card .info .actions .btn-primary {
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff;
+    }
+    .theme-card .info .actions .btn-primary:hover { transform: scale(1.02); }
+    .theme-card .info .actions .btn-secondary {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .theme-card .info .actions .btn-secondary:hover { background: rgba(255, 255, 255, 0.04); color: #fff; }
+
+    /* Theme preview colors */
+    .theme-card[data-theme="veda"] .preview {
+      background: linear-gradient(135deg, #faf0e6, #e8ddd0);
+      color: rgba(184, 134, 11, 0.08);
+    }
+    .theme-card[data-theme="karma"] .preview {
+      background: linear-gradient(135deg, #0a0a12, #1a1a2e);
+      color: rgba(109, 40, 217, 0.08);
+    }
+    .theme-card[data-theme="sattva"] .preview {
+      background: linear-gradient(135deg, #f8f6f2, #e8f5e9);
+      color: rgba(46, 125, 50, 0.08);
+    }
+    .theme-card[data-theme="dharma"] .preview {
+      background: linear-gradient(135deg, #f8fafc, #dbeafe);
+      color: rgba(59, 130, 246, 0.08);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+
+    /* Footer */
+    .footer {
+      padding: 30px 0 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.06);
+      font-size: 0.8rem;
+    }
+    .footer a { color: rgba(255, 255, 255, 0.1); text-decoration: none; }
+    .footer a:hover { color: #b8860b; }
+
+    @media (max-width: 768px) {
+      .theme-grid { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 2rem; }
+      .header-inner { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .theme-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <header class="header"><!-- same header as previous --></header>
 
+  <!-- Toast -->
+  <div class="toast" id="toast"><i class="fas fa-info-circle"></i><span id="toastMessage">Message</span></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><i class="fas fa-om"></i> Swayam<span>AI</span></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="builder/step-1.html">Builder</a>
+        <a href="themes.html" class="active">Themes</a>
+        <a href="dashboard/index.html">Dashboard</a>
+        <a href="pages/about.html">About</a>
+        <a href="pages/contact.html">Contact</a>
+        <a href="https://kalki-intelligence.in" target="_blank" class="header-cta">Kalki AI</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>✨ Choose Your Theme</h1>
+      <p>Four production‑grade designs, ready for your content.</p>
+    </div>
+  </section>
+
+  <!-- Filter -->
   <div class="container">
-    <div class="themes-header">
-      <h1>100+ Vedic & Modern Themes</h1>
-      <p style="color:rgba(255,255,255,0.4);">Choose the perfect design for your brand.</p>
-    </div>
-
-    <div class="filter-bar">
+    <div class="filter-bar" id="filterBar">
       <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="vedic">Vedic</button>
-      <button class="filter-btn" data-filter="modern">Modern</button>
-      <button class="filter-btn" data-filter="business">Business</button>
-      <button class="filter-btn" data-filter="creative">Creative</button>
-      <button class="filter-btn" data-filter="dark">Dark</button>
-      <button class="filter-btn" data-filter="light">Light</button>
-    </div>
-
-    <div class="theme-grid" id="themeGrid">
-      <!-- 20 example themes; in production, 100+ would be generated -->
-      <div class="theme-card" data-tags="vedic,business"><div class="preview" style="background:linear-gradient(135deg,#b8860b,#8b6508);"></div><div class="info"><h4>Vedic Gold</h4><p>Business • Premium</p></div></div>
-      <div class="theme-card" data-tags="modern,light"><div class="preview" style="background:linear-gradient(135deg,#f0ece6,#c4b5fd);"></div><div class="info"><h4>Minimal Light</h4><p>Creative • Clean</p></div></div>
-      <div class="theme-card" data-tags="dark,modern"><div class="preview" style="background:linear-gradient(135deg,#1a1a2e,#2d2d44);"></div><div class="info"><h4>Dark Elegance</h4><p>Agency • Bold</p></div></div>
-      <div class="theme-card" data-tags="creative,vedic"><div class="preview" style="background:linear-gradient(135deg,#d4a017,#f59e0b);"></div><div class="info"><h4>Kalaripayattu</h4><p>Creative • Traditional</p></div></div>
-      <div class="theme-card" data-tags="business,light"><div class="preview" style="background:linear-gradient(135deg,#ffffff,#e0e7ff);"></div><div class="info"><h4>Corporate White</h4><p>Business • Formal</p></div></div>
-      <div class="theme-card" data-tags="dark,creative"><div class="preview" style="background:linear-gradient(135deg,#0f0f23,#6d28d9);"></div><div class="info"><h4>Cosmic Vedic</h4><p>Creative • Mystic</p></div></div>
-      <!-- Add more as needed -->
+      <button class="filter-btn" data-filter="spiritual">Spiritual</button>
+      <button class="filter-btn" data-filter="agency">Agency</button>
+      <button class="filter-btn" data-filter="ecommerce">E‑commerce</button>
+      <button class="filter-btn" data-filter="consulting">Consulting</button>
     </div>
   </div>
 
-  <script>
-    // Filtering
-    const filters = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.theme-card');
+  <!-- Themes -->
+  <section class="themes">
+    <div class="container">
+      <div class="theme-grid" id="themeGrid">
+        <div class="theme-card" data-theme="veda" data-category="spiritual">
+          <div class="preview"><span>🕉</span><div class="overlay">Preview Theme</div></div>
+          <div class="info">
+            <div class="name">Veda</div>
+            <div class="desc">Spiritual &amp; wellness — calm, earthy, Vedic motifs.</div>
+            <div class="tags"><span>Spiritual</span><span>Wellness</span><span>Minimal</span></div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="useTheme('veda')">Use Theme</button>
+              <button class="btn btn-secondary" onclick="previewTheme('veda')">Preview</button>
+            </div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme="karma" data-category="agency">
+          <div class="preview"><span>🚀</span><div class="overlay">Preview Theme</div></div>
+          <div class="info">
+            <div class="name">Karma</div>
+            <div class="desc">Digital agency &amp; creative — bold, modern, dark mode.</div>
+            <div class="tags"><span>Agency</span><span>Creative</span><span>Dark</span></div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="useTheme('karma')">Use Theme</button>
+              <button class="btn btn-secondary" onclick="previewTheme('karma')">Preview</button>
+            </div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme="sattva" data-category="ecommerce">
+          <div class="preview"><span>🛍️</span><div class="overlay">Preview Theme</div></div>
+          <div class="info">
+            <div class="name">Sattva</div>
+            <div class="desc">E‑commerce — clean, minimalist, product‑focused.</div>
+            <div class="tags"><span>E‑commerce</span><span>Retail</span><span>Clean</span></div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="useTheme('sattva')">Use Theme</button>
+              <button class="btn btn-secondary" onclick="previewTheme('sattva')">Preview</button>
+            </div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme="dharma" data-category="consulting">
+          <div class="preview"><span>📊</span><div class="overlay">Preview Theme</div></div>
+          <div class="info">
+            <div class="name">Dharma</div>
+            <div class="desc">Consulting &amp; corporate — trustworthy, professional.</div>
+            <div class="tags"><span>Consulting</span><span>Corporate</span><span>Professional</span></div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="useTheme('dharma')">Use Theme</button>
+              <button class="btn btn-secondary" onclick="previewTheme('dharma')">Preview</button>
+            </div>
+          </div>
+        </div>
+        <!-- Additional themed variants -->
+        <div class="theme-card" data-theme="veda-gold" data-category="spiritual">
+          <div class="preview"><span>🌅</span><div class="overlay">Preview Theme</div></div>
+          <div class="info">
+            <div class="name">Veda Gold</div>
+            <div class="desc">Spiritual with warm gold accents and elegant typography.</div>
+            <div class="tags"><span>Spiritual</span><span>Premium</span><span>Gold</span></div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="useTheme('veda-gold')">Use Theme</button>
+              <button class="btn btn-secondary" onclick="previewTheme('veda-gold')">Preview</button>
+            </div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme="karma-neon" data-category="agency">
+          <div class="preview"><span>⚡</span><div class="overlay">Preview Theme</div></div>
+          <div class="info">
+            <div class="name">Karma Neon</div>
+            <div class="desc">Agency with neon accents and dynamic animations.</div>
+            <div class="tags"><span>Agency</span><span>Neon</span><span>Dynamic</span></div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="useTheme('karma-neon')">Use Theme</button>
+              <button class="btn btn-secondary" onclick="previewTheme('karma-neon')">Preview</button>
+            </div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme="sattva-dark" data-category="ecommerce">
+          <div class="preview"><span>🌙</span><div class="overlay">Preview Theme</div></div>
+          <div class="info">
+            <div class="name">Sattva Dark</div>
+            <div class="desc">E‑commerce with dark mode and premium product focus.</div>
+            <div class="tags"><span>E‑commerce</span><span>Dark</span><span>Premium</span></div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="useTheme('sattva-dark')">Use Theme</button>
+              <button class="btn btn-secondary" onclick="previewTheme('sattva-dark')">Preview</button>
+            </div>
+          </div>
+        </div>
+        <div class="theme-card" data-theme="dharma-blue" data-category="consulting">
+          <div class="preview"><span>💎</span><div class="overlay">Preview Theme</div></div>
+          <div class="info">
+            <div class="name">Dharma Blue</div>
+            <div class="desc">Corporate consulting with deep blue and trust signals.</div>
+            <div class="tags"><span>Consulting</span><span>Corporate</span><span>Trust</span></div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="useTheme('dharma-blue')">Use Theme</button>
+              <button class="btn btn-secondary" onclick="previewTheme('dharma-blue')">Preview</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    filters.forEach(btn => {
-      btn.addEventListener('click', function() {
-        filters.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        const filter = this.dataset.filter;
-        cards.forEach(card => {
-          const tags = card.dataset.tags.split(',');
-          if (filter === 'all' || tags.includes(filter)) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Swayam — An AI Website Builder by <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      let toastTimeout = null;
+
+      function showToast(msg, type) {
+        toastMessage.textContent = msg;
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() { toast.classList.remove('show'); }, 3500);
+      }
+
+      // Filter
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const themeCards = document.querySelectorAll('.theme-card');
+
+      filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          const filter = this.dataset.filter;
+          themeCards.forEach(function(card) {
+            const category = card.dataset.category;
+            if (filter === 'all' || category === filter) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
         });
       });
-    });
+
+      // Use Theme
+      window.useTheme = function(theme) {
+        showToast('🎨 Applied "' + theme + '" theme! You can now customize it in the builder.', 'success');
+        // In production: redirect to builder with theme param
+        setTimeout(function() {
+          window.location.href = '../builder/step-2.html?theme=' + theme;
+        }, 800);
+      };
+
+      // Preview Theme
+      window.previewTheme = function(theme) {
+        const previewUrls = {
+          'veda': '../theme-preview/veda-demo.html',
+          'karma': '../theme-preview/karma-demo.html',
+          'sattva': '../theme-preview/sattva-demo.html',
+          'dharma': '../theme-preview/dharma-demo.html',
+          'veda-gold': '../theme-preview/veda-demo.html',
+          'karma-neon': '../theme-preview/karma-demo.html',
+          'sattva-dark': '../theme-preview/sattva-demo.html',
+          'dharma-blue': '../theme-preview/dharma-demo.html'
+        };
+        const url = previewUrls[theme] || '../theme-preview/veda-demo.html';
+        window.open(url, '_blank');
+      };
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { toast.classList.remove('show'); }
+      });
+
+      console.log('Themes page initialized.');
+    })();
   </script>
+
 </body>
 </html>
