@@ -3,71 +3,626 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Domain — Swayam</title>
+  <title>Domain Management — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* base styles */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter',sans-serif; background:#0a0a1a; color:#f0ece6; }
-    .container { max-width:1280px; margin:0 auto; padding:0 24px; }
-    .header { background:rgba(10,10,26,0.92); backdrop-filter:blur(18px); border-bottom:1px solid rgba(184,134,11,0.15); position:sticky; top:0; z-index:1000; padding:14px 0; }
-    .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
-    .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
-    .logo-icon { width:48px; height:48px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #b8860b, #8b6508); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; color:#fff; }
-    .logo-text { font-size:1.6rem; font-weight:700; background:linear-gradient(135deg,#f0ece6, #b8860b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .logo-text span { font-weight:300; -webkit-text-fill-color:rgba(255,255,255,0.4); }
-    .nav-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.9rem; font-weight:500; margin-left:28px; }
-    .nav-links a:hover { color:#fff; }
-    .nav-links a.active { color:#b8860b; }
-    .header-cta { padding:8px 24px; border-radius:40px; background:linear-gradient(135deg,#b8860b,#d4a017); color:#fff !important; font-weight:600; margin-left:20px; }
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.02) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
 
-    .domain-search { max-width:600px; margin:40px auto; text-align:center; }
-    .domain-search h1 { font-size:2.4rem; margin-bottom:8px; }
-    .domain-search p { color:rgba(255,255,255,0.4); margin-bottom:24px; }
-    .search-box { display:flex; gap:10px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:60px; padding:4px; }
-    .search-box input { flex:1; padding:14px 20px; background:transparent; border:none; color:#fff; font-size:1rem; outline:none; }
-    .search-box button { padding:12px 32px; border-radius:40px; background:linear-gradient(135deg,#b8860b,#d4a017); border:none; color:#fff; font-weight:700; cursor:pointer; }
-    .search-box button:hover { transform:scale(1.02); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-    .domain-results { margin-top:30px; display:flex; flex-direction:column; gap:12px; }
-    .domain-item { display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); border-radius:12px; padding:12px 20px; }
-    .domain-item .name { font-weight:500; }
-    .domain-item .price { color:#b8860b; font-weight:600; }
-    .domain-item .buy-btn { padding:6px 20px; border-radius:30px; background:rgba(184,134,11,0.15); border:1px solid #b8860b; color:#b8860b; cursor:pointer; transition:0.3s; }
-    .domain-item .buy-btn:hover { background:#b8860b; color:#fff; }
+    /* Header */
+    .header {
+      background: rgba(10, 10, 26, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(184, 134, 11, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i { color: #b8860b; }
+    .logo span { font-weight: 300; opacity: 0.3; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #b8860b; }
+    .header-cta {
+      padding: 8px 24px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff !important;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .header-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25); }
+
+    /* Hero */
+    .hero { padding: 40px 0 20px; text-align: center; }
+    .hero .icon { font-size: 3rem; color: #b8860b; opacity: 0.15; margin-bottom: 8px; }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.15); margin-top: 4px; }
+
+    /* Search */
+    .domain-search {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      padding: 32px;
+      margin: 20px 0 30px;
+      text-align: center;
+    }
+    .domain-search .search-box {
+      display: flex;
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .domain-search .search-box input {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.3s;
+      min-width: 200px;
+    }
+    .domain-search .search-box input:focus {
+      border-color: #b8860b;
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.06);
+    }
+    .domain-search .search-box input::placeholder { color: rgba(255, 255, 255, 0.1); }
+    .domain-search .search-box button {
+      padding: 14px 32px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .domain-search .search-box button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25);
+    }
+    .domain-search .search-box button:disabled {
+      opacity: 0.3;
+      pointer-events: none;
+      transform: none;
+    }
+    .domain-search .price-note {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.06);
+      margin-top: 12px;
+    }
+    .domain-search .price-note strong { color: #b8860b; }
+
+    /* Results */
+    .domain-results {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 20px 0 30px;
+    }
+    .domain-result {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      transition: 0.3s;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn { 0% { opacity: 0; transform: translateX(-10px); } 100% { opacity: 1; transform: translateX(0); } }
+    .domain-result:hover { border-color: rgba(255, 255, 255, 0.04); }
+    .domain-result .name {
+      font-weight: 500;
+      font-size: 1rem;
+      color: #f0ece6;
+    }
+    .domain-result .name .tld { color: #b8860b; }
+    .domain-result .status {
+      font-size: 0.7rem;
+      padding: 2px 12px;
+      border-radius: 20px;
+    }
+    .domain-result .status.available { background: rgba(34, 197, 94, 0.08); color: #22c55e; }
+    .domain-result .status.taken { background: rgba(239, 68, 68, 0.08); color: #ef4444; }
+    .domain-result .status.pending { background: rgba(251, 191, 36, 0.08); color: #fbbf24; }
+    .domain-result .price {
+      font-weight: 600;
+      color: #b8860b;
+      font-size: 0.95rem;
+    }
+    .domain-result .actions {
+      display: flex;
+      gap: 8px;
+    }
+    .domain-result .actions button {
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      border: none;
+    }
+    .domain-result .actions .buy-btn {
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff;
+    }
+    .domain-result .actions .buy-btn:hover { transform: scale(1.02); }
+    .domain-result .actions .buy-btn:disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .domain-result .actions .buy-btn.purchased {
+      background: rgba(34, 197, 94, 0.08);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.08);
+    }
+    .domain-result .actions .details-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .domain-result .actions .details-btn:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+
+    /* Owned Domains */
+    .owned-domains {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin: 20px 0 30px;
+    }
+    .owned-domains h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      padding-bottom: 8px;
+    }
+    .owned-domains .domain-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+    }
+    .owned-domains .domain-item:last-child { border-bottom: none; }
+    .owned-domains .domain-item .name {
+      font-weight: 500;
+      color: #f0ece6;
+    }
+    .owned-domains .domain-item .expiry {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .owned-domains .domain-item .actions button {
+      padding: 4px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.65rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .owned-domains .domain-item .actions button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .owned-domains .domain-item .actions button.primary {
+      background: rgba(184, 134, 11, 0.04);
+      border-color: rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+    }
+    .owned-domains .domain-item .actions button.primary:hover {
+      background: rgba(184, 134, 11, 0.08);
+    }
+    .owned-domains .domain-item .status-badge {
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 0.55rem;
+      font-weight: 600;
+    }
+    .owned-domains .domain-item .status-badge.active { background: rgba(34, 197, 94, 0.08); color: #22c55e; }
+    .owned-domains .domain-item .status-badge.expiring { background: rgba(251, 191, 36, 0.08); color: #fbbf24; }
+    .owned-domains .domain-item .status-badge.expired { background: rgba(239, 68, 68, 0.08); color: #ef4444; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+    .toast.warning { border-color: rgba(251,191,36,0.2); }
+    .toast.warning i { color: #fbbf24; }
+
+    /* Footer */
+    .footer {
+      padding: 30px 0 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.06);
+      font-size: 0.8rem;
+    }
+    .footer a { color: rgba(255, 255, 255, 0.1); text-decoration: none; }
+    .footer a:hover { color: #b8860b; }
+
+    @media (max-width: 768px) {
+      .header-inner { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: center; }
+      .hero h1 { font-size: 2rem; }
+      .domain-search .search-box { flex-direction: column; }
+      .domain-result { flex-wrap: wrap; gap: 8px; }
+      .owned-domains .domain-item { flex-wrap: wrap; gap: 6px; }
+    }
+    @media (max-width: 480px) {
+      .domain-result { flex-direction: column; align-items: stretch; }
+      .domain-result .actions { justify-content: flex-start; }
+    }
   </style>
 </head>
 <body>
-  <header class="header"><!-- same header --></header>
 
-  <div class="container">
-    <div class="domain-search">
-      <h1>Find Your Perfect Domain</h1>
-      <p>Start with ₹3000/year — includes SSL & auto‑renewal.</p>
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><i class="fas fa-om"></i> Swayam<span>AI</span></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="builder/step-1.html">Builder</a>
+        <a href="themes.html">Themes</a>
+        <a href="dashboard/index.html">Dashboard</a>
+        <a href="pages/about.html">About</a>
+        <a href="pages/contact.html">Contact</a>
+        <a href="https://kalki-intelligence.in" target="_blank" class="header-cta">Kalki AI</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="icon"><i class="fas fa-globe-asia"></i></div>
+      <h1>Domain Management</h1>
+      <p>Find, buy, and manage your custom domain.</p>
+    </div>
+  </section>
+
+  <!-- Search -->
+  <section class="domain-search">
+    <div class="container">
       <div class="search-box">
-        <input type="text" placeholder="yourbusiness.com" id="domainInput" value="myvedicbrand.com" />
-        <button id="searchDomain"><i class="fas fa-search"></i> Check</button>
+        <input type="text" id="domainInput" placeholder="Search for your perfect domain (e.g., mybrand.com)" value="mybrand.com" />
+        <button id="searchBtn"><i class="fas fa-search"></i> Check Availability</button>
       </div>
-      <div class="domain-results" id="domainResults">
-        <div class="domain-item"><span class="name">myvedicbrand.com</span><span class="price">₹3000/year</span><button class="buy-btn">Buy Now</button></div>
-        <div class="domain-item"><span class="name">myvedicbrand.in</span><span class="price">₹3000/year</span><button class="buy-btn">Buy Now</button></div>
-        <div class="domain-item"><span class="name">myvedicbrand.co</span><span class="price">₹3000/year</span><button class="buy-btn">Buy Now</button></div>
+      <div class="price-note">
+        Domains from <strong>₹3,000/year</strong> — includes SSL, DNS management, and auto-renewal.
       </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <div class="container">
+    <div class="domain-results" id="domainResults">
+      <!-- Results injected by JS -->
     </div>
   </div>
 
+  <!-- Owned Domains -->
+  <section class="owned-domains">
+    <div class="container">
+      <h3><i class="fas fa-check-circle" style="color:#b8860b; margin-right:6px;"></i> Your Domains</h3>
+      <div id="ownedDomainsList">
+        <div class="domain-item">
+          <span class="name">mybrand.com</span>
+          <span class="status-badge active">Active</span>
+          <span class="expiry">Expires: July 1, 2027</span>
+          <div class="actions">
+            <button class="primary" onclick="handleManageDomain('mybrand.com')">Manage</button>
+            <button onclick="handleRenewDomain('mybrand.com')">Renew</button>
+            <button onclick="handleRemoveDomain('mybrand.com')" style="color:rgba(239,68,68,0.2);">Remove</button>
+          </div>
+        </div>
+        <div class="domain-item">
+          <span class="name">veda-wellness.com</span>
+          <span class="status-badge expiring">Expiring Soon</span>
+          <span class="expiry">Expires: July 15, 2026</span>
+          <div class="actions">
+            <button class="primary" onclick="handleManageDomain('veda-wellness.com')">Manage</button>
+            <button onclick="handleRenewDomain('veda-wellness.com')" style="color:#fbbf24;">Renew Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Swayam — An AI Website Builder by <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+    </div>
+  </footer>
+
   <script>
-    document.getElementById('searchDomain').addEventListener('click', function() {
-      const val = document.getElementById('domainInput').value.trim();
-      if (!val) return;
-      // Simulate domain search
-      const results = document.getElementById('domainResults');
-      results.innerHTML = `
-        <div class="domain-item"><span class="name">${val}</span><span class="price">₹3000/year</span><button class="buy-btn">Buy Now</button></div>
-        <div class="domain-item"><span class="name">${val.replace('.com','.in')}</span><span class="price">₹3000/year</span><button class="buy-btn">Buy Now</button></div>
-        <div class="domain-item"><span class="name">${val.replace('.com','.co')}</span><span class="price">₹3000/year</span><button class="buy-btn">Buy Now</button></div>
-      `;
-    });
+    (function() {
+      'use strict';
+
+      // ----- DOM REFS -----
+      const domainInput = document.getElementById('domainInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const domainResults = document.getElementById('domainResults');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+
+      // ----- TOAST -----
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        toastMessage.textContent = typeof message === 'string' ? message : String(message);
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        if (type === 'warning') toast.classList.add('warning');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() {
+          toast.classList.remove('show');
+        }, 3500);
+      }
+
+      // ----- DOMAIN SEARCH -----
+      function searchDomain() {
+        const query = domainInput.value.trim();
+        if (!query) {
+          showToast('Please enter a domain name.', 'warning');
+          return;
+        }
+        if (!query.includes('.')) {
+          showToast('Please include a TLD like .com, .in, or .co', 'warning');
+          return;
+        }
+
+        searchBtn.disabled = true;
+        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+
+        // Simulate API call with realistic results
+        setTimeout(function() {
+          const base = query.split('.')[0] || 'mybrand';
+          const tlds = [
+            { tld: '.com', price: '₹3,000', available: Math.random() > 0.3 },
+            { tld: '.in', price: '₹3,000', available: Math.random() > 0.2 },
+            { tld: '.co', price: '₹3,000', available: Math.random() > 0.3 },
+            { tld: '.org', price: '₹3,000', available: Math.random() > 0.5 },
+            { tld: '.io', price: '₹3,500', available: Math.random() > 0.6 },
+            { tld: '.ai', price: '₹4,500', available: Math.random() > 0.7 },
+            { tld: '.tech', price: '₹3,200', available: Math.random() > 0.4 },
+            { tld: '.store', price: '₹3,500', available: Math.random() > 0.5 }
+          ];
+
+          let html = '';
+          tlds.forEach(function(item) {
+            const full = base + item.tld;
+            const statusClass = item.available ? 'available' : 'taken';
+            const statusLabel = item.available ? 'Available' : 'Taken';
+            const btnHtml = item.available ?
+              `<button class="buy-btn" data-domain="${full}" data-price="${item.price}"><i class="fas fa-shopping-cart"></i> Buy Now</button>` :
+              `<button class="buy-btn" disabled>Unavailable</button>`;
+            html += `
+              <div class="domain-result">
+                <span class="name">${full} <span class="tld">${item.tld}</span></span>
+                <span class="status ${statusClass}">${statusLabel}</span>
+                <span class="price">${item.price}/year</span>
+                <div class="actions">
+                  ${btnHtml}
+                  <button class="details-btn" onclick="showDomainDetails('${full}')"><i class="fas fa-info-circle"></i></button>
+                </div>
+              </div>
+            `;
+          });
+          domainResults.innerHTML = html;
+
+          // Attach buy events
+          document.querySelectorAll('.domain-result .buy-btn[data-domain]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              const domain = this.dataset.domain;
+              const price = this.dataset.price || '₹3,000';
+              if (confirm(`Purchase ${domain} for ${price}/year?`)) {
+                this.classList.add('purchased');
+                this.textContent = '✓ Purchased';
+                this.disabled = true;
+                showToast(`🎉 ${domain} purchased successfully!`, 'success');
+                // Add to owned domains
+                addOwnedDomain(domain);
+              }
+            });
+          });
+
+          searchBtn.disabled = false;
+          searchBtn.innerHTML = '<i class="fas fa-search"></i> Check Availability';
+          showToast('Domain search complete.', 'success');
+
+        }, 1200 + Math.random() * 800);
+      }
+
+      // ----- ADD OWNED DOMAIN -----
+      function addOwnedDomain(domain) {
+        const list = document.getElementById('ownedDomainsList');
+        const item = document.createElement('div');
+        item.className = 'domain-item';
+        const now = new Date();
+        const expiry = new Date(now.setFullYear(now.getFullYear() + 1));
+        const expiryStr = expiry.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+        item.innerHTML = `
+          <span class="name">${domain}</span>
+          <span class="status-badge active">Active</span>
+          <span class="expiry">Expires: ${expiryStr}</span>
+          <div class="actions">
+            <button class="primary" onclick="handleManageDomain('${domain}')">Manage</button>
+            <button onclick="handleRenewDomain('${domain}')">Renew</button>
+            <button onclick="handleRemoveDomain('${domain}')" style="color:rgba(239,68,68,0.2);">Remove</button>
+          </div>
+        `;
+        list.insertBefore(item, list.firstChild);
+      }
+
+      // ----- DOMAIN ACTIONS -----
+      window.handleManageDomain = function(domain) {
+        showToast(`🔧 Managing ${domain}... (DNS settings would open)`, 'success');
+      };
+
+      window.handleRenewDomain = function(domain) {
+        if (confirm(`Renew ${domain} for another year at ₹3,000?`)) {
+          showToast(`✅ ${domain} renewed successfully!`, 'success');
+        }
+      };
+
+      window.handleRemoveDomain = function(domain) {
+        if (confirm(`Remove ${domain} from your account?`)) {
+          const items = document.querySelectorAll('#ownedDomainsList .domain-item');
+          items.forEach(function(item) {
+            if (item.querySelector('.name')?.textContent === domain) {
+              item.remove();
+              showToast(`🗑️ ${domain} removed.`, 'warning');
+            }
+          });
+        }
+      };
+
+      window.showDomainDetails = function(domain) {
+        showToast(`📋 ${domain} — Available for purchase. Includes SSL, DNS, and auto-renewal.`, 'success');
+      };
+
+      // ----- EVENT BINDING -----
+      searchBtn.addEventListener('click', searchDomain);
+      domainInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          searchDomain();
+        }
+      });
+
+      // ----- KEYBOARD SHORTCUTS -----
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { toast.classList.remove('show'); }
+        if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+          e.preventDefault();
+          domainInput.focus();
+        }
+      });
+
+      // ----- INIT -----
+      console.log('Domain Management page initialized.');
+      showToast('🌐 Search for your perfect domain above.', 'success');
+
+      // ----- ERROR BOUNDARY -----
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
+      });
+
+    })();
   </script>
+
 </body>
 </html>
