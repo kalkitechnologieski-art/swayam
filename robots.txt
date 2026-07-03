@@ -1,11 +1,36 @@
+# ============================================================
+# ROBOTS.TXT — Swayam AI Website Builder
+# Domain: swayam.vercel.app
+# Optimized for Googlebot, Bingbot, and General Bots
+# ============================================================
+
+# --- GLOBAL RULES ---
 User-agent: *
 Allow: /
-Disallow: /api/
+
+# Block admin or duplicate content fragments
+Disallow: /404.html
+Disallow: /*.json$
 Disallow: /_next/
+Disallow: /api/
+
+# --- CRAWL DELAY ---
 Crawl-delay: 1.0
 
+# --- GOOGLEBOT SPECIFIC ---
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0.5
 
+# --- BINGBOT SPECIFIC ---
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1.0
+
+# --- SITEMAP LOCATION ---
 Sitemap: https://swayam.vercel.app/sitemap.xml
+
+# ============================================================
+# CRAWL BUDGET OPTIMIZATION
+# All locality pages are explicitly allowed for maximum indexing.
+# ============================================================
