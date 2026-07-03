@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.02) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .header {
+      background: rgba(10, 10, 26, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(184, 134, 11, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i { color: #b8860b; }
+    .logo span { font-weight: 300; opacity: 0.3; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #b8860b; }
+    .header-cta {
+      padding: 8px 24px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff !important;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .header-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25); }
+
+    /* Hero */
+    .hero { padding: 60px 0 40px; text-align: center; }
+    .hero .om { font-size: 4rem; color: #b8860b; opacity: 0.15; font-family: serif; }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p { font-size: 1.1rem; color: rgba(255, 255, 255, 0.3); max-width: 640px; margin: 12px auto 0; }
+
+    /* Content */
+    .content { padding: 40px 0 60px; }
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .content-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      padding: 30px;
+      transition: 0.3s;
+    }
+    .content-card:hover {
+      border-color: rgba(255, 255, 255, 0.04);
+      transform: translateY(-4px);
+    }
+    .content-card .icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .content-card h3 { font-size: 1.3rem; font-weight: 700; color: #f0ece6; margin-bottom: 8px; }
+    .content-card p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.4); line-height: 1.7; }
+    .content-card .highlight { color: #b8860b; font-weight: 600; }
+
+    /* Stats */
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 40px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      margin: 20px 0;
+    }
+    .stat-item { text-align: center; }
+    .stat-item .number {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #b8860b;
+    }
+    .stat-item .label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.15);
+      margin-top: 4px;
+    }
+
+    /* Team */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .team-card {
+      text-align: center;
+      padding: 24px 16px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      transition: 0.3s;
+    }
+    .team-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.04);
+    }
+    .team-card .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.02));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      color: rgba(184, 134, 11, 0.2);
+    }
+    .team-card h4 { font-size: 1rem; font-weight: 600; color: #f0ece6; }
+    .team-card .role { font-size: 0.75rem; color: rgba(255, 255, 255, 0.15); }
+
+    /* Footer */
+    .footer {
+      padding: 30px 0 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.06);
+      font-size: 0.8rem;
+    }
+    .footer a { color: rgba(255, 255, 255, 0.1); text-decoration: none; }
+    .footer a:hover { color: #b8860b; }
+
+    @media (max-width: 768px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .stats-section { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 2.2rem; }
+      .header-inner { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .stats-section { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo"><i class="fas fa-om"></i> Swayam<span>AI</span></a>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../builder/step-1.html">Builder</a>
+        <a href="../themes.html">Themes</a>
+        <a href="../dashboard/index.html">Dashboard</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://kalki-intelligence.in" target="_blank" class="header-cta">Kalki AI</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="om">ॐ</div>
+      <h1>About Swayam</h1>
+      <p>Empowering everyone to build a beautiful, AI‑optimized website — for free.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="content">
+    <div class="container">
+      <div class="content-grid">
+        <div class="content-card">
+          <div class="icon">🕉</div>
+          <h3>Our Philosophy</h3>
+          <p>
+            <span class="highlight">Swayam</span> (Sanskrit: स्वयं — "Self") is built on the belief that
+            <span class="highlight">everyone deserves a powerful online presence</span>.
+            We combine the ancient wisdom of Vedic philosophy with cutting‑edge AI to
+            make web development simple, accessible, and truly free.
+          </p>
+        </div>
+        <div class="content-card">
+          <div class="icon">🤖</div>
+          <h3>Powered by Kalki Intelligence</h3>
+          <p>
+            Swayam is backed by <span class="highlight">Kalki Intelligence</span> —
+            India's leading SEO, GEO, and AEO agency. Our AI models are trained on
+            proven growth strategies to ensure every website we generate is
+            <span class="highlight">search‑engine ready</span> from day one.
+          </p>
+        </div>
+        <div class="content-card">
+          <div class="icon">🌐</div>
+          <h3>True Ownership</h3>
+          <p>
+            We don't lock you in. <span class="highlight">You own your code</span>.
+            Download your full HTML/CSS/JS anytime. Host anywhere. No platform lock‑in.
+            No hidden fees. No surprises.
+          </p>
+        </div>
+        <div class="content-card">
+          <div class="icon">🚀</div>
+          <h3>Free &amp; Forever</h3>
+          <p>
+            The core Swayam platform — AI generation, 4 premium themes, Vercel hosting,
+            and a free subdomain — is <span class="highlight">completely free</span>.
+            We only ask you to pay when you're ready to scale with Pro features.
+          </p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-section">
+        <div class="stat-item"><div class="number">5k+</div><div class="label">Websites Built</div></div>
+        <div class="stat-item"><div class="number">100+</div><div class="label">Themes</div></div>
+        <div class="stat-item"><div class="number">98%</div><div class="label">Satisfaction</div></div>
+        <div class="stat-item"><div class="number">24/7</div><div class="label">Support</div></div>
+      </div>
+
+      <!-- Team -->
+      <h2 style="font-size:1.6rem; font-weight:700; margin-top:40px; color:#f0ece6;">
+        <i class="fas fa-users" style="color:#b8860b; margin-right:10px;"></i> Our Team
+      </h2>
+      <p style="color:rgba(255,255,255,0.15); margin-bottom:20px;">The minds behind Swayam and Kalki Intelligence.</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar">🕉</div>
+          <h4>Arjun Kumar</h4>
+          <div class="role">Founder &amp; CEO</div>
+        </div>
+        <div class="team-card">
+          <div class="avatar">💻</div>
+          <h4>Priya Sharma</h4>
+          <div class="role">Lead Developer</div>
+        </div>
+        <div class="team-card">
+          <div class="avatar">🎨</div>
+          <h4>Vikram Singh</h4>
+          <div class="role">Head of Design</div>
+        </div>
+        <div class="team-card">
+          <div class="avatar">📊</div>
+          <h4>Ananya Reddy</h4>
+          <div class="role">SEO &amp; Growth</div>
+        </div>
+        <div class="team-card">
+          <div class="avatar">🤖</div>
+          <h4>Rahul Jain</h4>
+          <div class="role">AI Engineer</div>
+        </div>
+        <div class="team-card">
+          <div class="avatar">💬</div>
+          <h4>Meera Patel</h4>
+          <div class="role">Support Lead</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Swayam — An AI Website Builder by <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
