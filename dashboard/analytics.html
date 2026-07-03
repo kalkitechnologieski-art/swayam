@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.01) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.01) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.2); border-radius: 10px; }
+
+    /* ============================================================
+       SIDEBAR (same as previous pages)
+       ============================================================ */
+    .sidebar {
+      width: 260px;
+      background: rgba(255, 255, 255, 0.01);
+      border-right: 1px solid rgba(255, 255, 255, 0.02);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
+    .sidebar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+      margin-bottom: 30px;
+      padding: 0 8px;
+    }
+    .sidebar .logo i { color: #b8860b; }
+    .sidebar .logo span { font-weight: 300; opacity: 0.3; }
+    .sidebar .nav-section { margin-bottom: 8px; }
+    .sidebar .nav-section .label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.06);
+      padding: 8px 12px 4px;
+    }
+    .sidebar .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+    }
+    .sidebar .nav-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .sidebar .nav-item.active {
+      background: rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+    }
+    .sidebar .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      height: 60%;
+      width: 3px;
+      background: #b8860b;
+      border-radius: 0 4px 4px 0;
+    }
+    .sidebar .nav-item .icon { width: 20px; text-align: center; font-size: 1rem; }
+    .sidebar .nav-item .badge {
+      margin-left: auto;
+      padding: 0 8px;
+      border-radius: 20px;
+      background: rgba(184, 134, 11, 0.08);
+      color: #b8860b;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+    .sidebar .nav-item .badge.success { background: rgba(34, 197, 94, 0.08); color: #22c55e; }
+    .sidebar .user-section {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .sidebar .user-section .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+    }
+    .sidebar .user-section .user-info .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .sidebar .user-section .user-info .name { font-size: 0.85rem; font-weight: 600; color: #f0ece6; }
+    .sidebar .user-section .user-info .email { font-size: 0.65rem; color: rgba(255, 255, 255, 0.15); }
+
+    /* ============================================================
+       MAIN CONTENT
+       ============================================================ */
+    .main-content {
+      flex: 1;
+      padding: 24px 32px 32px;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    /* ----- Top Bar ----- */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topbar .greeting h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .topbar .greeting p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .topbar .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .topbar .actions .date-picker {
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      font-family: inherit;
+      font-size: 0.8rem;
+      outline: none;
+      cursor: pointer;
+    }
+    .topbar .actions .date-picker:focus {
+      border-color: #b8860b;
+    }
+    .topbar .actions .btn-export {
+      padding: 8px 20px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .topbar .actions .btn-export:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+
+    /* ----- Stats Grid ----- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 18px 20px;
+      transition: 0.3s;
+    }
+    .stat-card:hover {
+      border-color: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.01);
+    }
+    .stat-card .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.15);
+    }
+    .stat-card .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #f0ece6;
+      margin: 4px 0 2px;
+    }
+    .stat-card .change {
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .stat-card .change.up { color: #22c55e; }
+    .stat-card .change.down { color: #ef4444; }
+    .stat-card .change.neutral { color: rgba(255, 255, 255, 0.15); }
+
+    /* ----- Chart Section ----- */
+    .chart-container {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .chart-container .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .chart-container .chart-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .chart-container .chart-header .chart-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .chart-container .chart-header .chart-actions button {
+      padding: 4px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.65rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .chart-container .chart-header .chart-actions button:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+    .chart-container .chart-header .chart-actions button.active {
+      background: rgba(184, 134, 11, 0.04);
+      border-color: #b8860b;
+      color: #b8860b;
+    }
+
+    .chart-container .chart-body {
+      position: relative;
+      height: 200px;
+    }
+    .chart-container .chart-body canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* ----- Two‑column layout for SEO & Sources ----- */
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .analytics-grid .card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .analytics-grid .card h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 12px;
+    }
+    .analytics-grid .card .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+      font-size: 0.85rem;
+    }
+    .analytics-grid .card .item:last-child { border-bottom: none; }
+    .analytics-grid .card .item .label { color: rgba(255, 255, 255, 0.3); }
+    .analytics-grid .card .item .value { color: #f0ece6; font-weight: 500; }
+    .analytics-grid .card .item .value .bar {
+      display: inline-block;
+      height: 4px;
+      border-radius: 4px;
+      background: #b8860b;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* ----- Top Pages ----- */
+    .top-pages {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .top-pages h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 12px;
+    }
+    .top-pages table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .top-pages th {
+      text-align: left;
+      padding: 8px 0;
+      color: rgba(255, 255, 255, 0.1);
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .top-pages td {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .top-pages td:last-child { text-align: right; color: #f0ece6; }
+    .top-pages tr:hover td { color: #f0ece6; }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+    .toast.warning { border-color: rgba(251,191,36,0.2); }
+    .toast.warning i { color: #fbbf24; }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 992px) {
+      .sidebar { width: 80px; padding: 16px 8px; }
+      .sidebar .logo { font-size: 1.2rem; justify-content: center; }
+      .sidebar .logo span { display: none; }
+      .sidebar .nav-item { padding: 10px 12px; justify-content: center; }
+      .sidebar .nav-item .label-text { display: none; }
+      .sidebar .nav-item .badge { display: none; }
+      .sidebar .nav-section .label { display: none; }
+      .sidebar .user-section .user-info .name,
+      .sidebar .user-section .user-info .email { display: none; }
+      .main-content { padding: 16px; }
+      .analytics-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      body { overflow: auto; flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 26, 0.92);
+        backdrop-filter: blur(12px);
+        gap: 4px;
+      }
+      .sidebar .logo { margin-bottom: 0; font-size: 1.1rem; }
+      .sidebar .logo span { display: inline; }
+      .sidebar .nav-section { display: flex; gap: 4px; margin-bottom: 0; }
+      .sidebar .nav-section .label { display: none; }
+      .sidebar .nav-item { padding: 6px 10px; font-size: 0.7rem; }
+      .sidebar .nav-item .label-text { display: inline; }
+      .sidebar .nav-item .badge { display: inline; }
+      .sidebar .user-section { display: none; }
+      .main-content { height: auto; padding: 16px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .topbar .greeting h1 { font-size: 1.2rem; }
+      .topbar .actions { flex-wrap: wrap; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .chart-container .chart-body { height: 150px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       TOAST
+       ============================================================ -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- ============================================================
+       SIDEBAR
+       ============================================================ -->
+  <nav class="sidebar">
+    <a href="../index.html" class="logo">
+      <i class="fas fa-om"></i>
+      Swayam<span>AI</span>
+    </a>
+    <div class="nav-section">
+      <div class="label">Main</div>
+      <a href="index.html" class="nav-item">
+        <span class="icon"><i class="fas fa-th-large"></i></span>
+        <span class="label-text">Dashboard</span>
+      </a>
+      <a href="sites.html" class="nav-item">
+        <span class="icon"><i class="fas fa-globe"></i></span>
+        <span class="label-text">Sites</span>
+        <span class="badge success">4</span>
+      </a>
+      <a href="analytics.html" class="nav-item active">
+        <span class="icon"><i class="fas fa-chart-line"></i></span>
+        <span class="label-text">Analytics</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="label">Management</div>
+      <a href="../builder/step-1.html" class="nav-item">
+        <span class="icon"><i class="fas fa-plus-circle"></i></span>
+        <span class="label-text">New Website</span>
+      </a>
+      <a href="domain.html" class="nav-item">
+        <span class="icon"><i class="fas fa-globe-asia"></i></span>
+        <span class="label-text">Domains</span>
+        <span class="badge">1</span>
+      </a>
+      <a href="billing.html" class="nav-item">
+        <span class="icon"><i class="fas fa-credit-card"></i></span>
+        <span class="label-text">Billing</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="label">Support</div>
+      <a href="support.html" class="nav-item">
+        <span class="icon"><i class="fas fa-headset"></i></span>
+        <span class="label-text">Support</span>
+      </a>
+      <a href="../pages/about.html" class="nav-item">
+        <span class="icon"><i class="fas fa-info-circle"></i></span>
+        <span class="label-text">About</span>
+      </a>
+    </div>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="avatar">AK</div>
+        <div>
+          <div class="name">Arjun Kumar</div>
+          <div class="email">arjun@example.com</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="greeting">
+        <h1><i class="fas fa-chart-line" style="color:#b8860b; margin-right:10px;"></i> Analytics</h1>
+        <p>Track your website performance in real time.</p>
+      </div>
+      <div class="actions">
+        <input type="date" class="date-picker" id="datePicker" value="2026-07-01" />
+        <button class="btn-export" id="exportBtn"><i class="fas fa-download"></i> Export</button>
+        <button class="btn-export" id="refreshBtn"><i class="fas fa-sync"></i> Refresh</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="label">Total Visits</div>
+        <div class="value" id="totalVisits">12,847</div>
+        <div class="change up"><i class="fas fa-arrow-up"></i> +12.5%</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Unique Visitors</div>
+        <div class="value" id="uniqueVisitors">8,234</div>
+        <div class="change up"><i class="fas fa-arrow-up"></i> +8.3%</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Bounce Rate</div>
+        <div class="value" id="bounceRate">34.2%</div>
+        <div class="change down"><i class="fas fa-arrow-down"></i> -2.1%</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Avg. Session</div>
+        <div class="value" id="avgSession">2m 47s</div>
+        <div class="change up"><i class="fas fa-arrow-up"></i> +0.4%</div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-container">
+      <div class="chart-header">
+        <h3><i class="fas fa-chart-area" style="color:#b8860b; margin-right:6px;"></i> Traffic Overview</h3>
+        <div class="chart-actions">
+          <button class="active" data-period="week">Week</button>
+          <button data-period="month">Month</button>
+          <button data-period="year">Year</button>
+        </div>
+      </div>
+      <div class="chart-body">
+        <canvas id="trafficChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Two‑column: SEO Score & Traffic Sources -->
+    <div class="analytics-grid">
+      <div class="card">
+        <h3><i class="fas fa-search" style="color:#b8860b; margin-right:6px;"></i> SEO Performance</h3>
+        <div class="item"><span class="label">SEO Score</span><span class="value">89/100</span></div>
+        <div class="item"><span class="label">Keywords Ranking</span><span class="value">47</span></div>
+        <div class="item"><span class="label">Backlinks</span><span class="value">234</span></div>
+        <div class="item"><span class="label">Domain Authority</span><span class="value">54</span></div>
+        <div class="item"><span class="label">Page Speed (mobile)</span><span class="value">72</span></div>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-share-alt" style="color:#b8860b; margin-right:6px;"></i> Traffic Sources</h3>
+        <div class="item"><span class="label">Organic Search</span><span class="value">45% <span class="bar" style="width:45px;"></span></span></div>
+        <div class="item"><span class="label">Direct</span><span class="value">28% <span class="bar" style="width:28px;"></span></span></div>
+        <div class="item"><span class="label">Social</span><span class="value">15% <span class="bar" style="width:15px;"></span></span></div>
+        <div class="item"><span class="label">Referral</span><span class="value">8% <span class="bar" style="width:8px;"></span></span></div>
+        <div class="item"><span class="label">Email</span><span class="value">4% <span class="bar" style="width:4px;"></span></span></div>
+      </div>
+    </div>
+
+    <!-- Top Pages -->
+    <div class="top-pages">
+      <h3><i class="fas fa-file-alt" style="color:#b8860b; margin-right:6px;"></i> Top Pages</h3>
+      <table>
+        <thead>
+          <tr><th>Page</th><th>Visits</th><th>Bounce Rate</th></tr>
+        </thead>
+        <tbody id="topPagesBody">
+          <tr><td>/</td><td>3,245</td><td>22%</td></tr>
+          <tr><td>/about</td><td>1,874</td><td>18%</td></tr>
+          <tr><td>/services</td><td>1,432</td><td>35%</td></tr>
+          <tr><td>/blog/ai-trends</td><td>1,012</td><td>42%</td></tr>
+          <tr><td>/contact</td><td>876</td><td>15%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- DOM REFS -----
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const exportBtn = document.getElementById('exportBtn');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const datePicker = document.getElementById('datePicker');
+      const chartActions = document.querySelectorAll('.chart-actions button');
+      const canvas = document.getElementById('trafficChart');
+
+      // ----- TOAST -----
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        toastMessage.textContent = typeof message === 'string' ? message : String(message);
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        if (type === 'warning') toast.classList.add('warning');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() { toast.classList.remove('show'); }, 3500);
+      }
+
+      // ----- CHART -----
+      function drawChart(period) {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const width = canvas.parentElement.clientWidth;
+        const height = canvas.parentElement.clientHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        // Data based on period
+        let labels, data;
+        if (period === 'week') {
+          labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+          data = [120, 190, 150, 220, 280, 200, 170];
+        } else if (period === 'month') {
+          labels = ['W1', 'W2', 'W3', 'W4'];
+          data = [650, 820, 740, 980];
+        } else { // year
+          labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          data = [3200, 2800, 3400, 4100, 3800, 4200, 4700, 5100, 4900, 5300, 5800, 6200];
+        }
+
+        const padding = 40;
+        const chartWidth = width - padding * 2;
+        const chartHeight = height - padding * 2;
+        const maxVal = Math.max(...data) * 1.2;
+
+        ctx.clearRect(0, 0, width, height);
+
+        // Grid lines
+        ctx.strokeStyle = 'rgba(255,255,255,0.02)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 5; i++) {
+          const y = padding + (chartHeight / 5) * i;
+          ctx.beginPath();
+          ctx.moveTo(padding, y);
+          ctx.lineTo(width - padding, y);
+          ctx.stroke();
+        }
+
+        // Draw bars
+        const barWidth = Math.min(chartWidth / data.length * 0.6, 40);
+        const gap = (chartWidth - barWidth * data.length) / (data.length + 1);
+        data.forEach(function(val, i) {
+          const x = padding + gap + i * (barWidth + gap);
+          const barHeight = (val / maxVal) * chartHeight;
+          const y = height - padding - barHeight;
+          // Gradient bar
+          const gradient = ctx.createLinearGradient(0, y, 0, height - padding);
+          gradient.addColorStop(0, '#b8860b');
+          gradient.addColorStop(1, 'rgba(184,134,11,0.1)');
+          ctx.fillStyle = gradient;
+          ctx.shadowColor = 'rgba(184,134,11,0.2)';
+          ctx.shadowBlur = 10;
+          ctx.fillRect(x, y, barWidth, barHeight);
+          ctx.shadowBlur = 0;
+          // Label
+          ctx.fillStyle = 'rgba(255,255,255,0.1)';
+          ctx.font = '10px Inter';
+          ctx.textAlign = 'center';
+          ctx.fillText(labels[i], x + barWidth / 2, height - padding + 16);
+          // Value on top
+          ctx.fillStyle = 'rgba(255,255,255,0.2)';
+          ctx.fillText(val, x + barWidth / 2, y - 6);
+        });
+      }
+
+      // ----- CHART PERIOD SWITCH -----
+      let currentPeriod = 'week';
+
+      chartActions.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          chartActions.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          currentPeriod = this.dataset.period;
+          drawChart(currentPeriod);
+          showToast('Chart updated: ' + currentPeriod, 'success');
+        });
+      });
+
+      // ----- REFRESH -----
+      refreshBtn.addEventListener('click', function() {
+        drawChart(currentPeriod);
+        showToast('Analytics refreshed.', 'success');
+        // Randomize stats for demo
+        document.getElementById('totalVisits').textContent = (Math.floor(Math.random() * 5000) + 10000).toLocaleString();
+        document.getElementById('uniqueVisitors').textContent = (Math.floor(Math.random() * 3000) + 6000).toLocaleString();
+        document.getElementById('bounceRate').textContent = (Math.random() * 20 + 25).toFixed(1) + '%';
+        document.getElementById('avgSession').textContent = Math.floor(Math.random() * 2 + 1) + 'm ' + Math.floor(Math.random() * 59) + 's';
+      });
+
+      // ----- EXPORT -----
+      exportBtn.addEventListener('click', function() {
+        // Create CSV
+        const rows = [
+          ['Page', 'Visits', 'Bounce Rate'],
+          ['/', '3,245', '22%'],
+          ['/about', '1,874', '18%'],
+          ['/services', '1,432', '35%'],
+          ['/blog/ai-trends', '1,012', '42%'],
+          ['/contact', '876', '15%']
+        ];
+        let csv = rows.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'analytics_export.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Analytics exported as CSV.', 'success');
+      });
+
+      // ----- DATE PICKER -----
+      datePicker.addEventListener('change', function() {
+        showToast('Date range updated to ' + this.value, 'success');
+      });
+
+      // ----- KEYBOARD SHORTCUTS -----
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          toast.classList.remove('show');
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+          e.preventDefault();
+          refreshBtn.click();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+          e.preventDefault();
+          exportBtn.click();
+        }
+      });
+
+      // ----- RESIZE HANDLER -----
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          drawChart(currentPeriod);
+        }, 200);
+      });
+
+      // ----- INIT -----
+      function init() {
+        try {
+          drawChart('week');
+          console.log('Analytics dashboard initialized.');
+          // Show welcome toast
+          setTimeout(function() {
+            showToast('📊 Analytics loaded. Press Ctrl+R to refresh.', 'success');
+          }, 400);
+        } catch (err) {
+          console.error('Init error:', err);
+          showToast('Failed to initialize analytics.', 'error');
+        }
+      }
+
+      // ----- ERROR BOUNDARY -----
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
+      });
+
+      // ----- START -----
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
