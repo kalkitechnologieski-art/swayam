@@ -1,0 +1,308 @@
+<!-- ================================================================
+     NAVIGATION COMPONENT — Swayam AI Website Builder
+     Reusable navigation with mega menu, breadcrumbs, and navigation helpers
+     ================================================================ -->
+<nav class="swayam-nav" id="swayamNav" role="navigation" aria-label="Main Navigation">
+  <div class="nav-container">
+    <!-- Breadcrumb (conditional) -->
+    <div class="nav-breadcrumb" id="navBreadcrumb">
+      <span class="breadcrumb-home"><i class="fas fa-home"></i></span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">Dashboard</span>
+    </div>
+
+    <!-- Secondary Navigation -->
+    <ul class="nav-secondary" id="navSecondary">
+      <li><a href="/dashboard" class="secondary-link active"><i class="fas fa-th-large"></i> Overview</a></li>
+      <li><a href="/dashboard/sites" class="secondary-link"><i class="fas fa-globe"></i> Sites</a></li>
+      <li><a href="/dashboard/analytics" class="secondary-link"><i class="fas fa-chart-line"></i> Analytics</a></li>
+      <li><a href="/dashboard/settings" class="secondary-link"><i class="fas fa-cog"></i> Settings</a></li>
+      <li><a href="/dashboard/billing" class="secondary-link"><i class="fas fa-credit-card"></i> Billing</a></li>
+      <li><a href="/dashboard/support" class="secondary-link"><i class="fas fa-headset"></i> Support</a></li>
+    </ul>
+
+    <!-- Quick Actions -->
+    <div class="nav-quick-actions">
+      <button class="nav-quick-btn" id="navQuickNew" aria-label="New Website">
+        <i class="fas fa-plus"></i>
+        <span class="quick-label">New Site</span>
+      </button>
+      <button class="nav-quick-btn" id="navQuickDomain" aria-label="Buy Domain">
+        <i class="fas fa-globe-asia"></i>
+        <span class="quick-label">Domain</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* ================================================================
+     NAVIGATION STYLES
+     ================================================================ */
+  .swayam-nav {
+    background: rgba(10, 10, 26, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    padding: 0 24px;
+    position: sticky;
+    top: 64px;
+    z-index: 500;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  body.dark .swayam-nav {
+    background: rgba(10, 10, 20, 0.6);
+  }
+
+  .nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 48px;
+    flex-wrap: wrap;
+  }
+
+  /* ----- BREADCRUMB ----- */
+  .nav-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.1);
+    padding: 4px 0;
+  }
+
+  .nav-breadcrumb .breadcrumb-home {
+    color: rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-breadcrumb .breadcrumb-separator {
+    opacity: 0.1;
+  }
+
+  .nav-breadcrumb .breadcrumb-current {
+    color: rgba(255, 255, 255, 0.15);
+    font-weight: 500;
+  }
+
+  /* ----- SECONDARY NAV ----- */
+  .nav-secondary {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+
+  .nav-secondary .secondary-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    color: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+
+  .nav-secondary .secondary-link:hover {
+    background: rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .nav-secondary .secondary-link.active {
+    color: #b8860b;
+    background: rgba(184, 134, 11, 0.04);
+  }
+
+  .nav-secondary .secondary-link i {
+    font-size: 0.7rem;
+    opacity: 0.3;
+  }
+
+  .nav-secondary .secondary-link.active i {
+    opacity: 1;
+  }
+
+  /* ----- QUICK ACTIONS ----- */
+  .nav-quick-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .nav-quick-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: inherit;
+  }
+
+  .nav-quick-btn:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+  }
+
+  .nav-quick-btn:first-child {
+    background: linear-gradient(135deg, #b8860b, #d4a017);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 2px 12px rgba(184, 134, 11, 0.12);
+  }
+
+  .nav-quick-btn:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(184, 134, 11, 0.2);
+  }
+
+  .nav-quick-btn i {
+    font-size: 0.75rem;
+  }
+
+  .nav-quick-btn .quick-label {
+    font-size: 0.65rem;
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 1024px) {
+    .nav-breadcrumb {
+      display: none;
+    }
+    .nav-container {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .swayam-nav {
+      top: 56px;
+      padding: 0 12px;
+    }
+    .nav-container {
+      min-height: 40px;
+    }
+    .nav-secondary .secondary-link {
+      padding: 4px 10px;
+      font-size: 0.7rem;
+    }
+    .nav-secondary .secondary-link .label-text {
+      display: none;
+    }
+    .nav-secondary .secondary-link i {
+      font-size: 0.9rem;
+      opacity: 0.5;
+    }
+    .nav-quick-btn .quick-label {
+      display: none;
+    }
+    .nav-quick-btn {
+      padding: 6px 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .swayam-nav {
+      top: 48px;
+      padding: 0 8px;
+    }
+    .nav-container {
+      min-height: 36px;
+    }
+    .nav-secondary {
+      gap: 0;
+    }
+    .nav-secondary .secondary-link {
+      padding: 4px 8px;
+      font-size: 0.65rem;
+    }
+    .nav-quick-btn {
+      padding: 4px 8px;
+      font-size: 0.65rem;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    'use strict';
+
+    // ----- QUICK ACTIONS -----
+    const newBtn = document.getElementById('navQuickNew');
+    const domainBtn = document.getElementById('navQuickDomain');
+
+    if (newBtn) {
+      newBtn.addEventListener('click', function() {
+        window.location.href = '/builder/step-1';
+      });
+    }
+
+    if (domainBtn) {
+      domainBtn.addEventListener('click', function() {
+        window.location.href = '/domain';
+      });
+    }
+
+    // ----- BREADCRUMB AUTO-GENERATION -----
+    function updateBreadcrumb() {
+      const path = window.location.pathname;
+      const breadcrumb = document.getElementById('navBreadcrumb');
+      if (!breadcrumb) return;
+
+      const current = breadcrumb.querySelector('.breadcrumb-current');
+      if (!current) return;
+
+      // Simple breadcrumb generation
+      const segments = path.split('/').filter(Boolean);
+      if (segments.length === 0) {
+        current.textContent = 'Home';
+        return;
+      }
+
+      // Get the last segment
+      const last = segments[segments.length - 1];
+      // Format: replace hyphens with spaces, capitalize
+      const formatted = last
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+
+      current.textContent = formatted || 'Home';
+    }
+
+    updateBreadcrumb();
+
+    // ----- ACTIVE LINK HIGHLIGHT -----
+    function highlightActiveLink() {
+      const path = window.location.pathname;
+      document.querySelectorAll('.nav-secondary .secondary-link').forEach(function(link) {
+        const href = link.getAttribute('href');
+        if (href && path.includes(href)) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    highlightActiveLink();
+
+    console.log('Swayam Navigation component initialized.');
+  })();
+</script>
