@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Same base as about.html — abbreviated for space */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.02) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #141425; }
+    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 10px; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header (same as about) */
+    .header {
+      background: rgba(10, 10, 26, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(184, 134, 11, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+    }
+    .logo i { color: #b8860b; }
+    .logo span { font-weight: 300; opacity: 0.3; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #b8860b; }
+    .header-cta {
+      padding: 8px 24px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff !important;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+    }
+    .header-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25); }
+
+    /* Hero */
+    .hero { padding: 50px 0 30px; text-align: center; }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p { font-size: 1rem; color: rgba(255, 255, 255, 0.2); margin-top: 4px; }
+
+    /* Contact Grid */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 30px 0 60px;
+    }
+
+    /* Form */
+    .form-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      padding: 30px;
+    }
+    .form-card h3 { font-size: 1.3rem; font-weight: 700; color: #f0ece6; margin-bottom: 4px; }
+    .form-card .sub { color: rgba(255, 255, 255, 0.15); margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.15);
+      margin-bottom: 4px;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: #b8860b;
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.06);
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn-submit {
+      padding: 12px 32px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      width: 100%;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25); }
+
+    /* Info */
+    .info-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      padding: 30px;
+    }
+    .info-card h3 { font-size: 1.3rem; font-weight: 700; color: #f0ece6; margin-bottom: 4px; }
+    .info-card .sub { color: rgba(255, 255, 255, 0.15); margin-bottom: 20px; }
+    .info-item {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+    }
+    .info-item:last-child { border-bottom: none; }
+    .info-item .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(184, 134, 11, 0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b8860b;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .info-item .text .label { font-size: 0.65rem; color: rgba(255, 255, 255, 0.1); }
+    .info-item .text .value { font-size: 0.9rem; color: #f0ece6; }
+
+    /* Map */
+    .map-container {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      margin-top: 16px;
+    }
+    .map-container iframe { width: 100%; height: 200px; border: 0; }
+
+    /* Footer */
+    .footer {
+      padding: 30px 0 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.06);
+      font-size: 0.8rem;
+    }
+    .footer a { color: rgba(255, 255, 255, 0.1); text-decoration: none; }
+    .footer a:hover { color: #b8860b; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
+      .header-inner { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"><i class="fas fa-info-circle"></i><span id="toastMessage">Message</span></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo"><i class="fas fa-om"></i> Swayam<span>AI</span></a>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../builder/step-1.html">Builder</a>
+        <a href="../themes.html">Themes</a>
+        <a href="../dashboard/index.html">Dashboard</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="https://kalki-intelligence.in" target="_blank" class="header-cta">Kalki AI</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Get in Touch</h1>
+      <p>We'd love to hear from you. Reach out anytime.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Form -->
+        <div class="form-card">
+          <h3>Send a Message</h3>
+          <p class="sub">Fill out the form and we'll get back to you within 24 hours.</p>
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group"><label>First Name *</label><input type="text" required /></div>
+              <div class="form-group"><label>Last Name</label><input type="text" /></div>
+            </div>
+            <div class="form-group"><label>Email Address *</label><input type="email" required /></div>
+            <div class="form-group"><label>Subject</label>
+              <select>
+                <option value="general">General Inquiry</option>
+                <option value="support">Technical Support</option>
+                <option value="billing">Billing</option>
+                <option value="partnership">Partnership</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Message *</label><textarea required placeholder="Tell us how we can help..."></textarea></div>
+            <button type="submit" class="btn-submit"><i class="fas fa-paper-plane" style="margin-right:8px;"></i> Send Message</button>
+          </form>
+        </div>
+
+        <!-- Info -->
+        <div>
+          <div class="info-card">
+            <h3>Contact Information</h3>
+            <p class="sub">Reach us through any of these channels.</p>
+            <div class="info-item">
+              <div class="icon"><i class="fas fa-envelope"></i></div>
+              <div class="text"><div class="label">Email</div><div class="value">hello@swayam.ai</div></div>
+            </div>
+            <div class="info-item">
+              <div class="icon"><i class="fas fa-phone"></i></div>
+              <div class="text"><div class="label">Phone</div><div class="value">+91-98765-43210</div></div>
+            </div>
+            <div class="info-item">
+              <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div class="text"><div class="label">Address</div><div class="value">Delhi NCR, India</div></div>
+            </div>
+            <div class="info-item">
+              <div class="icon"><i class="fas fa-clock"></i></div>
+              <div class="text"><div class="label">Support Hours</div><div class="value">24/7 • Live Chat Available</div></div>
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="info-card" style="margin-top:20px;">
+            <h3>Find Us</h3>
+            <div class="map-container">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d112115.36760875818!2d77.10202276169019!3d28.52436785007849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5a1b1c4a6f%3A0x9c2c5e9a5f5b6a1b!2sDelhi%2C%20India!5e0!3m2!1sen!2sus!4v1740000000000" allowfullscreen loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Swayam — An AI Website Builder by <a href="https://kalki-intelligence.in" target="_blank">Kalki Intelligence</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      let toastTimeout = null;
+
+      function showToast(msg, type) {
+        toastMessage.textContent = msg;
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() { toast.classList.remove('show'); }, 3500);
+      }
+
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        showToast('✅ Message sent! We\'ll get back to you within 24 hours.', 'success');
+        this.reset();
+      });
+    })();
+  </script>
+
+</body>
+</html>
