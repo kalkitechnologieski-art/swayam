@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Swayam AI Website Builder</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉</text></svg>" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #f0ece6;
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.01) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.01) 0%, transparent 60%);
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.2); border-radius: 10px; }
+
+    /* ============================================================
+       SIDEBAR
+       ============================================================ */
+    .sidebar {
+      width: 260px;
+      background: rgba(255, 255, 255, 0.01);
+      border-right: 1px solid rgba(255, 255, 255, 0.02);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
+    .sidebar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f0ece6;
+      text-decoration: none;
+      margin-bottom: 30px;
+      padding: 0 8px;
+    }
+    .sidebar .logo i { color: #b8860b; }
+    .sidebar .logo span { font-weight: 300; opacity: 0.3; }
+    .sidebar .nav-section { margin-bottom: 8px; }
+    .sidebar .nav-section .label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.06);
+      padding: 8px 12px 4px;
+    }
+    .sidebar .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+    }
+    .sidebar .nav-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .sidebar .nav-item.active {
+      background: rgba(184, 134, 11, 0.04);
+      color: #b8860b;
+    }
+    .sidebar .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      height: 60%;
+      width: 3px;
+      background: #b8860b;
+      border-radius: 0 4px 4px 0;
+    }
+    .sidebar .nav-item .icon { width: 20px; text-align: center; font-size: 1rem; }
+    .sidebar .nav-item .badge {
+      margin-left: auto;
+      padding: 0 8px;
+      border-radius: 20px;
+      background: rgba(184, 134, 11, 0.08);
+      color: #b8860b;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+    .sidebar .user-section {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .sidebar .user-section .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+    }
+    .sidebar .user-section .user-info .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .sidebar .user-section .user-info .name { font-size: 0.85rem; font-weight: 600; color: #f0ece6; }
+    .sidebar .user-section .user-info .email { font-size: 0.65rem; color: rgba(255, 255, 255, 0.15); }
+
+    /* ============================================================
+       MAIN CONTENT
+       ============================================================ */
+    .main-content {
+      flex: 1;
+      padding: 24px 32px 32px;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    /* ----- Top Bar ----- */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topbar .greeting h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #b8860b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .topbar .greeting p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .topbar .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .topbar .actions .btn-new-ticket {
+      padding: 8px 24px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .topbar .actions .btn-new-ticket:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(184, 134, 11, 0.25);
+    }
+
+    /* ----- Tabs ----- */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      margin-bottom: 24px;
+    }
+    .tabs button {
+      padding: 10px 24px;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      border-bottom: 2px solid transparent;
+    }
+    .tabs button:hover { color: rgba(255, 255, 255, 0.4); }
+    .tabs button.active { color: #b8860b; border-bottom-color: #b8860b; }
+    .tabs button .count {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 20px;
+      padding: 0 8px;
+      font-size: 0.6rem;
+      margin-left: 4px;
+      color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ----- Tab Content ----- */
+    .tab-content { display: none; animation: fadeUp 0.4s ease; }
+    .tab-content.active { display: block; }
+    @keyframes fadeUp { 0% { opacity: 0; transform: translateY(12px); } 100% { opacity: 1; transform: translateY(0); } }
+
+    /* ============================================================
+       FAQ ACCORDION
+       ============================================================ */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .faq-category {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .faq-category h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      padding-bottom: 8px;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+      padding: 8px 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    .faq-question:hover { color: #f0ece6; }
+    .faq-question i { color: #b8860b; transition: 0.3s; font-size: 0.7rem; }
+    .faq-question.active i { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0;
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+    .faq-answer.open {
+      max-height: 300px;
+      padding: 8px 0 4px;
+    }
+
+    /* ============================================================
+       TICKET SYSTEM
+       ============================================================ */
+    .ticket-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ticket-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .ticket-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.04);
+    }
+    .ticket-item .info .title {
+      font-weight: 500;
+      color: #f0ece6;
+      font-size: 0.9rem;
+    }
+    .ticket-item .info .meta {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.15);
+      display: flex;
+      gap: 16px;
+      margin-top: 2px;
+    }
+    .ticket-item .status-badge {
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .ticket-item .status-badge.open { background: rgba(96, 165, 250, 0.08); color: #60a5fa; }
+    .ticket-item .status-badge.in-progress { background: rgba(251, 191, 36, 0.08); color: #fbbf24; }
+    .ticket-item .status-badge.resolved { background: rgba(34, 197, 94, 0.08); color: #22c55e; }
+    .ticket-item .status-badge.closed { background: rgba(255, 255, 255, 0.02); color: rgba(255, 255, 255, 0.15); }
+
+    /* ============================================================
+       LIVE CHAT
+       ============================================================ */
+    .chat-container {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+    .chat-messages .message {
+      margin-bottom: 12px;
+      display: flex;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn { 0% { opacity: 0; transform: translateX(-8px); } 100% { opacity: 1; transform: translateX(0); } }
+    .chat-messages .message .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(184, 134, 11, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      color: #b8860b;
+    }
+    .chat-messages .message .avatar.support { background: rgba(59, 130, 246, 0.08); color: #3b82f6; }
+    .chat-messages .message .bubble {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 70%;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .chat-messages .message .bubble .time {
+      font-size: 0.55rem;
+      color: rgba(255, 255, 255, 0.06);
+      margin-top: 4px;
+      display: block;
+    }
+    .chat-messages .message.self { flex-direction: row-reverse; }
+    .chat-messages .message.self .bubble {
+      background: rgba(184, 134, 11, 0.04);
+      border-color: rgba(184, 134, 11, 0.04);
+      color: #f0ece6;
+    }
+    .chat-input {
+      display: flex;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .chat-input input:focus { border-color: #b8860b; }
+    .chat-input button {
+      padding: 10px 20px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    .chat-input button:hover { transform: scale(1.02); }
+
+    /* ============================================================
+       KNOWLEDGE BASE
+       ============================================================ */
+    .kb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .kb-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 20px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .kb-card:hover {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.04);
+      transform: translateY(-3px);
+    }
+    .kb-card .icon { font-size: 2rem; margin-bottom: 8px; }
+    .kb-card h4 { font-size: 0.95rem; font-weight: 600; color: #f0ece6; }
+    .kb-card p { font-size: 0.8rem; color: rgba(255, 255, 255, 0.2); margin-top: 4px; }
+    .kb-card .articles { font-size: 0.65rem; color: rgba(255, 255, 255, 0.06); margin-top: 8px; }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+    .toast.warning { border-color: rgba(251,191,36,0.2); }
+    .toast.warning i { color: #fbbf24; }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 992px) {
+      .sidebar { width: 80px; padding: 16px 8px; }
+      .sidebar .logo { font-size: 1.2rem; justify-content: center; }
+      .sidebar .logo span { display: none; }
+      .sidebar .nav-item { padding: 10px 12px; justify-content: center; }
+      .sidebar .nav-item .label-text { display: none; }
+      .sidebar .nav-item .badge { display: none; }
+      .sidebar .nav-section .label { display: none; }
+      .sidebar .user-section .user-info .name,
+      .sidebar .user-section .user-info .email { display: none; }
+      .main-content { padding: 16px; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      body { overflow: auto; flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 26, 0.92);
+        backdrop-filter: blur(12px);
+        gap: 4px;
+      }
+      .sidebar .logo { margin-bottom: 0; font-size: 1.1rem; }
+      .sidebar .logo span { display: inline; }
+      .sidebar .nav-section { display: flex; gap: 4px; margin-bottom: 0; }
+      .sidebar .nav-section .label { display: none; }
+      .sidebar .nav-item { padding: 6px 10px; font-size: 0.7rem; }
+      .sidebar .nav-item .label-text { display: inline; }
+      .sidebar .nav-item .badge { display: inline; }
+      .sidebar .user-section { display: none; }
+      .main-content { height: auto; padding: 16px; }
+      .tabs { overflow-x: auto; flex-wrap: nowrap; }
+      .tabs button { white-space: nowrap; padding: 8px 16px; font-size: 0.75rem; }
+    }
+    @media (max-width: 480px) {
+      .kb-grid { grid-template-columns: 1fr; }
+      .chat-container { height: 300px; }
+      .chat-messages .message .bubble { max-width: 85%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       TOAST
+       ============================================================ -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <!-- ============================================================
+       SIDEBAR
+       ============================================================ -->
+  <nav class="sidebar">
+    <a href="../index.html" class="logo">
+      <i class="fas fa-om"></i>
+      Swayam<span>AI</span>
+    </a>
+    <div class="nav-section">
+      <div class="label">Main</div>
+      <a href="index.html" class="nav-item">
+        <span class="icon"><i class="fas fa-th-large"></i></span>
+        <span class="label-text">Dashboard</span>
+      </a>
+      <a href="sites.html" class="nav-item">
+        <span class="icon"><i class="fas fa-globe"></i></span>
+        <span class="label-text">Sites</span>
+        <span class="badge success">4</span>
+      </a>
+      <a href="analytics.html" class="nav-item">
+        <span class="icon"><i class="fas fa-chart-line"></i></span>
+        <span class="label-text">Analytics</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="label">Management</div>
+      <a href="../builder/step-1.html" class="nav-item">
+        <span class="icon"><i class="fas fa-plus-circle"></i></span>
+        <span class="label-text">New Website</span>
+      </a>
+      <a href="domain.html" class="nav-item">
+        <span class="icon"><i class="fas fa-globe-asia"></i></span>
+        <span class="label-text">Domains</span>
+        <span class="badge">1</span>
+      </a>
+      <a href="billing.html" class="nav-item">
+        <span class="icon"><i class="fas fa-credit-card"></i></span>
+        <span class="label-text">Billing</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="label">Support</div>
+      <a href="support.html" class="nav-item active">
+        <span class="icon"><i class="fas fa-headset"></i></span>
+        <span class="label-text">Support</span>
+      </a>
+      <a href="../pages/about.html" class="nav-item">
+        <span class="icon"><i class="fas fa-info-circle"></i></span>
+        <span class="label-text">About</span>
+      </a>
+    </div>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="avatar">AK</div>
+        <div>
+          <div class="name">Arjun Kumar</div>
+          <div class="email">arjun@example.com</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="greeting">
+        <h1><i class="fas fa-headset" style="color:#b8860b; margin-right:10px;"></i> Support Center</h1>
+        <p>Get help, browse FAQs, or chat with our team.</p>
+      </div>
+      <div class="actions">
+        <button class="btn-new-ticket" id="newTicketBtn">
+          <i class="fas fa-ticket-alt"></i> New Ticket
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" id="tabs">
+      <button class="active" data-tab="faq">FAQ <span class="count">12</span></button>
+      <button data-tab="tickets">My Tickets <span class="count">3</span></button>
+      <button data-tab="chat">Live Chat</button>
+      <button data-tab="knowledge">Knowledge Base</button>
+    </div>
+
+    <!-- ==========================================================
+         TAB 1: FAQ
+         ========================================================== -->
+    <div class="tab-content active" id="tab-faq">
+      <div class="faq-grid">
+        <div class="faq-category">
+          <h4>🚀 Getting Started</h4>
+          <div class="faq-item">
+            <div class="faq-question">What is Swayam? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Swayam is a free AI-powered website builder that helps you create a professional website in minutes with zero coding.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">How do I start building? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Click "New Site" on your dashboard or visit the Builder to describe your business and let AI generate your site.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Is Swayam really free? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Yes! The core builder, hosting, and 4 themes are completely free forever. Pro plans are optional.</div>
+          </div>
+        </div>
+        <div class="faq-category">
+          <h4>⚙️ Features &amp; Customization</h4>
+          <div class="faq-item">
+            <div class="faq-question">What themes are available? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Veda (Spiritual), Karma (Agency), Sattva (E‑commerce), and Dharma (Consulting) — each production‑ready.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Can I use my own domain? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Yes! You can purchase a domain for ₹3000/year or connect your existing domain to Vercel.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">What is Swayam Pro? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Pro gives you a 30‑page Next.js site, international SEO, GEO, AEO, and dedicated support for ₹4,999/month.</div>
+          </div>
+        </div>
+        <div class="faq-category">
+          <h4>🛠️ Technical</h4>
+          <div class="faq-item">
+            <div class="faq-question">Where is my site hosted? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">All sites are deployed to Vercel with a free *.vercel.app subdomain and auto‑HTTPS.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Can I download my code? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Yes! You own your code. Download the full HTML/CSS/JS from the Deploy step.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">What AI models do you use? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">We use Groq (fastest inference) with Zhipu as a fallback for reliability.</div>
+          </div>
+        </div>
+        <div class="faq-category">
+          <h4>💳 Billing &amp; Support</h4>
+          <div class="faq-item">
+            <div class="faq-question">How do I upgrade to Pro? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Visit Billing in your dashboard and select the Pro plan. You'll be redirected to secure payment.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Can I cancel anytime? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Yes, you can cancel your subscription at any time without penalty. You keep your website.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">How do I contact support? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Use this Support Center, create a ticket, or chat with our team live.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         TAB 2: MY TICKETS
+         ========================================================== -->
+    <div class="tab-content" id="tab-tickets">
+      <div class="ticket-list">
+        <div class="ticket-item">
+          <div class="info">
+            <div class="title">My site isn't loading properly</div>
+            <div class="meta">#T-1001 • 2 hours ago • Veda Wellness</div>
+          </div>
+          <span class="status-badge in-progress">In Progress</span>
+        </div>
+        <div class="ticket-item">
+          <div class="info">
+            <div class="title">How to add custom domain?</div>
+            <div class="meta">#T-1002 • 1 day ago • Karma Agency</div>
+          </div>
+          <span class="status-badge resolved">Resolved</span>
+        </div>
+        <div class="ticket-item">
+          <div class="info">
+            <div class="title">Billing issue: duplicate charge</div>
+            <div class="meta">#T-1003 • 3 days ago • Billing</div>
+          </div>
+          <span class="status-badge open">Open</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         TAB 3: LIVE CHAT
+         ========================================================== -->
+    <div class="tab-content" id="tab-chat">
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <div class="message support">
+            <div class="avatar">🤖</div>
+            <div class="bubble">
+              Welcome to Swayam Support! How can we help you today? 👋
+              <span class="time">10:30 AM</span>
+            </div>
+          </div>
+          <div class="message self">
+            <div class="avatar">👤</div>
+            <div class="bubble">
+              I'm having trouble with my theme customization.
+              <span class="time">10:32 AM</span>
+            </div>
+          </div>
+          <div class="message support">
+            <div class="avatar">🤖</div>
+            <div class="bubble">
+              I'd be happy to help! Which theme are you using? And what would you like to change?
+              <span class="time">10:33 AM</span>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input">
+          <input type="text" id="chatInput" placeholder="Type your message..." />
+          <button id="chatSendBtn"><i class="fas fa-paper-plane"></i> Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+         TAB 4: KNOWLEDGE BASE
+         ========================================================== -->
+    <div class="tab-content" id="tab-knowledge">
+      <div class="kb-grid">
+        <div class="kb-card">
+          <div class="icon">📖</div>
+          <h4>Getting Started Guide</h4>
+          <p>Learn the basics of building your first website.</p>
+          <div class="articles">12 articles</div>
+        </div>
+        <div class="kb-card">
+          <div class="icon">🎨</div>
+          <h4>Theme Customization</h4>
+          <p>Customize colors, fonts, and layout.</p>
+          <div class="articles">8 articles</div>
+        </div>
+        <div class="kb-card">
+          <div class="icon">🌐</div>
+          <h4>Domains &amp; Hosting</h4>
+          <p>Connect custom domains and manage hosting.</p>
+          <div class="articles">6 articles</div>
+        </div>
+        <div class="kb-card">
+          <div class="icon">📈</div>
+          <h4>SEO &amp; Analytics</h4>
+          <p>Optimize your site and track performance.</p>
+          <div class="articles">10 articles</div>
+        </div>
+        <div class="kb-card">
+          <div class="icon">🚀</div>
+          <h4>Swayam Pro</h4>
+          <p>Everything about upgrading to Pro.</p>
+          <div class="articles">5 articles</div>
+        </div>
+        <div class="kb-card">
+          <div class="icon">🔧</div>
+          <h4>Troubleshooting</h4>
+          <p>Common issues and how to fix them.</p>
+          <div class="articles">7 articles</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- DOM REFS -----
+      const tabs = document.querySelectorAll('.tabs button');
+      const tabContents = {
+        faq: document.getElementById('tab-faq'),
+        tickets: document.getElementById('tab-tickets'),
+        chat: document.getElementById('tab-chat'),
+        knowledge: document.getElementById('tab-knowledge')
+      };
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const chatInput = document.getElementById('chatInput');
+      const chatSendBtn = document.getElementById('chatSendBtn');
+      const chatMessages = document.getElementById('chatMessages');
+      const newTicketBtn = document.getElementById('newTicketBtn');
+
+      // ----- TOAST -----
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        toastMessage.textContent = typeof message === 'string' ? message : String(message);
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        if (type === 'warning') toast.classList.add('warning');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() {
+          toast.classList.remove('show');
+        }, 3500);
+      }
+
+      // ----- TABS -----
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          tabs.forEach(function(t) { t.classList.remove('active'); });
+          this.classList.add('active');
+          const tabId = this.dataset.tab;
+          Object.keys(tabContents).forEach(function(key) {
+            tabContents[key].classList.toggle('active', key === tabId);
+          });
+        });
+      });
+
+      // ----- FAQ ACCORDION -----
+      document.querySelectorAll('.faq-question').forEach(function(q) {
+        q.addEventListener('click', function() {
+          const answer = this.nextElementSibling;
+          const isOpen = answer.classList.contains('open');
+          // Close all in same category
+          const parent = this.closest('.faq-category');
+          parent.querySelectorAll('.faq-answer').forEach(function(a) {
+            a.classList.remove('open');
+          });
+          parent.querySelectorAll('.faq-question').forEach(function(q2) {
+            q2.classList.remove('active');
+          });
+          if (!isOpen) {
+            this.classList.add('active');
+            answer.classList.add('open');
+          }
+        });
+      });
+
+      // ----- LIVE CHAT -----
+      function addChatMessage(text, isSelf) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message' + (isSelf ? ' self' : ' support');
+        const avatar = document.createElement('div');
+        avatar.className = 'avatar' + (isSelf ? '' : ' support');
+        avatar.textContent = isSelf ? '👤' : '🤖';
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        bubble.innerHTML = text + ' <span class="time">' + time + '</span>';
+        msgDiv.appendChild(avatar);
+        msgDiv.appendChild(bubble);
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        addChatMessage(text, true);
+        chatInput.value = '';
+        // Simulate bot response
+        setTimeout(function() {
+          const responses = [
+            'I understand. Let me look into that for you.',
+            'Great question! Here\'s what I can tell you...',
+            'Thank you for your message. I\'m on it!',
+            'That\'s a good point. Let me check with our team.',
+            'Thanks for reaching out! Is there anything else I can help with?'
+          ];
+          const reply = responses[Math.floor(Math.random() * responses.length)];
+          addChatMessage(reply, false);
+          showToast('💬 Support team is on it!', 'success');
+        }, 800 + Math.random() * 1000);
+      }
+
+      chatSendBtn.addEventListener('click', sendMessage);
+      chatInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+
+      // ----- NEW TICKET -----
+      newTicketBtn.addEventListener('click', function() {
+        const subject = prompt('Enter your ticket subject:');
+        if (subject && subject.trim()) {
+          const description = prompt('Describe your issue in detail:');
+          if (description && description.trim()) {
+            showToast('✅ Ticket #T-1004 created successfully!', 'success');
+            // Add to ticket list
+            const list = document.querySelector('.ticket-list');
+            const item = document.createElement('div');
+            item.className = 'ticket-item';
+            item.innerHTML = `
+              <div class="info">
+                <div class="title">${subject}</div>
+                <div class="meta">#T-1004 • Just now • Support</div>
+              </div>
+              <span class="status-badge open">Open</span>
+            `;
+            list.insertBefore(item, list.firstChild);
+          }
+        }
+      });
+
+      // ----- KB CARD CLICK -----
+      document.querySelectorAll('.kb-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+          const title = this.querySelector('h4')?.textContent || 'Article';
+          showToast('📄 Opening: ' + title, 'success');
+        });
+      });
+
+      // ----- TICKET CLICK -----
+      document.querySelectorAll('.ticket-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+          const title = this.querySelector('.title')?.textContent || 'Ticket';
+          showToast('📋 Viewing ticket: ' + title, 'success');
+        });
+      });
+
+      // ----- KEYBOARD SHORTCUTS -----
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          toast.classList.remove('show');
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+          e.preventDefault();
+          newTicketBtn.click();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          e.preventDefault();
+          // Switch to knowledge base
+          tabs.forEach(function(t) {
+            t.classList.toggle('active', t.dataset.tab === 'knowledge');
+          });
+          Object.keys(tabContents).forEach(function(key) {
+            tabContents[key].classList.toggle('active', key === 'knowledge');
+          });
+          showToast('📚 Knowledge Base opened.', 'success');
+        }
+      });
+
+      // ----- INIT -----
+      console.log('Support Center initialized successfully.');
+      showToast('💬 Welcome to Support! Type /ticket to create a ticket.', 'success');
+
+      // ----- ERROR BOUNDARY -----
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled rejection:', e.reason);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
