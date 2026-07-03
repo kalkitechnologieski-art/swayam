@@ -23,7 +23,6 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
-      /* subtle animated background */
       background-image: radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.04) 0%, transparent 60%),
                         radial-gradient(ellipse at 80% 50%, rgba(109, 40, 217, 0.04) 0%, transparent 60%);
     }
@@ -324,6 +323,22 @@
     @keyframes rippleEffect {
       to { transform: scale(4); opacity: 0; }
     }
+    .btn-generate .spinner {
+      display: none;
+      animation: spin 1s linear infinite;
+    }
+    .btn-generate.loading .spinner {
+      display: inline-block;
+    }
+    .btn-generate.loading .label-text {
+      display: none;
+    }
+    .btn-generate.loading .icon {
+      display: none;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
 
     /* ============================================================
        AI STATUS INDICATOR (pulsing dot)
@@ -371,6 +386,37 @@
     }
 
     /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: #f0ece6;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .toast.success { border-color: rgba(34,197,94,0.2); }
+    .toast.success i { color: #22c55e; }
+    .toast.error { border-color: rgba(239,68,68,0.2); }
+    .toast.error i { color: #ef4444; }
+
+    /* ============================================================
        RESPONSIVE
        ============================================================ */
     @media (max-width: 600px) {
@@ -406,6 +452,14 @@
   </style>
 </head>
 <body>
+
+  <!-- ============================================================
+       TOAST
+       ============================================================ -->
+  <div class="toast" id="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
 
   <!-- ============================================================
        HEADER
@@ -477,7 +531,9 @@
     <!-- Generate button (floating) -->
     <div class="generate-area">
       <button class="btn-generate" id="generateBtn" disabled>
-        <i class="fas fa-rocket"></i> Generate Website
+        <span class="icon"><i class="fas fa-rocket"></i></span>
+        <span class="label-text">Generate Website</span>
+        <span class="spinner"><i class="fas fa-spinner fa-spin"></i></span>
         <span class="ripple" id="rippleEffect"></span>
       </button>
     </div>
@@ -512,41 +568,24 @@
       const suggestionChips = document.querySelectorAll('.suggestion-chip');
       const aiDot = document.getElementById('aiDot');
       const aiStatusText = document.getElementById('aiStatusText');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
 
-      // ----- Ripple effect on button -----
-      generateBtn.addEventListener('click', function(e) {
-        const ripple = document.getElementById('rippleEffect');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-        ripple.style.transform = 'scale(0)';
-        ripple.style.opacity = '1';
-        // Force reflow to restart animation
-        void ripple.offsetWidth;
-        ripple.style.transform = 'scale(4)';
-        ripple.style.opacity = '0';
-        // Simulate AI generation
-        aiDot.classList.add('active');
-        aiStatusText.textContent = 'AI is thinking...';
-        generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-        generateBtn.disabled = true;
-        setTimeout(function() {
-          aiDot.classList.remove('active');
-          aiStatusText.textContent = '✅ Ready!';
-          generateBtn.innerHTML = '<i class="fas fa-rocket"></i> Generated!';
-          // In real app, redirect to step-2 or show preview
-          alert('🎉 Your website is being generated! (Step 2 would load here)');
-          // Reset for demo
-          setTimeout(function() {
-            generateBtn.innerHTML = '<i class="fas fa-rocket"></i> Generate Website';
-            generateBtn.disabled = false;
-            aiStatusText.textContent = 'AI ready • Groq + Zhipu';
-            generateBtn.classList.add('active');
-          }, 1000);
-        }, 1800);
-      });
+      // ----- Toast helper -----
+      let toastTimeout = null;
+
+      function showToast(message, type) {
+        if (!message) return;
+        toastMessage.textContent = typeof message === 'string' ? message : String(message);
+        toast.className = 'toast';
+        if (type === 'error') toast.classList.add('error');
+        if (type === 'success') toast.classList.add('success');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(function() {
+          toast.classList.remove('show');
+        }, 3500);
+      }
 
       // ----- Enable/disable generate button based on input -----
       function updateGenerateButton() {
@@ -572,10 +611,12 @@
       updateGenerateButton();
 
       // ----- Quick select: fill textarea with a template -----
+      let selectedType = null;
       quickOptions.forEach(function(opt) {
         opt.addEventListener('click', function() {
           quickOptions.forEach(function(o) { o.classList.remove('selected'); });
           this.classList.add('selected');
+          selectedType = this.dataset.type;
           const type = this.dataset.type;
           let prompt = '';
           switch (type) {
@@ -630,7 +671,6 @@
       });
 
       // ----- AI dot pulse simulation (already animating via CSS) -----
-      // Toggle active state when typing to show "listening"
       textarea.addEventListener('focus', function() {
         aiDot.classList.add('active');
         aiStatusText.textContent = 'AI listening...';
@@ -638,6 +678,57 @@
       textarea.addEventListener('blur', function() {
         aiDot.classList.remove('active');
         aiStatusText.textContent = 'AI ready • Groq + Zhipu';
+      });
+
+      // ----- Ripple effect on button -----
+      generateBtn.addEventListener('click', function(e) {
+        // Ripple
+        const ripple = document.getElementById('rippleEffect');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.opacity = '1';
+        void ripple.offsetWidth;
+        ripple.style.transform = 'scale(4)';
+        ripple.style.opacity = '0';
+
+        // Show loading state
+        generateBtn.classList.add('loading');
+        generateBtn.disabled = true;
+        aiDot.classList.add('active');
+        aiStatusText.textContent = 'AI is generating your website...';
+
+        // Save data to localStorage
+        const description = textarea.value.trim();
+        const type = selectedType || 'general';
+        const siteData = {
+          description: description,
+          type: type,
+          timestamp: Date.now(),
+        };
+        try {
+          localStorage.setItem('swayam_builder_description', JSON.stringify(siteData));
+          // Also store in the general state for step 2
+          const state = {
+            description: description,
+            selectedTheme: null,
+            primaryColor: '#b8860b',
+            font: 'inter',
+            pages: ['home', 'about', 'services', 'contact'],
+          };
+          localStorage.setItem('swayam_builder_state', JSON.stringify(state));
+        } catch (err) {
+          console.warn('Could not save state:', err);
+        }
+
+        // Simulate AI generation delay (1.5s) then redirect
+        setTimeout(function() {
+          // Redirect to step 2
+          window.location.href = 'step-2.html';
+        }, 1500);
       });
 
       // ----- Keyboard shortcut: Ctrl+Enter to generate -----
@@ -650,7 +741,7 @@
         }
       });
 
-      // ----- Animated placeholder via typing simulation (just for fun) -----
+      // ----- Animated placeholder via typing simulation -----
       const placeholders = [
         "Example: I run a digital marketing agency in Delhi...",
         "Describe your business, product, or service...",
@@ -669,12 +760,39 @@
         if (!textarea.value.trim()) {
           textarea.focus();
         }
+        // Restore previous description if exists
+        try {
+          const saved = localStorage.getItem('swayam_builder_description');
+          if (saved) {
+            const data = JSON.parse(saved);
+            if (data.description && data.description.trim()) {
+              textarea.value = data.description;
+              updateGenerateButton();
+              // Find matching quick type
+              if (data.type) {
+                quickOptions.forEach(function(opt) {
+                  if (opt.dataset.type === data.type) {
+                    opt.classList.add('selected');
+                    selectedType = data.type;
+                  }
+                });
+              }
+            }
+          }
+        } catch (e) { /* ignore */ }
       }, 600);
 
-      // ----- Handle textarea auto-resize (optional) -----
+      // ----- Handle textarea auto-resize -----
       textarea.addEventListener('input', function() {
         this.style.height = 'auto';
         this.style.height = this.scrollHeight + 'px';
+      });
+
+      // ----- Error boundary -----
+      window.addEventListener('error', function(e) {
+        console.error('Unhandled error:', e.error || e.message);
+        showToast('An unexpected error occurred. Please refresh.', 'error');
+        return true;
       });
 
     })();
